@@ -1,0 +1,161 @@
+html body {
+    margin: 0;
+    padding: 0;
+    background: rgb(235, 240, 242);
+    font-family: Avenir, "Segoe UI", Helvetica, Arial, sans-serif !important;
+}
+
+.container {
+    margin: auto;
+    width: 100%;
+    padding-left: 15%;
+    padding-right: 15%;
+    padding-top: 20px;
+    padding-bottom: 50px;
+    margin-top: 80px;
+    background-color: white;
+}
+
+.container-main-title {    
+    text-shadow: 1px 1px #fff;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom: 1px solid #cccccc;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.navbar {
+    list-style: none;
+    background: #FFFFFF !important;
+    min-height: 80px !important;
+    font-size: 16px;
+    border-radius: 0;
+    margin-bottom: 0 !important;
+}
+
+.padd {
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.no-header{
+    margin-top: 30px !important;
+}
+
+.header {
+    text-align: left;
+    padding-bottom: 2px;
+    border-bottom: 1px solid #000000;
+    background: #333;
+    position: fixed !important;
+    width: 100%;
+    z-index: 10000;
+    top: 0;
+    left: 0;
+}
+
+.header-logo {
+    display: block;
+    left: 50%;
+    margin-left: -50px;
+    top: 8px;
+    height: 40px;
+    position: absolute;
+    cursor: auto;    
+}
+
+.separador {
+    width: 100%;
+    height: 1px;
+    background: #cccccc;
+    margin: 10px 0;
+}
+
+.btn-crear-aviso {
+    background-color: #33C867; 
+    border: 1px solid #07c56f; 
+}
+
+.email-input {
+    display: inline !important;
+    width: auto !important;
+    margin-right: 15px;
+}
+
+.info {
+    width: 70%;
+    margin: auto;
+    text-align: center; 
+    margin: 30px auto 25px;
+}
+
+.form-text-input {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.1;
+}
+
+/* FONTS */
+.fsize70 {
+    font-size: 70px;
+}
+
+@media ( max-width : 767px) {
+    .fsize70 {
+        font-size: 50px;
+    }
+}
+
+.fsize60 {
+    font-size: 60px;
+}
+
+@media ( max-width : 767px) {
+    .fsize60 {
+        font-size: 45px;
+    }
+}
+
+.fsize50 {
+    font-size: 50px;
+}
+
+@media ( max-width : 767px) {
+    .fsize50 {
+        font-size: 40px;
+    }
+}
+
+.fsize40 {
+    font-size: 40px;
+}
+
+@media ( max-width : 767px) {
+    .fsize40 {
+        font-size: 35px;
+    }
+}
+
+.fsize35 {
+    font-size: 35px;
+}
+
+@media ( max-width : 767px) {
+    .fsize35 {
+        font-size: 32px;
+    }
+}
+
+.fsize30 {
+    font-size: 30px;
+}
+
+.fsize25 {
+    font-size: 25px;
+}
+
+.fsize20 {
+    font-size: 20px;
+}
