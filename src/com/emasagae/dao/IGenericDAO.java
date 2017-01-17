@@ -8,11 +8,10 @@ import com.googlecode.objectify.Key;
 public interface IGenericDAO<T> {
 
 	public Key<T> save(T entity);
-	public Map<Long, T> saveAll(Iterable<T> entities);
-	public void update(T entity);
-	public void updateList(Iterable<T> entities);
-	public boolean delete(T entity);
-	public boolean deleteByKey(Key<T> entityKey);
+	public Map<Key<T>, T> saveAll(Iterable<T> entities);
+	public void delete(T entity);
+	public void deleteById(Long id);
+	public void deleteByKey(Key<T> entityKey);
 	public void deleteList(Iterable<T> entities);
 	public void deleteListByKeys(Iterable<Key<T>> keys);
 	public T findById(Long id);

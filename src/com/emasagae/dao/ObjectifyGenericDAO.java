@@ -34,62 +34,48 @@ public class ObjectifyGenericDAO<T> implements IGenericDAO<T>{
 	}
 
 	@Override
-	public Map<Long, T> saveAll(Iterable<T> entities) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
-	public void update(T entity) {
-		
-	}
-	
-	@Override
-	public void updateList(Iterable<T> entities){
-		
+	public Map<Key<T>, T> saveAll(Iterable<T> entities) {		
+		return ofy().save().entities(entities).now();
 	}
 
 	@Override
-	public boolean delete(T entity) {
+	public void delete(T entity) {
 		ofy().delete().entity(entity).now();
-		return false;		
+	}
+	
+	@Override
+	public void deleteById(Long id) {
+		deleteByKey(getKey(id));
 	}
 
 	@Override
-	public boolean deleteByKey(Key<T> entityKey) {
-		return false;
-		// TODO Auto-generated method stub
-		
+	public void deleteByKey(Key<T> entityKey) {
+		ofy().delete().key(entityKey).now();
 	}
 
 	@Override
 	public void deleteList(Iterable<T> entities) {
-		// TODO Auto-generated method stub
-		
+		ofy().delete().entities(entities).now();		
 	}
 
 	@Override
 	public void deleteListByKeys(Iterable<Key<T>> keys) {
-		// TODO Auto-generated method stub
-		
+		ofy().delete().keys(keys).now();
 	}
 
 	@Override
 	public T findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return ofy().load().type(clazz).id(id).get();
 	}
 
 	@Override
 	public T findByKey(Key<T> key) {
-		// TODO Auto-generated method stub
-		return null;
+		return ofy().load().key(key).get();
 	}
 
 	@Override
 	public Key<T> getKey(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return Key.create(clazz, id);
 	}
 
 	@Override
@@ -99,20 +85,18 @@ public class ObjectifyGenericDAO<T> implements IGenericDAO<T>{
 
 	@Override
 	public T findByProperty(String propName, Object propValue) {
-		// TODO Auto-generated method stub
-		return null;
+		T obj =  ofy().load().type(clazz).filter(propName, propValue).first().get();
+        return obj;
 	}
 
 	@Override
 	public List<T> findAllByProperty(String propName, Object propValue) {
-		// TODO Auto-generated method stub
-		return null;
+		return ofy().load().type(clazz).filter(propName, propValue).list();
 	}
 
 	@Override
 	public List<Key<T>> findKeysByProperty(String propName, Object propValue) {
-		// TODO Auto-generated method stub
-		return null;
+		return ofy().load().type(clazz).filter(propName, propValue).keys().list();
 	}
 
 }
