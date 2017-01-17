@@ -1,0 +1,139 @@
+package com.emasagae.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+
+public class Operation implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    private Integer id;
+    private String state;
+    private String type;
+    private String description;
+    private Date creationdate;
+    private Date scheduleddate;
+    private Date startdate;
+    private String notes;
+    private Report report;
+    private ReportUser reportUser;
+
+    public Operation() {
+    }
+
+    public Operation(Integer id) {
+        this.id = id;
+    }
+
+    public Operation(Integer id, String state, String type, Date creationdate) {
+        this.id = id;
+        this.state = state;
+        this.type = type;
+        this.creationdate = creationdate;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Date getCreationdate() {
+        return creationdate;
+    }
+
+    public void setCreationdate(Date creationdate) {
+        this.creationdate = creationdate;
+    }
+
+    public Date getScheduleddate() {
+        return scheduleddate;
+    }
+
+    public void setScheduleddate(Date scheduleddate) {
+        this.scheduleddate = scheduleddate;
+    }
+
+    public Date getStartdate() {
+        return startdate;
+    }
+
+    public void setStartdate(Date startdate) {
+        this.startdate = startdate;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public Report getReport() {
+        return report;
+    }
+
+    public void setReport(Report report) {
+        this.report = report;
+    }
+
+    public ReportUser getReportUser() {
+        return reportUser;
+    }
+
+    public void setReportUser(ReportUser reportUser) {
+        this.reportUser = reportUser;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Operation)) {
+            return false;
+        }
+        Operation other = (Operation) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "emarcli.dto.Operation[ id=" + id + " ]";
+    }
+    
+}
