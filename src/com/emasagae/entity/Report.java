@@ -61,6 +61,14 @@ public class Report implements Serializable {
         this.priority = priority;
         this.creationdate = creationdate;
     }
+    
+    public Long getidObj() {
+        return idObj;
+    }
+
+    public void setidObj(Long idObj) {
+        this.idObj = idObj;
+    }
 
     public Integer getId() {
         return id;

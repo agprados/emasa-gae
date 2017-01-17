@@ -22,8 +22,7 @@ import com.googlecode.objectify.annotation.Id;
 public class Operation implements Serializable {
 	
 	// Objectify auto-generates Long IDs just like JDO / JPA
-	@Id 
-	Long idObj;
+	@Id	Long idObj;
 
     private static final long serialVersionUID = 1L;
     private Integer id;
@@ -49,6 +48,14 @@ public class Operation implements Serializable {
         this.state = state;
         this.type = type;
         this.creationdate = creationdate;
+    }
+    
+    public Long getidObj() {
+        return idObj;
+    }
+
+    public void setidObj(Long idObj) {
+        this.idObj = idObj;
     }
 
     public Integer getId() {

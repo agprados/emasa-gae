@@ -43,6 +43,14 @@ public class ReportUser implements Serializable {
         this.email = email;
         this.operator = operator;
     }
+    
+    public Long getidObj() {
+        return idObj;
+    }
+
+    public void setidObj(Long idObj) {
+        this.idObj = idObj;
+    }
 
     public Integer getId() {
         return id;
