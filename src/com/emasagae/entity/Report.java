@@ -27,10 +27,10 @@ public class Report implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	// Objectify auto-generates Long IDs just like JDO / JPA
-	@Id private Long id;
-	  
-    
-    private String state;
+	@Id Long idObj;
+	
+	private Integer id;
+	private String state;
     private String type;
     private String address;
     private Integer zip;
@@ -49,11 +49,11 @@ public class Report implements Serializable {
     public Report() {
     }
 
-    public Report(Long id) {
+    public Report(Integer id) {
         this.id = id;
     }
 
-    public Report(Long id, String state, String address, String description, String priority, Date creationdate) {
+    public Report(Integer id, String state, String address, String description, String priority, Date creationdate) {
         this.id = id;
         this.state = state;
         this.address = address;
@@ -62,11 +62,11 @@ public class Report implements Serializable {
         this.creationdate = creationdate;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -191,6 +191,9 @@ public class Report implements Serializable {
     public void setReportUser(ReportUser reportUser) {
         this.reportUser = reportUser;
     }
+
+    
+    
 }
 	
 	
