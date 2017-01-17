@@ -20,43 +20,31 @@ import com.googlecode.objectify.annotation.Id;
 
 @Entity
 public class ReportUser implements Serializable {
-	
-	// Objectify auto-generates Long IDs just like JDO / JPA
-	@Id Long idObj;
-
+	 
     private static final long serialVersionUID = 1L;
-    private Integer id;
+    
+    // Objectify auto-generates Long IDs just like JDO / JPA
+    @Id
+    private Long id;
     private String email;
-    private Boolean operator;
-    private Collection<Operation> operationCollection;
-    private Collection<Report> reportCollection;
 
     public ReportUser() {
     }
 
-    public ReportUser(Integer id) {
+    public ReportUser(Long id) {
         this.id = id;
     }
 
-    public ReportUser(Integer id, String email, Boolean operator) {
+    public ReportUser(Long id, String email, Boolean operator) {
         this.id = id;
         this.email = email;
-        this.operator = operator;
     }
     
-    public Long getidObj() {
-        return idObj;
-    }
-
-    public void setidObj(Long idObj) {
-        this.idObj = idObj;
-    }
-
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -66,57 +54,6 @@ public class ReportUser implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Boolean getOperator() {
-        return operator;
-    }
-
-    public void setOperator(Boolean operator) {
-        this.operator = operator;
-    }
-
-    @XmlTransient
-    public Collection<Operation> getOperationCollection() {
-        return operationCollection;
-    }
-
-    public void setOperationCollection(Collection<Operation> operationCollection) {
-        this.operationCollection = operationCollection;
-    }
-
-    @XmlTransient
-    public Collection<Report> getReportCollection() {
-        return reportCollection;
-    }
-
-    public void setReportCollection(Collection<Report> reportCollection) {
-        this.reportCollection = reportCollection;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ReportUser)) {
-            return false;
-        }
-        ReportUser other = (ReportUser) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "emarcli.dto.ReportUser[ id=" + id + " ]";
     }
     
 }

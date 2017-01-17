@@ -27,9 +27,8 @@ public class Report implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	// Objectify auto-generates Long IDs just like JDO / JPA
-	@Id Long idObj;
-	
-	private Integer id;
+	@Id 
+	private Long id;
 	private String state;
     private String type;
     private String address;
@@ -41,19 +40,16 @@ public class Report implements Serializable {
     private Date creationdate;
     private Date startdate;
     private Date finishdate;
-    private String notes;
-    private String technicaldata;
-    private Collection<Operation> operationCollection;
     private ReportUser reportUser;
 
     public Report() {
     }
 
-    public Report(Integer id) {
+    public Report(Long id) {
         this.id = id;
     }
 
-    public Report(Integer id, String state, String address, String description, String priority, Date creationdate) {
+    public Report(Long id, String state, String address, String description, String priority, Date creationdate) {
         this.id = id;
         this.state = state;
         this.address = address;
@@ -61,20 +57,12 @@ public class Report implements Serializable {
         this.priority = priority;
         this.creationdate = creationdate;
     }
-    
-    public Long getidObj() {
-        return idObj;
-    }
 
-    public void setidObj(Long idObj) {
-        this.idObj = idObj;
-    }
-
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -164,33 +152,7 @@ public class Report implements Serializable {
 
     public void setFinishdate(Date finishdate) {
         this.finishdate = finishdate;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-    public String getTechnicaldata() {
-        return technicaldata;
-    }
-
-    public void setTechnicaldata(String technicaldata) {
-        this.technicaldata = technicaldata;
-    }
-
-    @XmlTransient
-    public Collection<Operation> getOperationCollection() {
-        return operationCollection;
-    }
-
-    public void setOperationCollection(Collection<Operation> operationCollection) {
-        this.operationCollection = operationCollection;
-    }
-
+    }  
     
     public ReportUser getReportUser() {
         return reportUser;
