@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
-	<title>Emasa</title>
+	<title>EMASA</title>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link rel="stylesheet" type="text/css" href="resources/css/style.css" />
@@ -17,11 +17,12 @@
 		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
 		integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
 		crossorigin="anonymous" />
+		
 	<!-- Compiled and minified Bootstrap JavaScript -->
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
 		integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
 		crossorigin="anonymous"></script>
+		
 	<script type="text/javascript">
 		var map;
 		function initMap() {
@@ -32,11 +33,11 @@
 				},
 				zoom : 1
 			});
-			var geocoder = new google.maps.Geocoder();
 			
+			var geocoder = new google.maps.Geocoder();			
 			var reports = #{reportBean.allReports};
-
             var infowindow = new google.maps.InfoWindow();
+            
             for (var i = 0; i &lt; reports.length; i++) {
                 (function(address, report) {
                     geocoder.geocode({'address': address}, function(results) {
@@ -63,8 +64,8 @@
             });
         }
 	</script>
-
 </h:head>
+
 <h:body>
 	<ui:include src="/includes/header.xhtml" />
 	<div class="container-fluid container">
@@ -76,15 +77,6 @@
 			</div>
 		</div>
 		<div>
-			<!-- TABLA CON LOS AVISOS (orden cronologico)
-					- fecha
-					- hora
-					- direccion: (las direcciones son enlaces)
-						+ calle
-						+ numero
-						+ cp			 -->
-
-
 			<h:form>
 				<h:dataTable value="#{reportBean.reports}" var="report" width="100%">
 					<h:column>
@@ -117,159 +109,9 @@
 			<center>
 				<div id="map" style="height: 500px; width: 750px; margin-top: 20px"></div>
 			</center>
-			<script
-				src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDaKC_fQZyaRvwbfuE6U6YFeuUzE1pmhq8&amp;callback=initMap"></script>
-		<div>			
-		<h:form>
-        	<h:dataTable value="#{reportBean.reports}" var="report" width="100%">
-	            <h:column>
-	                <f:facet name="header">
-	                    <center> DIRECCI&Oacute;N </center>
-	                </f:facet>
-	                <h:commandLink value="#{report.address}" action="#{reportBean.doVerAviso(report)}" />
-	            </h:column>
-	            <h:column>
-	                <f:facet name="header">
-	                    <center> CP </center>
-	                </f:facet>
-	                #{report.zip}
-	            </h:column>
-	            <h:column>
-	                <f:facet name="header">
-	                    <center> FECHA CREACIÓN </center>
-	                </f:facet>
-	                <h:outputText value="#{report.creationdate}">
-	                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
-	                </h:outputText>
-	            </h:column>
-	        </h:dataTable>
-	    </h:form>
-	    </div>
-	    <div>
-	    <h:form>
-        	<h:commandButton value="Reset DB" action="#{resetBean.doResetDB}" />
-	    </h:form>				
-		<div>			
-		<h:form>
-        	<h:dataTable value="#{reportBean.reports}" var="report" width="100%">
-	            <h:column>
-	                <f:facet name="header">
-	                    <center> DIRECCI&Oacute;N </center>
-	                </f:facet>
-	                <h:commandLink value="#{report.address}" action="#{reportBean.doVerAviso(report)}" />
-	            </h:column>
-	            <h:column>
-	                <f:facet name="header">
-	                    <center> CP </center>
-	                </f:facet>
-	                #{report.zip}
-	            </h:column>
-	            <h:column>
-	                <f:facet name="header">
-	                    <center> FECHA CREACIÓN </center>
-	                </f:facet>
-	                <h:outputText value="#{report.creationdate}">
-	                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
-	                </h:outputText>
-	            </h:column>
-	        </h:dataTable>
-	    </h:form>
-	    </div>
-	    <div>
-	    <h:form>
-        	<h:commandButton value="Reset DB" action="#{resetBean.doResetDB}" />
-	    </h:form>				
-		<div>			
-		<h:form>
-        	<h:dataTable value="#{reportBean.reports}" var="report" width="100%">
-	            <h:column>
-	                <f:facet name="header">
-	                    <center> DIRECCI&Oacute;N </center>
-	                </f:facet>
-	                <h:commandLink value="#{report.address}" action="#{reportBean.doVerAviso(report)}" />
-	            </h:column>
-	            <h:column>
-	                <f:facet name="header">
-	                    <center> CP </center>
-	                </f:facet>
-	                #{report.zip}
-	            </h:column>
-	            <h:column>
-	                <f:facet name="header">
-	                    <center> FECHA CREACIÓN </center>
-	                </f:facet>
-	                <h:outputText value="#{report.creationdate}">
-	                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
-	                </h:outputText>
-	            </h:column>
-	        </h:dataTable>
-	    </h:form>
-	    </div>
-	    <div>
-	    <h:form>
-        	<h:commandButton value="Reset DB" action="#{resetBean.doResetDB}" />
-	    </h:form>				
-		<div>			
-		<h:form>
-        	<h:dataTable value="#{reportBean.reports}" var="report" width="100%">
-	            <h:column>
-	                <f:facet name="header">
-	                    <center> DIRECCI&Oacute;N </center>
-	                </f:facet>
-	                <h:commandLink value="#{report.address}" action="#{reportBean.doVerAviso(report)}" />
-	            </h:column>
-	            <h:column>
-	                <f:facet name="header">
-	                    <center> CP </center>
-	                </f:facet>
-	                #{report.zip}
-	            </h:column>
-	            <h:column>
-	                <f:facet name="header">
-	                    <center> FECHA CREACIÓN </center>
-	                </f:facet>
-	                <h:outputText value="#{report.creationdate}">
-	                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
-	                </h:outputText>
-	            </h:column>
-	        </h:dataTable>
-	    </h:form>
-	    </div>
-	    <div>
-	    <h:form>
-        	<h:commandButton value="Reset DB" action="#{resetBean.doResetDB}" />
-	    </h:form>				
-		<div>			
-		<h:form>
-        	<h:dataTable value="#{reportBean.reports}" var="report" width="100%">
-	            <h:column>
-	                <f:facet name="header">
-	                    <center> DIRECCI&Oacute;N </center>
-	                </f:facet>
-	                <h:commandLink value="#{report.address}" action="#{reportBean.doVerAviso(report)}" />
-	            </h:column>
-	            <h:column>
-	                <f:facet name="header">
-	                    <center> CP </center>
-	                </f:facet>
-	                #{report.zip}
-	            </h:column>
-	            <h:column>
-	                <f:facet name="header">
-	                    <center> FECHA CREACIÓN </center>
-	                </f:facet>
-	                <h:outputText value="#{report.creationdate}">
-	                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
-	                </h:outputText>
-	            </h:column>
-	        </h:dataTable>
-	    </h:form>
-	    </div>
-	    <div>
-	    <h:form>
-        	<h:commandButton value="Reset DB" action="#{resetBean.doResetDB}" />
-	    </h:form>				
+			<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDaKC_fQZyaRvwbfuE6U6YFeuUzE1pmhq8&amp;callback=initMap"></script>
 		</div>
 	</div>
 </h:body>
+
 </html>
