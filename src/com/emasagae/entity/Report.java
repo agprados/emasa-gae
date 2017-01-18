@@ -28,7 +28,7 @@ public class Report implements Serializable {
 	
 	// Objectify auto-generates Long IDs just like JDO / JPA
 	@Id 
-	private Long id;
+	private Long id;	
 	private String state;
     private String type;
     private String address;
@@ -41,6 +41,7 @@ public class Report implements Serializable {
     private Date startdate;
     private Date finishdate;
     private ReportUser reportUser;
+    
 
     public Report() {
     }
