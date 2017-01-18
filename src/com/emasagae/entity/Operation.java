@@ -3,8 +3,10 @@ package com.emasagae.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Parent;
 
 /**
  * The @Entity tells Objectify about our entity.  We also register it in {@link OfyHelper}
@@ -26,11 +28,12 @@ public class Operation implements Serializable {
  // Objectify auto-generates Long IDs just like JDO / JPA
  	@Id	
  	private Long id;
+ 	@Parent
+    private Key<Report> report;
     private String type;
     private String description;
     private Date creationdate;
     private Date startdate;
-    private Report report;
     private ReportUser reportUser;
 
     public Operation() {
@@ -86,11 +89,11 @@ public class Operation implements Serializable {
         this.startdate = startdate;
     }
 
-    public Report getReport() {
+    public Key<Report> getReport() {
         return report;
     }
 
-    public void setReport(Report report) {
+    public void setReport(Key<Report> report) {
         this.report = report;
     }
 

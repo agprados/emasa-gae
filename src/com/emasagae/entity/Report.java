@@ -1,12 +1,8 @@
 package com.emasagae.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Date;
-
-import javax.xml.bind.annotation.XmlTransient;
-
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.*;
 
 /**
@@ -28,19 +24,20 @@ public class Report implements Serializable {
 	
 	// Objectify auto-generates Long IDs just like JDO / JPA
 	@Id 
-	private Long id;
+	private Long id;	
 	private String state;
     private String type;
     private String address;
     private Integer zip;
-    private BigDecimal geolat;
-    private BigDecimal geolng;
     private String description;
     private String priority;
+    @Index
     private Date creationdate;
     private Date startdate;
     private Date finishdate;
-    private ReportUser reportUser;
+    @Parent
+    private Key<ReportUser> reportUser;
+    
 
     public Report() {
     }
@@ -98,22 +95,6 @@ public class Report implements Serializable {
         this.zip = zip;
     }
 
-    public BigDecimal getGeolat() {
-        return geolat;
-    }
-
-    public void setGeolat(BigDecimal geolat) {
-        this.geolat = geolat;
-    }
-
-    public BigDecimal getGeolng() {
-        return geolng;
-    }
-
-    public void setGeolng(BigDecimal geolng) {
-        this.geolng = geolng;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -154,15 +135,13 @@ public class Report implements Serializable {
         this.finishdate = finishdate;
     }  
     
-    public ReportUser getReportUser() {
+    public Key<ReportUser> getReportUser() {
         return reportUser;
     }
 
-    public void setReportUser(ReportUser reportUser) {
+    public void setReportUser(Key<ReportUser> reportUser) {
         this.reportUser = reportUser;
     }
-
-    
     
 }
 	

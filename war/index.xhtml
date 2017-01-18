@@ -119,6 +119,156 @@
 			</center>
 			<script
 				src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDaKC_fQZyaRvwbfuE6U6YFeuUzE1pmhq8&amp;callback=initMap"></script>
+		<div>			
+		<h:form>
+        	<h:dataTable value="#{reportBean.reports}" var="report" width="100%">
+	            <h:column>
+	                <f:facet name="header">
+	                    <center> DIRECCI&Oacute;N </center>
+	                </f:facet>
+	                <h:commandLink value="#{report.address}" action="#{reportBean.doVerAviso(report)}" />
+	            </h:column>
+	            <h:column>
+	                <f:facet name="header">
+	                    <center> CP </center>
+	                </f:facet>
+	                #{report.zip}
+	            </h:column>
+	            <h:column>
+	                <f:facet name="header">
+	                    <center> FECHA CREACIÓN </center>
+	                </f:facet>
+	                <h:outputText value="#{report.creationdate}">
+	                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+	                </h:outputText>
+	            </h:column>
+	        </h:dataTable>
+	    </h:form>
+	    </div>
+	    <div>
+	    <h:form>
+        	<h:commandButton value="Reset DB" action="#{resetBean.doResetDB}" />
+	    </h:form>				
+		<div>			
+		<h:form>
+        	<h:dataTable value="#{reportBean.reports}" var="report" width="100%">
+	            <h:column>
+	                <f:facet name="header">
+	                    <center> DIRECCI&Oacute;N </center>
+	                </f:facet>
+	                <h:commandLink value="#{report.address}" action="#{reportBean.doVerAviso(report)}" />
+	            </h:column>
+	            <h:column>
+	                <f:facet name="header">
+	                    <center> CP </center>
+	                </f:facet>
+	                #{report.zip}
+	            </h:column>
+	            <h:column>
+	                <f:facet name="header">
+	                    <center> FECHA CREACIÓN </center>
+	                </f:facet>
+	                <h:outputText value="#{report.creationdate}">
+	                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+	                </h:outputText>
+	            </h:column>
+	        </h:dataTable>
+	    </h:form>
+	    </div>
+	    <div>
+	    <h:form>
+        	<h:commandButton value="Reset DB" action="#{resetBean.doResetDB}" />
+	    </h:form>				
+		<div>			
+		<h:form>
+        	<h:dataTable value="#{reportBean.reports}" var="report" width="100%">
+	            <h:column>
+	                <f:facet name="header">
+	                    <center> DIRECCI&Oacute;N </center>
+	                </f:facet>
+	                <h:commandLink value="#{report.address}" action="#{reportBean.doVerAviso(report)}" />
+	            </h:column>
+	            <h:column>
+	                <f:facet name="header">
+	                    <center> CP </center>
+	                </f:facet>
+	                #{report.zip}
+	            </h:column>
+	            <h:column>
+	                <f:facet name="header">
+	                    <center> FECHA CREACIÓN </center>
+	                </f:facet>
+	                <h:outputText value="#{report.creationdate}">
+	                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+	                </h:outputText>
+	            </h:column>
+	        </h:dataTable>
+	    </h:form>
+	    </div>
+	    <div>
+	    <h:form>
+        	<h:commandButton value="Reset DB" action="#{resetBean.doResetDB}" />
+	    </h:form>				
+		<div>			
+		<h:form>
+        	<h:dataTable value="#{reportBean.reports}" var="report" width="100%">
+	            <h:column>
+	                <f:facet name="header">
+	                    <center> DIRECCI&Oacute;N </center>
+	                </f:facet>
+	                <h:commandLink value="#{report.address}" action="#{reportBean.doVerAviso(report)}" />
+	            </h:column>
+	            <h:column>
+	                <f:facet name="header">
+	                    <center> CP </center>
+	                </f:facet>
+	                #{report.zip}
+	            </h:column>
+	            <h:column>
+	                <f:facet name="header">
+	                    <center> FECHA CREACIÓN </center>
+	                </f:facet>
+	                <h:outputText value="#{report.creationdate}">
+	                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+	                </h:outputText>
+	            </h:column>
+	        </h:dataTable>
+	    </h:form>
+	    </div>
+	    <div>
+	    <h:form>
+        	<h:commandButton value="Reset DB" action="#{resetBean.doResetDB}" />
+	    </h:form>				
+		<div>			
+		<h:form>
+        	<h:dataTable value="#{reportBean.reports}" var="report" width="100%">
+	            <h:column>
+	                <f:facet name="header">
+	                    <center> DIRECCI&Oacute;N </center>
+	                </f:facet>
+	                <h:commandLink value="#{report.address}" action="#{reportBean.doVerAviso(report)}" />
+	            </h:column>
+	            <h:column>
+	                <f:facet name="header">
+	                    <center> CP </center>
+	                </f:facet>
+	                #{report.zip}
+	            </h:column>
+	            <h:column>
+	                <f:facet name="header">
+	                    <center> FECHA CREACIÓN </center>
+	                </f:facet>
+	                <h:outputText value="#{report.creationdate}">
+	                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+	                </h:outputText>
+	            </h:column>
+	        </h:dataTable>
+	    </h:form>
+	    </div>
+	    <div>
+	    <h:form>
+        	<h:commandButton value="Reset DB" action="#{resetBean.doResetDB}" />
+	    </h:form>				
 		</div>
 	</div>
 </h:body>

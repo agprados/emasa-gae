@@ -26,7 +26,8 @@ public class ReportBean implements Serializable{
     @PostConstruct
     public void init() {
     	db = new ObjectifyReportDAO();
-    	reports = db.findAll();
+    	reports = db.findAll(); // <-- solo para ver que sale alguno, en la version final la linea de abajo, que trae ordenados
+    	//reports = db.findAllSortedByCreationDate();
     }
 
 	public List<Report> getReports() {
