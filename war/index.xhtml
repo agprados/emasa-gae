@@ -22,6 +22,48 @@
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
 		integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
 		crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		var map;
+		function initMap() {
+			map = new google.maps.Map(document.getElementById('map'), {
+				center : {
+					lat : 36.728900,
+					lng : -4.425978
+				},
+				zoom : 1
+			});
+			var geocoder = new google.maps.Geocoder();
+			
+			var reports = #{reportBean.allReports};
+
+            var infowindow = new google.maps.InfoWindow();
+            for (var i = 0; i &lt; reports.length; i++) {
+                (function(address, report) {
+                    geocoder.geocode({'address': address}, function(results) {
+                        var marker = new google.maps.Marker({
+                            map: map,
+                            position: results[0].geometry.location,
+                            title: address
+                        });
+
+                        var contentString = '<p>ID: ' + report.id + '</p>' +
+                        					'<p>Direcci&oacute;n: ' + report.address + '</p>' +
+                        					'<p>Prioridad: ' + report.priority + '</p>';     
+                        
+                        bindInfoWindow(marker, map, infowindow, contentString);
+                    });
+                })(reports[i].address, reports[i]);
+            }
+        }
+        
+        function bindInfoWindow(marker, map, infowindow, html) {
+            marker.addListener('click', function() {
+            infowindow.setContent(html);
+            infowindow.open(map, this);
+            });
+        }
+	</script>
+
 </h:head>
 <h:body>
 	<ui:include src="/includes/header.xhtml" />
@@ -29,7 +71,7 @@
 		<div class="row padd">
 			<div style="margin: auto; width: 100%; text-align: center;">
 				<div class="container-main-title">
-					<h1 class="fsize50" style="color: #00A2DB;">AVISOS</h1>					
+					<h1 class="fsize50" style="color: #00A2DB;">AVISOS</h1>
 				</div>
 			</div>
 		</div>
@@ -41,45 +83,42 @@
 						+ calle
 						+ numero
 						+ cp			 -->
-						
-						
-		<h:form>
-        	<h:dataTable value="#{reportBean.reports}" var="report" width="100%">
-	            <h:column>
-	                <f:facet name="header">
-	                    <center> DIRECCI&Oacute;N </center>
-	                </f:facet>
-	                <h:commandLink value="#{report.address}" action="#{reportBean.doVerAviso(report)}" />
-	            </h:column>
-	            <h:column>
-	                <f:facet name="header">
-	                    <center> CP </center>
-	                </f:facet>
-	                #{report.zip}
-	            </h:column>
-	            <h:column>
-	                <f:facet name="header">
-	                    <center> FECHA CREACIÓN </center>
-	                </f:facet>
-	                <h:outputText value="#{report.creationdate}">
-	                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
-	                </h:outputText>
-	            </h:column>
-	        </h:dataTable>
-	    </h:form>				
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
+
+
+			<h:form>
+				<h:dataTable value="#{reportBean.reports}" var="report" width="100%">
+					<h:column>
+						<f:facet name="header">
+							<center>DIRECCI&Oacute;N</center>
+						</f:facet>
+						<center>
+							<h:commandLink value="#{report.address}"
+								action="#{reportBean.doVerAviso(report)}" />
+						</center>
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<center>CP</center>
+						</f:facet>
+						<center>#{report.zip}</center>
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<center>FECHA CREACIÓN</center>
+						</f:facet>
+						<center>
+							<h:outputText value="#{report.creationdate}">
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+							</h:outputText>
+						</center>
+					</h:column>
+				</h:dataTable>
+			</h:form>
+			<center>
+				<div id="map" style="height: 500px; width: 750px; margin-top: 20px"></div>
+			</center>
+			<script
+				src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDaKC_fQZyaRvwbfuE6U6YFeuUzE1pmhq8&amp;callback=initMap"></script>
 		</div>
 	</div>
 </h:body>
