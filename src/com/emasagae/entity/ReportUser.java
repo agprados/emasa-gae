@@ -1,13 +1,8 @@
 package com.emasagae.entity;
 
 import java.io.Serializable;
-import java.util.Collection;
-import javax.xml.bind.annotation.XmlTransient;
-
 import com.googlecode.objectify.Key;
-import com.googlecode.objectify.annotation.Entity;
-import com.googlecode.objectify.annotation.Id;
-import com.googlecode.objectify.annotation.Parent;
+import com.googlecode.objectify.annotation.*;
 /**
  * The @Entity tells Objectify about our entity.  We also register it in {@link OfyHelper}
  * Our primary key @Id is set automatically by the Google Datastore for us.
@@ -28,8 +23,7 @@ public class ReportUser implements Serializable {
     // Objectify auto-generates Long IDs just like JDO / JPA
     @Id
     private Long id;
-    @Parent
-    private Key<Report> report;
+    @Index
     private String email;
 
     public ReportUser() {
