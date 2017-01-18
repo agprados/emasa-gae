@@ -33,16 +33,7 @@
 				</div>
 			</div>
 		</div>
-		<div>
-			<!-- TABLA CON LOS AVISOS (orden cronologico)
-					- fecha
-					- hora
-					- direccion: (las direcciones son enlaces)
-						+ calle
-						+ numero
-						+ cp			 -->
-						
-						
+		<div>			
 		<h:form>
         	<h:dataTable value="#{reportBean.reports}" var="report" width="100%">
 	            <h:column>
@@ -66,20 +57,12 @@
 	                </h:outputText>
 	            </h:column>
 	        </h:dataTable>
+	    </h:form>
+	    </div>
+	    <div>
+	    <h:form>
+        	<h:commandButton value="Reset DB" action="#{resetBean.doResetDB}" />
 	    </h:form>				
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
 		</div>
 	</div>
 </h:body>
