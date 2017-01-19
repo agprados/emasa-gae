@@ -81,6 +81,16 @@
 				<h:dataTable value="#{reportBean.reports}" var="report" width="100%">
 					<h:column>
 						<f:facet name="header">
+							<center>FECHA CREACIÓN</center>
+						</f:facet>
+						<center>
+							<h:outputText value="#{report.creationdate}">
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+							</h:outputText>
+						</center>
+					</h:column>
+					<h:column>
+						<f:facet name="header">
 							<center>DIRECCI&Oacute;N</center>
 						</f:facet>
 						<center>
@@ -93,16 +103,6 @@
 							<center>CP</center>
 						</f:facet>
 						<center>#{report.zip}</center>
-					</h:column>
-					<h:column>
-						<f:facet name="header">
-							<center>FECHA CREACIÓN</center>
-						</f:facet>
-						<center>
-							<h:outputText value="#{report.creationdate}">
-								<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
-							</h:outputText>
-						</center>
 					</h:column>
 				</h:dataTable>
 			</h:form>

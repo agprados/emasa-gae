@@ -6,15 +6,18 @@ import com.google.gson.Gson;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
 import java.io.Serializable;
 import java.util.List;
 
-@ManagedBean
+@ManagedBean (name = "reportBean")
 @RequestScoped
 public class ReportBean implements Serializable{
-	
+
+	@ManagedProperty(value="#{userBean}")
+    private UserBean user;
 	private List<Report> reports;
 
 	private static final long serialVersionUID = 1L;
@@ -31,9 +34,14 @@ public class ReportBean implements Serializable{
 	public List<Report> getReports() {
 		return reports;
 	}
-	
+
+	public void setUser(UserBean user) {
+		this.user = user;
+	}
+
 	public String doVerAviso(Report report) {
-		return "index";
+		user.setReportSelected(report);
+		return "viewReport";
 	}
 	
 	public String getAllReports() {
