@@ -16,7 +16,6 @@ import java.util.List;
 public class ReportBean implements Serializable{
 	
 	private List<Report> reports;
-	private ObjectifyReportDAO db;
 
 	private static final long serialVersionUID = 1L;
 	
@@ -25,6 +24,7 @@ public class ReportBean implements Serializable{
     
     @PostConstruct
     public void init() {
+    	ObjectifyReportDAO db = new ObjectifyReportDAO();
     	reports = db.findAllSortedByCreationDate();
     }
 

@@ -7,9 +7,7 @@ import com.emasagae.entity.Report;
 public class ObjectifyReportDAO extends ObjectifyGenericDAO<Report> implements IReportDAO {
 	
 	public List<Report> findAllSortedByCreationDate() {
-		
 		return ofy().load().type(Report.class).order("-creationdate").list();
-
 	}
 	
 }
