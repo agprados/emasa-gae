@@ -33,7 +33,7 @@ public class Report implements Serializable {
     private String priority;
     @Index
     private Date creationdate;
-    private Date startdate;
+    private Date startDate;
     private Date finishdate;
     @Parent
     private Key<ReportUser> reportUser;
@@ -120,11 +120,11 @@ public class Report implements Serializable {
     }
 
     public Date getStartdate() {
-        return startdate;
+        return startDate;
     }
 
     public void setStartdate(Date startdate) {
-        this.startdate = startdate;
+        this.startDate = startdate;
     }
 
     public Date getFinishdate() {

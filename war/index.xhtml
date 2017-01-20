@@ -4,6 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
@@ -105,8 +106,13 @@
 						<center>#{report.zip}</center>
 					</h:column>
 				</h:dataTable>
-			</h:form>
+			
+		   <center>
+	           <h:commandButton value="Crear aviso" action="crearAviso" style="margin: 8px 0 0 5px;" class="btn btn-success" a:aria-expanded="false" />
+           </center>
+           </h:form>
 			<center>
+			
 				<div id="map" style="height: 500px; width: 750px; margin-top: 20px"></div>
 			</center>
 			<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDaKC_fQZyaRvwbfuE6U6YFeuUzE1pmhq8&amp;callback=initMap"></script>
