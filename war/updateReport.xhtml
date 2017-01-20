@@ -39,15 +39,15 @@
 				<h:form>
 					<div class="form-group">
 						<label for="outputEmail" class="form-text-input">Email *</label>
-						<h:outputText id="outputEmail" maxlength="70"	value="#{userBean.email}" style="border-radius: 5px" class="form-control" a:autofocus="true" />
+						<h:inputText id="outputEmail" maxlength="70"	value="#{userBean.email}" style="border-radius: 5px" class="form-control" a:autofocus="true" />
 					</div>
 					<div class="form-group">
 						<label for="outputAddress" class="form-text-input">Direcci&oacute;n*</label>
-						<h:outputText id="outputAddress" maxlength="100" value="#{reportBean.address}" style="border-radius: 5px"	class="form-control" />
+						<h:inputText id="outputAddress" maxlength="100" value="#{reportBean.address}" style="border-radius: 5px"	class="form-control" />
 					</div>
 					<div class="form-group">
 						<label for="outputZip" class="form-text-input">C&oacute;digo	postal</label> #{reportBean.setZip(null)}
-						<h:outputText id="outputZip" maxlength="5" value="#{reportBean.zip}" style="border-radius: 5px;" class="form-control" />
+						<h:inputText id="outputZip" maxlength="5" value="#{reportBean.zip}" style="border-radius: 5px;" class="form-control" />
 					</div>
 					<div class="form-group" style="width: 300px;">
 						<label for="inputPriority" class="form-text-input">Prioridad*</label>
@@ -80,7 +80,11 @@
 					</div>
 					<div class="form-group">
 						<label for="inputType" class="form-text-input">Tipo de aver&iacute;a</label>
-						<h:outputText id="inputType" maxlength="20" value="#{reportBean.type}" style="border-radius: 5px;" class="form-control" />
+						<h:inputText id="inputType" maxlength="20" value="#{reportBean.type}" style="border-radius: 5px;" class="form-control" />
+					</div>
+					<div class="form-group">
+						<label for="inputType" class="form-text-input">Etiqueta de Flickr</label>
+						<h:inputText id="inputLabel" maxlength="20" value="#{reportBean.label}" style="border-radius: 5px;" class="form-control" />
 					</div>
 					<div class="form-group">
 						<label for="inputDescription" class="form-text-input">Descripci&oacute;n*</label>

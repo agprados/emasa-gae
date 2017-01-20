@@ -39,7 +39,6 @@
 			var geocoder = new google.maps.Geocoder();			
 			var report = #{reportBean.reportForMap};
             var infowindow = new google.maps.InfoWindow();
-            
            
             geocoder.geocode({'address': report.address}, function(results, status) {
                 if(status === google.maps.GeocoderStatus.OK) {

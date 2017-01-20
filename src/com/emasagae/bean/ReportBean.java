@@ -34,7 +34,8 @@ public class ReportBean implements Serializable{
     private Date startDate;
     private Date finishdate;
     private String email;
-    private String errorReport ;
+    private String errorReport;
+    private String label;
     
 	private static final long serialVersionUID = 1L;
 	
@@ -141,6 +142,22 @@ public class ReportBean implements Serializable{
 
 	public void setReports(List<Report> reports) {
 		this.reports = reports;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
 	}
 
 	public String getReportsForMap() {
