@@ -207,6 +207,10 @@ public class ReportBean implements Serializable{
 	}
 	
 	public String doUpdate() {
-		return "viewReport";
+		return "updateReport";
+	}
+	
+	public String doSaveUpdate() {
+		return doViewReport(user.getReportSelected());
 	}
 }
