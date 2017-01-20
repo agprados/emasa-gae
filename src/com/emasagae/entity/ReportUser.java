@@ -19,7 +19,6 @@ public class ReportUser implements Serializable {
 	 
     private static final long serialVersionUID = 1L;
     
-    // Objectify auto-generates Long IDs just like JDO / JPA
     @Id
     private Long id;
     @Index

@@ -36,62 +36,66 @@
 					<h1 class="fsize50" style="color: #00A2DB;">VER AVISO</h1>
 					<span class="fsize25">Aviso </span><span class="fsize20">#{userBean.reportSelected.id}</span>
 				</div>
-				<center>
-					<h:form>
-						<div class="form-group">
-							<label for="outputEmail" class="form-text-input">Email *</label>
-							<h:outputText id="outputEmail" maxlength="70"	value="#{userBean.email}" style="border-radius: 5px" class="form-control" a:autofocus="true" />
+				<h:form>
+					<div class="form-group">
+						<label for="outputEmail" class="form-text-input">Email *</label>
+						<h:inputText id="outputEmail" maxlength="70"	value="#{userBean.email}" style="border-radius: 5px" class="form-control" a:autofocus="true" />
+					</div>
+					<div class="form-group">
+						<label for="outputAddress" class="form-text-input">Direcci&oacute;n*</label>
+						<h:inputText id="outputAddress" maxlength="100" value="#{reportBean.address}" style="border-radius: 5px"	class="form-control" />
+					</div>
+					<div class="form-group">
+						<label for="outputZip" class="form-text-input">C&oacute;digo	postal</label> #{reportBean.setZip(null)}
+						<h:inputText id="outputZip" maxlength="5" value="#{reportBean.zip}" style="border-radius: 5px;" class="form-control" />
+					</div>
+					<div class="form-group" style="width: 300px;">
+						<label for="inputPriority" class="form-text-input">Prioridad*</label>
+						<div style="background: #efefef; padding: 10px; border: 1px solid #cccccc; border-radius: 5px;">
+							#{reportBean.setPriority("LOW")}
+							<h:selectOneRadio value="#{reportBean.priority}" layout="pageDirection">
+								<f:selectItem itemValue="LOW" itemLabel="&nbsp;Baja" />
+								<f:selectItem itemValue="MED" itemLabel="&nbsp;Media" />
+								<f:selectItem itemValue="MAX" itemLabel="&nbsp;Urgente" />
+							</h:selectOneRadio>
 						</div>
-						<div class="form-group">
-							<label for="outputAddress" class="form-text-input">Direcci&oacute;n*</label>
-							<h:outputText id="outputAddress" maxlength="100" value="#{reportBean.address}" style="border-radius: 5px"	class="form-control" />
-						</div>
-						<div class="form-group">
-							<label for="outputZip" class="form-text-input">C&oacute;digo	postal</label> #{reportBean.setZip(null)}
-							<h:outputText id="outputZip" maxlength="5" value="#{reportBean.zip}" style="border-radius: 5px;" class="form-control" />
-						</div>
-						<div class="form-group" style="width: 300px;">
-							<label for="inputPriority" class="form-text-input">Prioridad*</label>
-							<div style="background: #efefef; padding: 10px; border: 1px solid #cccccc; border-radius: 5px;">
-								#{reportBean.setPriority("LOW")}
-								<h:selectOneRadio value="#{reportBean.priority}" layout="pageDirection">
-									<f:selectItem itemValue="LOW" itemLabel="&nbsp;Baja" />
-									<f:selectItem itemValue="MED" itemLabel="&nbsp;Media" />
-									<f:selectItem itemValue="MAX" itemLabel="&nbsp;Urgente" />
-								</h:selectOneRadio>
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="inputStartDate" class="form-text-input">Fecha de inicio de la aver&iacute;a</label>
-							<p:calendar id="inputStartDate" style="display: block;"	value="#{reportBean.startdate}" pattern="dd/MM/yyyy HH:mm" showOn="both" />
-							<p:dialog modal="true" resizable="false" header="Values" widgetVar="dlg" showEffect="fold">
-								<h:outputText value="#{reportBean.startdate}">
-									<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
-								</h:outputText>
-							</p:dialog>
-						</div>
-						<div class="form-group">
-							<label for="inputFinishDate" class="form-text-input">Fecha de finalizaci&oacute;n de la aver&iacute;a</label>
-							<p:calendar id="inputFinishDate" style="display: block;"	value="#{reportBean.finishdate}" pattern="dd/MM/yyyy HH:mm" showOn="both" />
-							<p:dialog modal="true" resizable="false" header="Values" widgetVar="dlg" showEffect="fold">
-								<h:outputText value="#{reportBean.finishdate}">
-									<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
-								</h:outputText>
-							</p:dialog>
-						</div>
-						<div class="form-group">
-							<label for="inputType" class="form-text-input">Tipo de aver&iacute;a</label>
-							<h:outputText id="inputType" maxlength="20" value="#{reportBean.type}" style="border-radius: 5px;" class="form-control" />
-						</div>
-						<div class="form-group">
-							<label for="inputDescription" class="form-text-input">Descripci&oacute;n*</label>
-							<h:inputTextarea id="inputDescription" rows="4" cols="500" maxlength="500" autoResize="false" value="#{reportBean.description}" style="border-radius: 5px; resize: none;" class="form-control" />
-						</div>                                             
-		                * Campo obligatorio<br/>
-						<h:commandButton value="Guardar" action="#{reportBean.doSaveUpdate()}" style="margin: 8px 0 0 5px;" class="btn btn-success" a:aria-expanded="false" />&nbsp;
-						<h:commandButton value="Cancelar" action="#{reportBean.doViewReport(reportBean.user.reportSelected)}" style="margin: 8px 0 0 5px;" class="btn btn-success" a:aria-expanded="false" />
-					</h:form>
-				</center>
+					</div>
+					<div class="form-group">
+						<label for="inputStartDate" class="form-text-input">Fecha de inicio de la aver&iacute;a</label>
+						<p:calendar id="inputStartDate" style="display: block;"	value="#{reportBean.startdate}" pattern="dd/MM/yyyy HH:mm" showOn="both" />
+						<p:dialog modal="true" resizable="false" header="Values" widgetVar="dlg" showEffect="fold">
+							<h:outputText value="#{reportBean.startdate}">
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+							</h:outputText>
+						</p:dialog>
+					</div>
+					<div class="form-group">
+						<label for="inputFinishDate" class="form-text-input">Fecha de finalizaci&oacute;n de la aver&iacute;a</label>
+						<p:calendar id="inputFinishDate" style="display: block;"	value="#{reportBean.finishdate}" pattern="dd/MM/yyyy HH:mm" showOn="both" />
+						<p:dialog modal="true" resizable="false" header="Values" widgetVar="dlg" showEffect="fold">
+							<h:outputText value="#{reportBean.finishdate}">
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+							</h:outputText>
+						</p:dialog>
+					</div>
+					<div class="form-group">
+						<label for="inputType" class="form-text-input">Tipo de aver&iacute;a</label>
+						<h:inputText id="inputType" maxlength="20" value="#{reportBean.type}" style="border-radius: 5px;" class="form-control" />
+					</div>
+					<div class="form-group">
+						<label for="inputType" class="form-text-input">Etiqueta de Flickr</label>
+						<h:inputText id="inputLabel" maxlength="20" value="#{reportBean.label}" style="border-radius: 5px;" class="form-control" />
+					</div>
+					<div class="form-group">
+						<label for="inputDescription" class="form-text-input">Descripci&oacute;n*</label>
+						<h:inputTextarea id="inputDescription" rows="4" cols="500" maxlength="500" autoResize="false" value="#{reportBean.description}" style="border-radius: 5px; resize: none;" class="form-control" />
+					</div>                                             
+	                * Campo obligatorio<br/>
+	                <center>
+		               	<h:commandButton value="Cancelar" action="#{reportBean.doViewReport(reportBean.user.reportSelected)}" style="margin: 8px 0 0 5px;" class="btn btn-default" a:aria-expanded="false" />&nbsp;
+						<h:commandButton value="Guardar" action="#{reportBean.doSaveUpdate()}" style="margin: 8px 0 0 5px;" class="btn btn-success" a:aria-expanded="false" />
+					</center>
+				</h:form>
 			</div>
 		</div>
 	</div>

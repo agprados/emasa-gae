@@ -33,8 +33,9 @@ public class ReportBean implements Serializable{
     private Date creationdate;
     private Date startDate;
     private Date finishdate;
-    private String email;
+    private String email;   
     private String errorReport;
+    private String label;
     
 	private static final long serialVersionUID = 1L;
 	
@@ -143,10 +144,29 @@ public class ReportBean implements Serializable{
 		this.reports = reports;
 	}
 
-	public String getAllReports() {
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	public String getReportsForMap() {
         return new Gson().toJson(reports);
 	}
 	
+	public String getReportForMap() {
+		return new Gson().toJson(user.getReportSelected(), Report.class);
+	}
 		
 	public String doSaveReport(){
 		Report r = new Report();
@@ -189,10 +209,6 @@ public class ReportBean implements Serializable{
 
 	public void setErrorReport(String errorReport) {
 		this.errorReport = errorReport;
-	}
-	
-	public String doBack() {
-		return "index";
 	}
 	
 	public String doDelete() {
