@@ -143,10 +143,13 @@ public class ReportBean implements Serializable{
 		this.reports = reports;
 	}
 
-	public String getAllReports() {
+	public String getReportsForMap() {
         return new Gson().toJson(reports);
 	}
 	
+	public String getReportForMap() {
+		return new Gson().toJson(user.getReportSelected(), Report.class);
+	}
 		
 	public String doSaveReport(){
 		Report r = new Report();
@@ -189,10 +192,6 @@ public class ReportBean implements Serializable{
 
 	public void setErrorReport(String errorReport) {
 		this.errorReport = errorReport;
-	}
-	
-	public String doBack() {
-		return "index";
 	}
 	
 	public String doDelete() {

@@ -33,31 +33,29 @@
 					lat : 36.728900,
 					lng : -4.425978
 				},
-				zoom : 1
+				zoom : 2
 			});
 			
 			var geocoder = new google.maps.Geocoder();			
-			var reports = #{reportBean.allReports};
-			var report = #{userBean.reportSelected};
+			var report = #{reportBean.reportForMap};
             var infowindow = new google.maps.InfoWindow();
             
-            for (var i = 0; i &lt; reports.length; i++) {
-            	(function(address, report) {
-	                    geocoder.geocode({'address': address}, function(results) {
-	                        var marker = new google.maps.Marker({
-	                            map: map,
-	                            position: results[0].geometry.location,
-	                            title: address
-	                        });
+           
+            geocoder.geocode({'address': report.address}, function(results, status) {
+                if(status === google.maps.GeocoderStatus.OK) {
+	               	var marker = new google.maps.Marker({
+	                   	map: map,
+	                    position: results[0].geometry.location,
+	                    title: report.address
+	                });
 	
-	                        var contentString = '<p>ID: ' + report.id + '</p>' +
-	                        					'<p>Direcci&oacute;n: ' + report.address + '</p>' +
-	                        					'<p>Prioridad: ' + report.priority + '</p>';     
+	                var contentString = '<p>ID: ' + report.id + '</p>' +
+	                      				'<p>Direcci&oacute;n: ' + report.address + '</p>' +
+	                        			'<p>Prioridad: ' + report.priority + '</p>';     
 	                        
-	                        bindInfoWindow(marker, map, infowindow, contentString);
-	                    });
-	                })(reports[i].address, reports[i]);
-           		 }
+	                bindInfoWindow(marker, map, infowindow, contentString);
+                }
+            });
         }
         
         function bindInfoWindow(marker, map, infowindow, html) {
@@ -123,9 +121,9 @@
 					src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDaKC_fQZyaRvwbfuE6U6YFeuUzE1pmhq8&amp;callback=initMap"></script>
 				<center>
 					<h:form>
+						<h:button value="Volver" outcome="index?faces-redirect=true" style="margin: 8px 0 0 5px;" class="btn btn-default" a:aria-expanded="false" />&nbsp;
 						<h:commandButton value="Modificar" action="#{reportBean.doUpdate()}" style="margin: 8px 0 0 5px;" class="btn btn-success" a:aria-expanded="false" />&nbsp;
-						<h:commandButton value="Eliminar" action="#{reportBean.doDelete()}" style="margin: 8px 0 0 5px;" class="btn btn-success" a:aria-expanded="false" />&nbsp;
-						<h:commandButton value="Volver" action="#{reportBean.doBack()}" style="margin: 8px 0 0 5px;" class="btn btn-success" a:aria-expanded="false" />
+						<h:commandButton value="Eliminar" action="#{reportBean.doDelete()}" style="margin: 8px 0 0 5px;" class="btn btn-danger" a:aria-expanded="false" />
 					</h:form>
 				</center>
 			</div>

@@ -36,23 +36,25 @@
 			});
 			
 			var geocoder = new google.maps.Geocoder();			
-			var reports = #{reportBean.allReports};
+			var reports = #{reportBean.reportsForMap};
             var infowindow = new google.maps.InfoWindow();
             
             for (var i = 0; i &lt; reports.length; i++) {
                 (function(address, report) {
-                    geocoder.geocode({'address': address}, function(results) {
-                        var marker = new google.maps.Marker({
-                            map: map,
-                            position: results[0].geometry.location,
-                            title: address
-                        });
-
-                        var contentString = '<p>ID: ' + report.id + '</p>' +
-                        					'<p>Direcci&oacute;n: ' + report.address + '</p>' +
-                        					'<p>Prioridad: ' + report.priority + '</p>';     
-                        
-                        bindInfoWindow(marker, map, infowindow, contentString);
+                    geocoder.geocode({'address': address}, function(results, status) {
+                        if(status === google.maps.GeocoderStatus.OK) {
+	                    	var marker = new google.maps.Marker({
+	                            map: map,
+	                            position: results[0].geometry.location,
+	                            title: address
+	                        });
+	
+	                        var contentString = '<p>ID: ' + report.id + '</p>' +
+	                        					'<p>Direcci&oacute;n: ' + report.address + '</p>' +
+	                        					'<p>Prioridad: ' + report.priority + '</p>';     
+	                        
+	                        bindInfoWindow(marker, map, infowindow, contentString);
+                        }
                     });
                 })(reports[i].address, reports[i]);
             }
