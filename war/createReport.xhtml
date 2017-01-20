@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>EMASA</title>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" type="text/css" href="resources/css/style.css" />
+
+	<!-- Compiled and minified Bootstrap CSS -->
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+		integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+		crossorigin="anonymous" />
+
+	<!-- Compiled and minified Bootstrap JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+		integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+		crossorigin="anonymous"></script>
+
+</h:head>
+
+<h:body>
+	<f:phaseListener type="com.emasagae.config.SessionPhaseListener" />
+	<ui:include src="/includes/header.xhtml" />
+	<div class="container-fluid container">
+		<div class="row padd">
+			<div style="margin: auto; width: 100%; text-align: center;">
+				<div class="container-main-title">
+					<h1 class="fsize50" style="color: #00A2DB;">AVISOS</h1>
+				</div>
+			</div>
+		</div>
+		<div>
+			<h:form>
+				<div class="form-group">
+					<label for="inputEmail" class="form-text-input">Email *</label>
+					<h:inputText id="inputEmail" maxlength="70"	value="#{userBean.email}" style="border-radius: 5px" class="form-control" a:autofocus="true" />
+				</div>
+				<div class="form-group">
+					<label for="inputAddress" class="form-text-input">Direcci&oacute;n*</label>
+					<h:inputText id="inputAddress" maxlength="100" value="#{reportBean.address}" style="border-radius: 5px"	class="form-control" />
+				</div>
+				<div class="form-group">
+					<label for="inputZip" class="form-text-input">C&oacute;digo	postal</label> #{reportBean.setZip(null)}
+					<h:inputText id="inputZip" maxlength="5" value="#{reportBean.zip}" style="border-radius: 5px;" class="form-control" />
+				</div>
+				<div class="form-group" style="width: 300px;">
+					<label for="inputPriority" class="form-text-input">Prioridad*</label>
+					<div style="background: #efefef; padding: 10px; border: 1px solid #cccccc; border-radius: 5px;">
+						#{reportBean.setPriority("LOW")}
+						<h:selectOneRadio value="#{reportBean.priority}" layout="pageDirection">
+							<f:selectItem itemValue="LOW" itemLabel="&nbsp;Baja" />
+							<f:selectItem itemValue="MED" itemLabel="&nbsp;Media" />
+							<f:selectItem itemValue="MAX" itemLabel="&nbsp;Urgente" />
+						</h:selectOneRadio>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputStartDate" class="form-text-input">Fecha de inicio de la aver&iacute;a</label>
+					<p:calendar id="inputStartDate" style="display: block;"	value="#{reportBean.startdate}" pattern="dd/MM/yyyy HH:mm" showOn="both" />
+					<p:dialog modal="true" resizable="false" header="Values" widgetVar="dlg" showEffect="fold">
+						<h:outputText value="#{reportBean.startdate}">
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+						</h:outputText>
+					</p:dialog>
+				</div>
+				<div class="form-group">
+					<label for="inputType" class="form-text-input">Tipo de aver&iacute;a</label>
+					<h:inputText id="inputType" maxlength="20" value="#{reportBean.type}" style="border-radius: 5px;" class="form-control" />
+				</div>
+				<div class="form-group">
+					<label for="inputDescription" class="form-text-input">Descripci&oacute;n*</label>
+					<h:inputTextarea id="inputDescription" rows="4" cols="500" maxlength="500" autoResize="false" value="#{reportBean.description}" style="border-radius: 5px; resize: none;" class="form-control" />
+				</div>                                             
+                * Campo obligatorio                 
+                <center>
+					<h:button value="Cancelar" style="margin-top: 8px;" outcome="index?faces-redirect=true" class="btn btn-default" a:aria-expanded="false" />
+					<h:commandButton value="Crear aviso" action="#{reportBean.doSaveReport()}" style="margin: 8px 0 0 5px;" class="btn btn-success" a:aria-expanded="false" />
+				</center>
+			</h:form>
+		</div>
+	</div>
+</h:body>
+
+</html>

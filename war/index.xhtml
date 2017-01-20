@@ -68,6 +68,7 @@
 </h:head>
 
 <h:body>
+	<f:phaseListener type="com.emasagae.config.SessionPhaseListener"/>
 	<ui:include src="/includes/header.xhtml" />
 	<div class="container-fluid container">
 		<div class="row padd">
@@ -104,18 +105,15 @@
 							<center>CP</center>
 						</f:facet>
 						<center>#{report.zip}</center>
-					</h:column>
-					
-				</h:dataTable>
-			
-		   <center>
-	           <h:commandButton value="Crear aviso" action="crearAviso" style="margin: 8px 0 0 5px;" class="btn btn-success" a:aria-expanded="false" />
-           </center>
+					</h:column>					
+				</h:dataTable>			
+		   		<center>
+	           		<h:commandButton value="Crear aviso" action="crearAviso" style="margin: 8px 0 0 5px;" class="btn btn-success" a:aria-expanded="false" />
+           		</center>
            </h:form>
-			<center>
-			
-				<div id="map" style="height: 500px; width: 750px; margin-top: 20px"></div>
-			</center>
+		   <center>
+		   		<div id="map" style="height: 500px; width: 750px; margin-top: 20px"></div>
+		   </center>
 			<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDaKC_fQZyaRvwbfuE6U6YFeuUzE1pmhq8&amp;callback=initMap"></script>
 		</div>
 	</div>
