@@ -147,11 +147,7 @@ public class ReportBean implements Serializable{
         return new Gson().toJson(reports);
 	}
 	
-	public String doVerAviso(Report report) {
-		user.setReportSelected(report);
-		return "viewReport";
-	}
-	
+		
 	public String doSaveReport(){
 		Report r = new Report();
 		ReportUser reportuser = new ReportUser();
@@ -176,6 +172,15 @@ public class ReportBean implements Serializable{
 		dao.save(r);
 		
 		return "index";
+	}
+	public String doVerAviso(Report r){
+		ObjectifyReportUserDAO du = new ObjectifyReportUserDAO();
+		
+		ReportUser ru=du.findByKey(r.getReportUser());
+		user.setEmail(ru.getEmail());
+		user.setReportSelected(r);
+		
+		return "verAviso";
 	}
 
 	public String getErrorReport() {

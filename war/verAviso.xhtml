@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"      
+    xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>EMASA</title>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" type="text/css" href="resources/css/style.css" />
+
+	<!-- Compiled and minified Bootstrap CSS -->
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+		integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+		crossorigin="anonymous" />
+		
+	<!-- Compiled and minified Bootstrap JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+		integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+		crossorigin="anonymous"></script>
+			<script type="text/javascript">
+		var map;
+		function initMap() {
+			map = new google.maps.Map(document.getElementById('map'), {
+				center : {
+					lat : 36.728900,
+					lng : -4.425978
+				},
+				zoom : 1
+			});
+			
+			var geocoder = new google.maps.Geocoder();			
+			var reports = #{reportBean.allReports};
+			var report = #{userBean.reportSelected};
+            var infowindow = new google.maps.InfoWindow();
+            
+            for (var i = 0; i &lt; reports.length; i++) {
+            	(function(address, report) {
+	                    geocoder.geocode({'address': address}, function(results) {
+	                        var marker = new google.maps.Marker({
+	                            map: map,
+	                            position: results[0].geometry.location,
+	                            title: address
+	                        });
+	
+	                        var contentString = '<p>ID: ' + report.id + '</p>' +
+	                        					'<p>Direcci&oacute;n: ' + report.address + '</p>' +
+	                        					'<p>Prioridad: ' + report.priority + '</p>';     
+	                        
+	                        bindInfoWindow(marker, map, infowindow, contentString);
+	                    });
+	                })(reports[i].address, reports[i]);
+           		 }
+        }
+        
+        function bindInfoWindow(marker, map, infowindow, html) {
+            marker.addListener('click', function() {
+            infowindow.setContent(html);
+            infowindow.open(map, this);
+            });
+        }
+	</script>
+</h:head>
+
+<h:body>
+	<ui:include src="/includes/header.xhtml" />
+<div class="container-fluid container">
+            <div class="row padd">
+                <div style="margin: auto; width: 100%;">
+                    <div class="container-main-title">
+                        <h1 class="fsize50" style="color: #00A2DB;">VER AVISO</h1>  
+                        <span class="fsize25">Aviso </span><span class="fsize20">#{userBean.reportSelected.id}</span>
+                    </div>                    
+                    <div class="row" style="text-align: center;">
+                        <div class="col-md-3 col-sm-3 col-xs-4" style="text-align: left;">    
+                            <br/>
+                            <h:outputText value="Estado: " style="font-size: 16px" />
+                            <h:outputText value="#{userBean.reportSelected.state}" style="font-size: 14px" />
+                            <br/>
+                            <h:outputText value="Tipo: " style="font-size: 16px" />
+                            <h:outputText value="#{userBean.reportSelected.type}" style="font-size: 14px" />  
+                        </div>
+                        <div class="col-md-2 col-md-offset-2 col-sm-2 col-sm-offset-2 col-xs-2 col-xs-offset-1">    
+                            <br/>
+                            <h:outputText value="Prioridad:" style="font-size: 16px" />
+                            <h:outputText rendered="#{userBean.reportSelected.priority.equalsIgnoreCase('LOW')}" value=" Baja" style="color: limegreen; font-size: 16px" />
+                            <h:outputText rendered="#{userBean.reportSelected.priority.equalsIgnoreCase('MED')}" value=" Media" style="color: #80ccff; font-size: 16px" />
+                            <h:outputText rendered="#{userBean.reportSelected.priority.equalsIgnoreCase('MAX')}" value=" Urgente" style="color: red; font-size: 16px" />        
+                        </div>
+                        <div class="col-md-3 col-md-offset-2 col-sm-3 col-sm-offset-2 col-xs-5" style="text-align: right;">
+                            Creación:
+                            <h:outputText value="#{userBean.reportSelected.creationdate}">
+                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+                            </h:outputText>
+                            <h:outputText rendered="#{userBean.reportSelected.creationdate == null}" value="--/--/----  --:--" />
+                            <br/>
+                            
+
+                        </div>                    
+                        <br/>
+                    </div>
+                    <div style="text-align: center; padding-top: 15px;">
+                        <span style="font-size: 16px;">#{userBean.reportSelected.address}</span>                     
+                        <h:outputText style="display: block;" rendered="#{userBean.reportSelected.zip != null}" value="#{userBean.reportSelected.zip}" />&nbsp;                    
+                    </div>
+                    <h3>Descripci&oacute;n</h3>
+                    <div class="separador"></div>
+                    <p style="word-wrap:break-word; white-space: pre-wrap;">#{userBean.reportSelected.description}</p>
+                   
+                   	<center>
+			
+				<div id="map" style="height: 500px; width: 750px; margin-top: 20px"></div>
+			</center>
+			<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDaKC_fQZyaRvwbfuE6U6YFeuUzE1pmhq8&amp;callback=initMap"></script>
+			<center><h:button value="Volver" style="margin-top: 8px;" outcome="index?faces-redirect=true" class="btn btn-default" a:aria-expanded="false" />
+                </center>            
+                    
+                </div>
+            </div>
+        </div>
+    </h:body>
+</html>
+
