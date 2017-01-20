@@ -173,14 +173,14 @@ public class ReportBean implements Serializable{
 		
 		return "index";
 	}
-	public String doVerAviso(Report r){
+	public String doViewReport(Report report){
 		ObjectifyReportUserDAO du = new ObjectifyReportUserDAO();
+		ReportUser ru = du.findByKey(report.getReportUser());
 		
-		ReportUser ru=du.findByKey(r.getReportUser());
 		user.setEmail(ru.getEmail());
-		user.setReportSelected(r);
+		user.setReportSelected(report);
 		
-		return "verAviso";
+		return "viewReport";
 	}
 
 	public String getErrorReport() {
