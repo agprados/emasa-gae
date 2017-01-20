@@ -172,7 +172,7 @@ public class ReportBean implements Serializable{
 		Report r = new Report();
 		ReportUser reportuser = new ReportUser();
 		reportuser.setEmail(user.getEmail()); //cuando se implemente el API de identificación de GAE el mail se añadira automaticmente 
-		r.setStartdate(this.startDate);
+		r.setStartDate(this.startDate);
 		r.setPriority(this.priority);
 		r.setState(this.state);
 		r.setType(this.type);		
@@ -193,6 +193,7 @@ public class ReportBean implements Serializable{
 		
 		return "index";
 	}
+	
 	public String doViewReport(Report report){
 		ObjectifyReportUserDAO du = new ObjectifyReportUserDAO();
 		ReportUser ru = du.findByKey(report.getReportUser());

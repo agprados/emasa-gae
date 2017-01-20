@@ -129,13 +129,13 @@ public class Report implements Serializable {
         return startDate;
     }
 
-    public void setStartdate(Date startdate) {
-        this.startDate = startdate;
-    }
+    public Date getStartDate() {
+		return startDate;
+	}
 
-    public Date getFinishdate() {
-        return finishdate;
-    }
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
 
     public void setFinishdate(Date finishdate) {
         this.finishdate = finishdate;
@@ -157,13 +157,7 @@ public class Report implements Serializable {
 		this.emasa = emasa;
 	}
     
-    public Date getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
+    
 
 	public String getLabel() {
 		return label;
