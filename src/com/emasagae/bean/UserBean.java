@@ -17,6 +17,7 @@ public class UserBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private String email;
+	private String reportSelectedEmail;
 	private Report reportSelected;
 	
 	public UserBean() {
@@ -35,6 +36,14 @@ public class UserBean implements Serializable {
 		this.email = email;
 	}
 	
+	public String getReportSelectedEmail() {
+		return reportSelectedEmail;
+	}
+
+	public void setReportSelectedEmail(String reportSelectedEmail) {
+		this.reportSelectedEmail = reportSelectedEmail;
+	}
+
 	public Report getReportSelected() {
 		return reportSelected;
 	}

@@ -177,7 +177,7 @@ public class ReportBean implements Serializable{
 		ObjectifyReportUserDAO du = new ObjectifyReportUserDAO();
 		ReportUser ru = du.findByKey(report.getReportUser());
 		
-		user.setEmail(ru.getEmail());
+		user.setReportSelectedEmail(ru.getEmail());
 		user.setReportSelected(report);
 		
 		return "viewReport";
