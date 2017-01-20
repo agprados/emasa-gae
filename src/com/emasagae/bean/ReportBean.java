@@ -190,4 +190,23 @@ public class ReportBean implements Serializable{
 	public void setErrorReport(String errorReport) {
 		this.errorReport = errorReport;
 	}
+	
+	public String doBack() {
+		return "index";
+	}
+	
+	public String doDelete() {
+		ObjectifyReportDAO db = new ObjectifyReportDAO();
+		
+		// eliminar de la lista aqui no tiene sentido porque el bean es de request y se actualiza la lista cada vez que pasamos por index
+		// es ineficiente, deberiamos mover esa lista al session para no traerla mas veces de las necesarias
+		//reports.remove(user.getReportSelected());
+		db.delete(user.getReportSelected());
+		
+		return "index";
+	}
+	
+	public String doUpdate() {
+		return "viewReport";
+	}
 }

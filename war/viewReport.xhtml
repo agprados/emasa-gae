@@ -87,6 +87,9 @@
 						<br/>
 						<h:outputText value="Tipo: " style="font-size: 16px" />
 						<h:outputText value="#{userBean.reportSelected.type}" style="font-size: 14px" />
+						<br/>
+						<h:outputText value="Contacto: " style="font-size: 16px" />
+						<h:outputText value="#{userBean.reportSelectedEmail}" style="font-size: 14px" />
 					</div>
 					<div class="col-md-2 col-md-offset-2 col-sm-2 col-sm-offset-2 col-xs-2 col-xs-offset-1">
 						<br/>
@@ -119,7 +122,13 @@
 				<script
 					src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDaKC_fQZyaRvwbfuE6U6YFeuUzE1pmhq8&amp;callback=initMap"></script>
 				<center>
-					<h:button value="Volver" style="margin-top: 8px;" outcome="index?faces-redirect=true" class="btn btn-default" a:aria-expanded="false" />
+					<!--  Boton Volver de Juanjo, si da visto bueno se elimina para mantener los commandButton -->
+					<!-- <h:button value="Volver" style="margin-top: 8px;" outcome="index?faces-redirect=true" class="btn btn-default" a:aria-expanded="false" /> -->
+					<h:form>
+						<h:commandButton value="Modificar" action="#{reportBean.doUpdate()}" class="btn btn-default" a:aria-expanded="false" style="margin-top: 8px;" />&nbsp;
+						<h:commandButton value="Eliminar" action="#{reportBean.doDelete()}" class="btn btn-default" a:aria-expanded="false" style="margin-top: 8px;" />&nbsp;
+						<h:commandButton value="Volver" action="#{reportBean.doBack()}" class="btn btn-default" a:aria-expanded="false" style="margin-top: 8px;" />
+					</h:form>
 				</center>
 			</div>
 		</div>
