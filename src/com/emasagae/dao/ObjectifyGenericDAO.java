@@ -65,12 +65,12 @@ public class ObjectifyGenericDAO<T> implements IGenericDAO<T>{
 
 	@Override
 	public T findById(Long id) {
-		return ofy().load().type(clazz).id(id).get();
+		return ofy().load().type(clazz).id(id).now();
 	}
 
 	@Override
 	public T findByKey(Key<T> key) {
-		return ofy().load().key(key).get();
+		return ofy().load().key(key).now();
 	}
 
 	@Override
@@ -85,7 +85,7 @@ public class ObjectifyGenericDAO<T> implements IGenericDAO<T>{
 
 	@Override
 	public T findByProperty(String propName, Object propValue) {
-		T obj =  ofy().load().type(clazz).filter(propName, propValue).first().get();
+		T obj =  ofy().load().type(clazz).filter(propName, propValue).first().now();
         return obj;
 	}
 

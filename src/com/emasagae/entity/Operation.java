@@ -34,7 +34,7 @@ public class Operation implements Serializable {
     private String description;
     private Date creationdate;
     private Date startdate;
-    private ReportUser reportUser;
+    private Key<ReportUser> reportUser;
 
     public Operation() {
     }
@@ -97,11 +97,11 @@ public class Operation implements Serializable {
         this.report = report;
     }
 
-    public ReportUser getReportUser() {
+    public Key<ReportUser> getReportUser() {
         return reportUser;
     }
 
-    public void setReportUser(ReportUser reportUser) {
+    public void setReportUser(Key<ReportUser> reportUser) {
         this.reportUser = reportUser;
     }
     

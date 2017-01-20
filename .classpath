@@ -8,9 +8,10 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/jsf-api-2.1.7.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/jsf-impl-2.1.7.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/guava-18.0.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/objectify-4.0b1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/primefaces-6.0.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/gson-2.8.0.jar"/>
 	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/bootstrap-1.0.10.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/objectify-5.1.14.jar" sourcepath="war/WEB-INF/lib/objectify-5.1.14-sources.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

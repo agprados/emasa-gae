@@ -34,7 +34,7 @@ public class ReportBean implements Serializable{
     private Date startDate;
     private Date finishdate;
     private String email;
-    private String errorReport ;
+    private String errorReport;
     
 	private static final long serialVersionUID = 1L;
 	

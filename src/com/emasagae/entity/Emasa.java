@@ -2,6 +2,7 @@ package com.emasagae.entity;
 
 import java.io.Serializable;
 import com.googlecode.objectify.annotation.*;
+
 /**
  * The @Entity tells Objectify about our entity.  We also register it in {@link OfyHelper}
  * Our primary key @Id is set automatically by the Google Datastore for us.
@@ -15,42 +16,22 @@ import com.googlecode.objectify.annotation.*;
  **/
 
 @Entity
-public class ReportUser implements Serializable {
-	 
-    private static final long serialVersionUID = 1L;
-    
-    // Objectify auto-generates Long IDs just like JDO / JPA
-    @Id
-    private Long id;
-    @Index
-    private String email;
+public class Emasa implements Serializable{
 
-    public ReportUser() {
-    }
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	private String id;
+	
+	public Emasa() {
+		
+	}
 
-    public ReportUser(Long id) {
-        this.id = id;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public ReportUser(Long id, String email, Boolean operator) {
-        this.id = id;
-        this.email = email;
-    }
-    
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    
+	public void setId(String id) {
+		this.id = id;
+	}
 }

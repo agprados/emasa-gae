@@ -10,7 +10,7 @@ import com.googlecode.objectify.annotation.*;
  * Our primary key @Id is set automatically by the Google Datastore for us.
  *
  * We add a @Parent to tell the object about its ancestor. We are doing this to support many
- * guestbooks.  Objectify, unlike the AppEngine library requires that you specify the fields you
+ * guestbooks. Objectify, unlike the AppEngine library requires that you specify the fields you
  * want to index using @Index.  Only indexing the fields you need can lead to substantial gains in
  * performance -- though if not indexing your data from the start will require indexing it later.
  *
@@ -35,8 +35,9 @@ public class Report implements Serializable {
     private Date creationdate;
     private Date startDate;
     private Date finishdate;
-    @Parent
     private Key<ReportUser> reportUser;
+    @Parent
+    private Key<Emasa> emasa;
     
 
     public Report() {
@@ -142,6 +143,14 @@ public class Report implements Serializable {
     public void setReportUser(Key<ReportUser> reportUser) {
         this.reportUser = reportUser;
     }
+
+	public Key<Emasa> getEmasa() {
+		return emasa;
+	}
+
+	public void setEmasa(Key<Emasa> emasa) {
+		this.emasa = emasa;
+	}
     
 }
 	
