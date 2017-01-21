@@ -1,11 +1,6 @@
 package com.emasagae.bean;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.Serializable;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,17 +13,16 @@ import com.emasagae.dao.ObjectifyReportDAO;
 import com.emasagae.dao.ObjectifyReportUserDAO;
 import com.emasagae.entity.Report;
 import com.emasagae.entity.ReportUser;
-import com.emasagae.flickr.FlickrResponse;
-import com.emasagae.flickr.Photo;
 import com.google.gson.Gson;
 import com.googlecode.objectify.Key;
 
 @ManagedBean (name = "reportBean")
 @RequestScoped
-public class ReportBean implements Serializable{
+public class ReportBean implements Serializable {
 
 	@ManagedProperty(value="#{userBean}")
-    private UserBean user;
+    private UserBean userBean;
+	
 	private List<Report> reports;
 	
 	private String state;
@@ -43,7 +37,6 @@ public class ReportBean implements Serializable{
     private String email;   
     private String errorReport;
     private String label;
-    private List<String> imagesUrl;
     
 	private static final long serialVersionUID = 1L;
 	
@@ -140,12 +133,12 @@ public class ReportBean implements Serializable{
 		this.email = email;
 	}
 
-	public UserBean getUser() {
-		return user;
+	public UserBean getUserBean() {
+		return userBean;
 	}
 	
-	public void setUser(UserBean user) {
-		this.user = user;
+	public void setUserBean(UserBean user) {
+		this.userBean = user;
 	}
 
 	public void setReports(List<Report> reports) {
@@ -159,27 +152,19 @@ public class ReportBean implements Serializable{
 	public void setLabel(String label) {
 		this.label = label;
 	}
-
-	public List<String> getImagesUrl() {
-		return imagesUrl;
-	}
-
-	public void setImagesUrl(List<String> imagesUrl) {
-		this.imagesUrl = imagesUrl;
-	}
-
+	
 	public String getReportsForMap() {
         return new Gson().toJson(reports);
 	}
 	
 	public String getReportForMap() {
-		return new Gson().toJson(user.getReportSelected(), Report.class);
+		return new Gson().toJson(userBean.getReportSelected(), Report.class);
 	}
 		
 	public String doSaveReport(){
 		Report r = new Report();
 		ReportUser reportuser = new ReportUser();
-		reportuser.setEmail(user.getEmail()); //cuando se implemente el API de identificaci�n de GAE el mail se a�adira automaticmente 
+		reportuser.setEmail(userBean.getEmail()); //cuando se implemente el API de identificaci�n de GAE el mail se a�adira automaticmente 
 		r.setStartDate(this.startDate);
 		r.setPriority(this.priority);
 		r.setState(this.state);
@@ -205,37 +190,8 @@ public class ReportBean implements Serializable{
 		ObjectifyReportUserDAO du = new ObjectifyReportUserDAO();
 		ReportUser ru = du.findByKey(report.getReportUser());
 		
-		user.setReportSelectedEmail(ru.getEmail());
-		user.setReportSelected(report);
-		
-		if(user.getReportSelected().getLabel() != null && !user.getReportSelected().getLabel().isEmpty()) {
-			String line, reply = "";
-			try {
-				URL url = new URL("https://api.flickr.com/services/rest/?method=flickr.photos.search&format=json&api_key=48f2342467e41b00b8e55c9896d81629&tags=" + user.getReportSelected().getLabel());
-				BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-			
-				while ((line = reader.readLine()) != null) { 
-					reply += line; 
-				}
-			
-				reader.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			reply = reply.replace("jsonFlickrApi(", "");
-			reply = reply.substring(0, reply.length()-1);
-			Gson gson = new Gson();
-			FlickrResponse fr = gson.fromJson(reply, FlickrResponse.class);
-			imagesUrl = new ArrayList<String>();
-			Photo p;
-			
-			for(int i=0;i<fr.getPhotos().getPhoto().size();i++) {
-				p = fr.getPhotos().getPhoto().get(i);
-				imagesUrl.add("http://farm"+p.getFarm()+".staticflickr.com/"+p.getServer()+"/"+p.getId()+"_"+p.getSecret()+"_z.jpg");
-			}
-		}
+		userBean.setReportSelectedEmail(ru.getEmail());
+		userBean.setReportSelected(report);
 		
 		return "viewReport";
 	}
@@ -254,7 +210,7 @@ public class ReportBean implements Serializable{
 		// eliminar de la lista aqui no tiene sentido porque el bean es de request y se actualiza la lista cada vez que pasamos por index
 		// es ineficiente, deberiamos mover esa lista al session para no traerla mas veces de las necesarias
 		//reports.remove(user.getReportSelected());
-		db.delete(user.getReportSelected());
+		db.delete(userBean.getReportSelected());
 		
 		return "index";
 	}
@@ -264,6 +220,6 @@ public class ReportBean implements Serializable{
 	}
 	
 	public String doSaveUpdate() {
-		return doViewReport(user.getReportSelected());
+		return doViewReport(userBean.getReportSelected());
 	}
 }

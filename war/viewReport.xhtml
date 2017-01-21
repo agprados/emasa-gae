@@ -121,14 +121,21 @@
 				<center>
 				<h:panelGroup rendered="#{not empty userBean.reportSelected.label}">
 			    	<h3>##{userBean.reportSelected.label}</h3>
-			     	<p:galleria value="#{reportBean.imagesUrl}" var="url" panelWidth="500" panelHeight="313" showCaption="false">
-			        	<p:graphicImage url="#{url}"/>
-			     	</p:galleria>
+			    	<h:form>
+				     	<p:graphicImage id="fondo" style="border: 1px solid black; width: 350px; height: 170px" url="#{galleryBean.url}"/>
+	                    <br/>
+	                    <h:commandLink value="anterior" style="font-size: 12px; height: 30px; width: 100px" action="#{galleryBean.previous()}" class="btn btn-default" >                         
+	                    	<f:ajax execute="@this" render="fondo"/>
+	                    </h:commandLink>
+	                    <h:commandLink value="siguiente" style="font-size: 12px; height: 30px; width: 100px" action="#{galleryBean.next()}" class="btn btn-default" >                       
+	                    	<f:ajax execute="@this" render="fondo"/>
+	                    </h:commandLink>
+                	</h:form>
 			    </h:panelGroup>
 					<h:form>
-						<h:button value="Volver" outcome="index?faces-redirect=true" style="margin: 8px 0 0 5px;" class="btn btn-default" a:aria-expanded="false" />
-						<h:button value="Modificar" outcome="updateReport?faces-redirect=true" style="margin: 8px 0 0 5px;" class="btn btn-success" a:aria-expanded="false" />
-						<h:commandButton value="Eliminar" action="#{reportBean.doDelete()}" style="margin: 8px 0 0 5px;" class="btn btn-danger" a:aria-expanded="false" />
+						<h:button value="Volver" outcome="index?faces-redirect=true" style="margin: 20px 0 0 5px;" class="btn btn-default" a:aria-expanded="false" />
+						<h:button value="Modificar" outcome="updateReport?faces-redirect=true" style="margin: 20px 0 0 5px;" class="btn btn-success" a:aria-expanded="false" />
+						<h:commandButton value="Eliminar" action="#{reportBean.doDelete()}" style="margin: 20px 0 0 5px;" class="btn btn-danger" a:aria-expanded="false" />
 					</h:form>
 				</center>
 			</div>
