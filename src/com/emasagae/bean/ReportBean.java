@@ -9,7 +9,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
-import com.emasagae.dao.ObjectifyOperationDAO;
 import com.emasagae.dao.ObjectifyReportDAO;
 import com.emasagae.dao.ObjectifyReportUserDAO;
 import com.emasagae.entity.Report;

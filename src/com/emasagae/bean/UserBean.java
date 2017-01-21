@@ -24,21 +24,21 @@ import java.util.logging.Logger;
 @ManagedBean
 @SessionScoped
 public class UserBean implements Serializable {
-	 
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private ReportUser loginUser;
 	private String reportSelectedEmail;
 	private Report reportSelected;
-	
+
 	public UserBean() {
 		initEmasa();
-    }
-    
-    @PostConstruct
-    public void init() {
-    	initEmasa();
-    }
+	}
+
+	@PostConstruct
+	public void init() {
+		initEmasa();
+	}
 
 	public ReportUser getLoginUser() {
 		return loginUser;
@@ -64,47 +64,62 @@ public class UserBean implements Serializable {
 		this.reportSelected = reportSelected;
 	}
 
-	public String doLogin(){
+	public void doLogin() {
 		ExternalContext ctx = FacesContext.getCurrentInstance().getExternalContext();
-	    HttpServletRequest request = (HttpServletRequest) ctx.getRequest();
+		HttpServletRequest request = (HttpServletRequest) ctx.getRequest();
+		UserService userService = UserServiceFactory.getUserService();
+		try {
+			ctx.redirect(userService.createLoginURL(request.getRequestURI()));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void login() {
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
-		loginUser = new ReportUser();
-		if (user != null) {			
-			ObjectifyReportUserDAO d = new ObjectifyReportUserDAO();			
-			String email = user.getEmail();
-			ReportUser u = d.findByProperty("email", email);
-			if (u == null) {
-				loginUser.setEmail(email);
-				Long id = d.save(loginUser);
-				loginUser.setId(id);
-			} else {
-				loginUser = u;
-				loginUser.setEmail(email);
+		if (user != null) {
+			if (loginUser == null || loginUser.getEmail() == null) {
+				loginUser = new ReportUser();
+				ObjectifyReportUserDAO d = new ObjectifyReportUserDAO();
+				String email = user.getEmail();
+				ReportUser u = d.findByProperty("email", email);
+				if (u == null) {
+					loginUser.setEmail(email);
+					Long id = d.save(loginUser);
+					loginUser.setId(id);
+				} else {
+					loginUser = u;
+					loginUser.setEmail(email);
+				}				
 			}
 		}
-		
-		return userService.createLoginURL(request.getRequestURI());
 	}
-	
-	public String doLogout(){
-        loginUser = new ReportUser();
-        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-		UserService userService = UserServiceFactory.getUserService();		
-	    return userService.createLogoutURL("/faces/index.xhtml");
-    }
-	
+
+	public void doLogout() {
+		loginUser = new ReportUser();		
+		UserService userService = UserServiceFactory.getUserService();
+		ExternalContext ctx = FacesContext.getCurrentInstance().getExternalContext();
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		try {
+			ctx.redirect(userService.createLogoutURL("/faces/index.xhtml?faces-redirect=true"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void doCheckLogin() {
-        try {
-            if (loginUser == null || loginUser.getEmail() == null) {
-                ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-                context.redirect(context.getRequestContextPath() + "index.xhtml");
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(UserBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-	
+		try {
+			if (loginUser == null || loginUser.getEmail() == null) {
+				ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+				context.redirect(context.getRequestContextPath() + "index.xhtml");
+			}
+		} catch (IOException ex) {
+			Logger.getLogger(UserBean.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+
 	private void initEmasa() {
 		ObjectifyEmasaDAO dao = new ObjectifyEmasaDAO();
 		Emasa emasa = dao.findById("EMASA");
@@ -113,6 +128,5 @@ public class UserBean implements Serializable {
 			dao.save(emasa);
 		}
 	}
-		
-	
+
 }

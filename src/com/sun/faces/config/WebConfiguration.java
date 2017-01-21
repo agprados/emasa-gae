@@ -40,37 +40,53 @@
 
 package com.sun.faces.config;
 
+import com.sun.faces.application.ApplicationAssociate;
+import com.sun.faces.application.view.FaceletViewHandlingStrategy;
+import com.sun.faces.facelets.util.Classpath;
+import com.sun.faces.lifecycle.HttpMethodRestrictionsPhaseListener;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
-import javax.faces.FactoryFinder;
+//import javax.enterprise.inject.spi.BeanManager;
 import javax.faces.application.ResourceHandler;
-import javax.faces.application.StateManager;
 import javax.faces.application.ViewHandler;
-import javax.faces.component.UIInput;
+import javax.faces.application.StateManager;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.servlet.ServletContext;
+
+import com.sun.faces.util.FacesLogger;
+import com.sun.faces.util.Util;
+import java.io.IOException;
+import java.net.URL;
+import java.util.Collections;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import javax.faces.FactoryFinder;
+import javax.faces.application.ProjectStage;
+import javax.faces.component.UIInput;
+import javax.faces.convert.Converter;
 import javax.faces.event.PhaseListener;
+import javax.faces.lifecycle.ClientWindow;
 import javax.faces.lifecycle.Lifecycle;
 import javax.faces.lifecycle.LifecycleFactory;
 import javax.faces.validator.BeanValidator;
 import javax.faces.view.facelets.ResourceResolver;
-import javax.servlet.ServletContext;
-
-import com.sun.faces.lifecycle.HttpMethodRestrictionsPhaseListener;
-import com.sun.faces.util.FacesLogger;
-import com.sun.faces.util.Util;
+import javax.faces.webapp.FacesServlet;
 
 
 /** Class Documentation */
@@ -87,6 +103,13 @@ public class WebConfiguration {
     // Key under which we store our WebConfiguration instance.
     private static final String WEB_CONFIG_KEY =
           "com.sun.faces.config.WebConfiguration";
+
+    public static final String META_INF_CONTRACTS_DIR = "META-INF" +
+            WebContextInitParameter.WebAppContractsDirectory.getDefaultValue();
+
+    private static final int META_INF_CONTRACTS_DIR_LEN = META_INF_CONTRACTS_DIR.length();
+
+    private static final String RESOURCE_CONTRACT_SUFFIX = "/" + ResourceHandler.RESOURCE_CONTRACT_XML;
 
     // Logging level.  Defaults to FINE
     private Level loggingLevel = Level.FINE;
@@ -113,6 +136,8 @@ public class WebConfiguration {
 
     private FaceletsConfiguration faceletsConfig;
 
+    private boolean hasFlows;
+
 
     // ------------------------------------------------------------ Constructors
 
@@ -129,14 +154,15 @@ public class WebConfiguration {
         if (canProcessJndiEntries()) {
             processJndiEntries(contextName);
         }
-        
+
         // build the cache of list type params
         cachedListParams = new HashMap<WebContextInitParameter, String []>(3);
         getOptionValue(WebContextInitParameter.ResourceExcludes, " ");
         getOptionValue(WebContextInitParameter.DefaultSuffix, " ");
         getOptionValue(WebContextInitParameter.FaceletsViewMappings, ";");
-
+        getOptionValue(WebContextInitParameter.FaceletsSuffix, " ");
     }
+
 
 
     // ---------------------------------------------------------- Public Methods
@@ -194,6 +220,13 @@ public class WebConfiguration {
 
     }
 
+    public static WebConfiguration getInstanceWithoutCreating(ServletContext servletContext) {
+        WebConfiguration webConfig = (WebConfiguration)
+              servletContext.getAttribute(WEB_CONFIG_KEY);
+
+        return webConfig;
+    }
+
 
     /**
      * @return The <code>ServletContext</code> originally used to construct
@@ -205,6 +238,13 @@ public class WebConfiguration {
 
     }
 
+    public boolean isHasFlows() {
+        return hasFlows;
+    }
+
+    public void setHasFlows(boolean hasFlows) {
+        this.hasFlows = hasFlows;
+    }
 
     /**
      * Obtain the value of the specified boolean parameter
@@ -229,7 +269,7 @@ public class WebConfiguration {
      */
     public String getOptionValue(WebContextInitParameter param) {
         String result = contextParameters.get(param);
-        
+
         if (null == result) {
             WebContextInitParameter alternate = param.getAlternate();
             if (null != alternate) {
@@ -239,6 +279,14 @@ public class WebConfiguration {
 
         return result;
 
+    }
+
+    public void setOptionValue(WebContextInitParameter param, String value) {
+        contextParameters.put(param, value);
+    }
+
+    public void setOptionEnabled(BooleanWebContextInitParameter param, boolean value) {
+        booleanContextParameters.put(param, value);
     }
 
     public FaceletsConfiguration getFaceletsConfiguration() {
@@ -273,21 +321,22 @@ public class WebConfiguration {
         return getFacesConfigOptionValue(param, false);
     }
 
-    
+
     public String[] getOptionValue(WebContextInitParameter param, String sep) {
         String [] result;
-        
+
         assert(null != cachedListParams);
         if (null == (result = cachedListParams.get(param))) {
             String value = getOptionValue(param);
             if (null == value) {
                 result = new String[0];
             } else {
-                result = Util.split(value, sep);
+                Map<String, Object> appMap = FacesContext.getCurrentInstance().getExternalContext().getApplicationMap();
+                result = Util.split(appMap, value, sep);
             }
             cachedListParams.put(param, result);
         }
-        
+
         return result;
     }
 
@@ -366,19 +415,14 @@ public class WebConfiguration {
         value = value.trim();
         String oldVal = contextParameters.put(param, value);
         cachedListParams.remove(param);
-        if (oldVal != null) {
-            if (LOGGER.isLoggable(Level.FINE) && !(oldVal.equals(value))) {
-                LOGGER.log(Level.FINE,
-                           "Overriding init parameter {0}.  Changing from {1} to {2}.",
-                           new Object[]{param.getQualifiedName(),
-                                        oldVal,
-                                        value});
-            }
+        if (oldVal != null && LOGGER.isLoggable(Level.FINE) && !(oldVal.equals(value))) {
+            LOGGER.log(Level.FINE,
+                "Overriding init parameter {0}.  Changing from {1} to {2}.",
+                new Object[]{param.getQualifiedName(),
+                             oldVal,
+                             value});
         }
-
-
     }
-
 
     public void doPostBringupActions() {
 
@@ -414,7 +458,115 @@ public class WebConfiguration {
             }
         }
 
+        discoverResourceLibraryContracts();
 
+    }
+
+    private void discoverResourceLibraryContracts() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        ExternalContext extContex = context.getExternalContext();
+        Set<String> foundContracts = new HashSet<String>();
+        Set<String> candidates;
+
+        // Scan for "contractMappings" in the web app root
+        String contractsDirName = getOptionValue(WebContextInitParameter.WebAppContractsDirectory);
+        assert(null != contractsDirName);
+        candidates = extContex.getResourcePaths(contractsDirName);
+        if (null != candidates) {
+            int contractsDirNameLen = contractsDirName.length();
+            int end;
+            for (String cur : candidates) {
+                end = cur.length();
+                if (cur.endsWith("/")) {
+                    end--;
+                }
+                foundContracts.add(cur.substring(contractsDirNameLen + 1, end));
+            }
+        }
+
+        // Scan for "META-INF" contractMappings in the classpath
+        try {
+            URL[] candidateURLs = Classpath.search(Util.getCurrentLoader(this),
+                                          META_INF_CONTRACTS_DIR,
+                                          RESOURCE_CONTRACT_SUFFIX,
+                    Classpath.SearchAdvice.AllMatches);
+            for (URL curURL : candidateURLs) {
+                String cur = curURL.toExternalForm();
+
+                int i = cur.indexOf(META_INF_CONTRACTS_DIR) + META_INF_CONTRACTS_DIR_LEN + 1;
+                int j = cur.indexOf(RESOURCE_CONTRACT_SUFFIX);
+                if (i < j) {
+                    foundContracts.add(cur.substring(i,j));
+                }
+
+            }
+        } catch (IOException ioe) {
+            if (LOGGER.isLoggable(Level.FINEST)) {
+                LOGGER.log(Level.FINEST, "Unable to scan " + META_INF_CONTRACTS_DIR, ioe);
+            }
+        }
+
+
+        if (foundContracts.isEmpty()) {
+            return;
+        }
+
+        Map<String, List<String>> contractMappings = new HashMap<String, List<String>>();
+
+        ApplicationAssociate associate = ApplicationAssociate.getCurrentInstance();
+        Map<String, List<String>> contractsFromConfig = associate.getResourceLibraryContracts();
+        List<String> contractsToExpose;
+
+        if (null != contractsFromConfig && !contractsFromConfig.isEmpty()) {
+            List<String> contractsFromMapping;
+            for (Map.Entry<String, List<String>> cur : contractsFromConfig.entrySet()) {
+                // Verify that the contractsToExpose in this mapping actually exist
+                // in the application.  If not, log a message.
+                contractsFromMapping = cur.getValue();
+                if (null == contractsFromMapping || contractsFromMapping.isEmpty()) {
+                    if (LOGGER.isLoggable(Level.CONFIG)) {
+                        LOGGER.log(Level.CONFIG, "resource library contract mapping for pattern {0} has no contracts.", cur.getKey());
+                    }
+                } else {
+                    contractsToExpose = new ArrayList<String>();
+                    for (String curContractFromMapping : contractsFromMapping) {
+                        if (foundContracts.contains(curContractFromMapping)) {
+                            contractsToExpose.add(curContractFromMapping);
+                        } else {
+                            if (LOGGER.isLoggable(Level.CONFIG)) {
+                                LOGGER.log(Level.CONFIG, "resource library contract mapping for pattern {0} exposes contract {1}, but that contract is not available to the application.",
+                                        new String [] { cur.getKey(), curContractFromMapping });
+                            }
+                        }
+                    }
+                    if (!contractsToExpose.isEmpty()) {
+                        contractMappings.put(cur.getKey(), contractsToExpose);
+                    }
+                }
+            }
+        } else {
+            contractsToExpose = new ArrayList<String>();
+            contractsToExpose.addAll(foundContracts);
+            contractMappings.put("*", contractsToExpose);
+        }
+        extContex.getApplicationMap().put(FaceletViewHandlingStrategy.RESOURCE_LIBRARY_CONTRACT_DATA_STRUCTURE_KEY,
+                contractMappings);
+
+    }
+
+    /**
+     * To inlcude the facelets suffix into the supported suffixes.
+     *
+     * @return merged suffixes including both default suffixes and the facelet suffixes.
+     */
+    public String[] getConfiguredExtensions() {
+        String[] defaultSuffix  = getOptionValue(WebContextInitParameter.DefaultSuffix, " ");
+        String[] faceletsSuffix = getOptionValue(WebContextInitParameter.FaceletsSuffix, " ");
+
+        List<String> mergedList = new ArrayList<String>(Arrays.asList(defaultSuffix));
+        mergedList.addAll(Arrays.asList(faceletsSuffix));
+
+        return mergedList.toArray(new String[0]);
     }
 
 
@@ -450,7 +602,7 @@ public class WebConfiguration {
                                  param.getQualifiedName(),
                                  "true|false",
                                  "true|false",
-                                 new Boolean(param.getDefaultValue()).toString()
+                                 param.getDefaultValue()
                            });
             }
             return false;
@@ -678,11 +830,16 @@ public class WebConfiguration {
      */
     private void processJndiEntries(String contextName) {
 
- /* incompatible with Google App Engine
-  *   
-  *     Context initialContext = null;
+        /* Incompatibility with GAE
+
+        Context initialContext = null;
         try {
             initialContext = new InitialContext();
+        } catch (NoClassDefFoundError nde) {
+          // on google app engine InitialContext is forbidden to use and GAE throws NoClassDefFoundError
+          if (LOGGER.isLoggable(Level.FINE)) {
+            LOGGER.log(Level.FINE, nde.toString(), nde);
+          }
         } catch (NamingException ne) {
             if (LOGGER.isLoggable(Level.WARNING)) {
                 LOGGER.log(Level.WARNING, ne.toString(), ne);
@@ -705,38 +862,32 @@ public class WebConfiguration {
 
                 if (value != null) {
                     if (LOGGER.isLoggable(Level.INFO)) {
-                        // special logic for ClientStateSavingPassword
-                        if (!entry
-                              .equals(WebEnvironmentEntry.ClientStateSavingPassword)) {
-                            if (LOGGER
-                                  .isLoggable(loggingLevel)) {
-                                LOGGER.log(loggingLevel,
-                                           "jsf.config.webconfig.enventryinfo",
-                                           new Object[]{contextName,
-                                                        entryName,
-                                                        value});
-                            }
-                        } else {
-                            if (LOGGER
-                                  .isLoggable(loggingLevel)) {
-                                LOGGER.log(loggingLevel,
-                                           "jsf.config.webconfig.enventry.clientencrypt",
-                                           contextName);
-                            }
+                        if (LOGGER
+                                .isLoggable(loggingLevel)) {
+                            LOGGER.log(loggingLevel,
+                                    "jsf.config.webconfig.enventryinfo",
+                                    new Object[]{contextName,
+                                        entryName,
+                                        value});
                         }
                     }
                     envEntries.put(entry, value);
                 }
             }
-        }
-*/
+            BeanManager beanManager = Util.getCdiBeanManager(FacesContext.getCurrentInstance());
+            if (null != beanManager) {
+                Util.setCDIAvailable(servletContext, beanManager);
+            }
+        }*/
+
     }
 
 
-    private boolean canProcessJndiEntries() {
+    public boolean canProcessJndiEntries() {
 
-        /* incompatible with Google App Engine
-         * try {
+        /* Incompatibility with GAE
+
+        try {
             Util.getCurrentLoader(this).loadClass("javax.naming.InitialContext");
         } catch (Exception e) {
             if (LOGGER.isLoggable(Level.FINE)) {
@@ -747,12 +898,12 @@ public class WebConfiguration {
         }
         return true;*/
 
-    	if (LOGGER.isLoggable(Level.FINE)) {
+        if (LOGGER.isLoggable(Level.FINE)) {
             LOGGER.fine(
                   "javax.naming is unavailable.  JNDI entries related to Mojarra configuration will not be processed.");
         }
         return false;
-        
+
     }
 
 
@@ -787,7 +938,7 @@ public class WebConfiguration {
               ""
         ),
         StateSavingMethod(
-              "javax.faces.STATE_SAVING_METHOD",
+              StateManager.STATE_SAVING_METHOD_PARAM_NAME,
               "server"
         ),
         FaceletsSuffix(
@@ -799,15 +950,15 @@ public class WebConfiguration {
               ViewHandler.DEFAULT_SUFFIX
         ),
         JavaxFacesConfigFiles(
-              "javax.faces.CONFIG_FILES",
+              FacesServlet.CONFIG_FILES_ATTR,
               ""
         ),
         JavaxFacesProjectStage(
-              "javax.faces.PROJECT_STAGE",
+              ProjectStage.PROJECT_STAGE_PARAM_NAME,
               "Production"
         ),
         AlternateLifecycleId(
-              "javax.faces.LIFECYCLE_ID",
+              FacesServlet.LIFECYCLE_ID_ATTR,
               ""
         ),
         ResourceExcludes(
@@ -855,7 +1006,7 @@ public class WebConfiguration {
               "1024"
         ),
         FaceletsBufferSize(
-              "javax.faces.FACELETS_BUFFER_SIZE",
+              ViewHandler.FACELETS_BUFFER_SIZE_PARAM_NAME,
               "1024"
         ),
         FaceletsBufferSizeDeprecated(
@@ -898,7 +1049,7 @@ public class WebConfiguration {
             "auto"
         ),
         FaceletsDefaultRefreshPeriod(
-              "javax.faces.FACELETS_REFRESH_PERIOD",
+              ViewHandler.FACELETS_REFRESH_PERIOD_PARAM_NAME,
               "2"
         ),
         FaceletsDefaultRefreshPeriodDeprecated(
@@ -931,7 +1082,7 @@ public class WebConfiguration {
               new FaceletsConfigParamLoggingStrategy()
         ),
         FaceletsLibraries(
-              "javax.faces.FACELETS_LIBRARIES",
+              ViewHandler.FACELETS_LIBRARIES_PARAM_NAME,
               ""
         ),
         FaceletsLibrariesDeprecated(
@@ -942,7 +1093,7 @@ public class WebConfiguration {
               new FaceletsConfigParamLoggingStrategy()
         ),
         FaceletsDecorators(
-              "javax.faces.FACELETS_DECORATORS",
+              ViewHandler.FACELETS_DECORATORS_PARAM_NAME,
               ""
         ),
         FaceletsDecoratorsDeprecated(
@@ -968,10 +1119,6 @@ public class WebConfiguration {
               "com.sun.faces.annotationScanPackages",
               ""
         ),
-        FaceletFactory(
-              "com.sun.faces.faceletFactory",
-              ""
-        ),
         FaceletCache(
             "com.sun.faces.faceletCache",
             ""
@@ -979,6 +1126,18 @@ public class WebConfiguration {
         FaceletsProcessingFileExtensionProcessAs(
                 "",
                 ""
+        ),
+        ClientWindowMode(
+              ClientWindow.CLIENT_WINDOW_MODE_PARAM_NAME,
+              "none"
+        ),
+        WebAppResourcesDirectory(
+              ResourceHandler.WEBAPP_RESOURCES_DIRECTORY_PARAM_NAME,
+              "/resources"
+        ),
+        WebAppContractsDirectory(
+              ResourceHandler.WEBAPP_CONTRACTS_DIRECTORY_PARAM_NAME,
+              "/contracts"
         );
 
 
@@ -1013,7 +1172,7 @@ public class WebConfiguration {
 
         }
 
-        
+
     // ------------------------------------------------- Package Private Methods
 
 
@@ -1103,6 +1262,14 @@ public class WebConfiguration {
               true,
               null
         ),
+        DisableClientStateEncryption(
+              "com.sun.faces.disableClientStateEncryption",
+              false
+        ),
+        EnableClientStateDebugging(
+              "com.sun.faces.enableClientStateDebugging",
+              false
+        ),
         EnableHtmlTagLibraryValidator(
               "com.sun.faces.enableHtmlTagLibValidator",
               false
@@ -1143,7 +1310,7 @@ public class WebConfiguration {
         ),
         SendPoweredByHeader(
               "com.sun.faces.sendPoweredByHeader",
-              true
+              false
         ),
         EnableJSStyleHiding(
             "com.sun.faces.enableJSStyleHiding",
@@ -1170,8 +1337,14 @@ public class WebConfiguration {
               false
         ),
         SerializeServerState(
-              "com.sun.faces.serializeServerState",
+              StateManager.SERIALIZE_SERVER_STATE_PARAM_NAME,
               false
+        ),
+        SerializeServerStateDeprecated(
+              "com.sun.faces.serializeServerState",
+              false,
+               true,
+                SerializeServerState
         ),
         EnableViewStateIdRendering(
             "com.sun.faces.enableViewStateIdRendering",
@@ -1186,14 +1359,14 @@ public class WebConfiguration {
             false
         ),
         DisableFaceletJSFViewHandler(
-              "javax.faces.DISABLE_FACELET_JSF_VIEWHANDLER",
+              ViewHandler.DISABLE_FACELET_JSF_VIEWHANDLER_PARAM_NAME,
               false
         ),
         DisableDefaultBeanValidator(
                 BeanValidator.DISABLE_DEFAULT_BEAN_VALIDATOR_PARAM_NAME,
                 false),
         DateTimeConverterUsesSystemTimezone(
-              "javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE",
+              Converter.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE_PARAM_NAME,
               false
         ),
         EnableHttpMethodRestrictionPhaseListener(
@@ -1201,13 +1374,13 @@ public class WebConfiguration {
               false
         ),
         FaceletsSkipComments(
-              "javax.faces.FACELETS_SKIP_COMMENTS",
+              ViewHandler.FACELETS_SKIP_COMMENTS_PARAM_NAME,
               false
         ),
         FaceletsSkipCommentsDeprecated(
               "facelets.SKIP_COMMENTS",
               false,
-              true, 
+              true,
               FaceletsSkipComments,
               new FaceletsConfigParamLoggingStrategy()
         ),
@@ -1239,10 +1412,30 @@ public class WebConfiguration {
               "com.sun.faces.enableAgressiveSessionDirtying",
               false
         ),
+        EnableDistributable(
+              "com.sun.faces.enableDistributable",
+              false
+        ),
+        EnableFaceletsResourceResolverResolveCompositeComponents(
+              "com.sun.faces.enableFaceletsResourceResolverCompositeComponents",
+              false
+        ),
         EnableMissingResourceLibraryDetection(
               "com.sun.faces.enableMissingResourceLibraryDetection",
               false
-        );
+        ),
+        DisableIdUniquenessCheck(
+            "com.sun.faces.disableIdUniquenessCheck",
+            false),
+        EnableTransitionTimeNoOpFlash(
+                "com.sun.faces.enableTransitionTimeNoOpFlash",
+                false),
+        NamespaceParameters(
+            "com.sun.faces.namespaceParameters",
+            false),
+        ForceAlwaysWriteFlashCookie(
+            "com.sun.faces.forceAlwaysWriteFlashCookie",
+            false);
 
         private BooleanWebContextInitParameter alternate;
 
@@ -1337,7 +1530,6 @@ public class WebConfiguration {
     public enum WebEnvironmentEntry {
 
 
-        ClientStateSavingPassword("ClientStateSavingPassword"),
         ProjectStage(javax.faces.application.ProjectStage.PROJECT_STAGE_JNDI_NAME);
 
         private static final String JNDI_PREFIX = "java:comp/env/";
@@ -1488,4 +1680,3 @@ public class WebConfiguration {
     } // END DeferredBooleanParameterLoggingAction
 
 } // END WebConfiguration
-

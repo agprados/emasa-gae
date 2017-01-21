@@ -8,6 +8,9 @@
 	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 
 <h:body>
+<f:metadata>
+ <f:event type="preRenderView" listener="#{userBean.login}" />
+</f:metadata>
 	<h:panelGroup layout="block" class="container-header">
 		<nav class="navbar navbar-default padd" style="width: 100%;">
 		<div class="container-fluid">

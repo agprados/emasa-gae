@@ -4,8 +4,6 @@ import com.emasagae.entity.Emasa;
 import com.emasagae.entity.Operation;
 import com.emasagae.entity.Report;
 import com.emasagae.entity.ReportUser;
-import com.googlecode.objectify.Objectify;
-import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.ObjectifyService;
 
 import javax.servlet.ServletContextListener;
