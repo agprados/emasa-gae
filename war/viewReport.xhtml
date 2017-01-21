@@ -5,7 +5,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:a="http://java.sun.com/jsf/passthrough"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
@@ -100,7 +100,7 @@
 						<h:outputText value="#{userBean.reportSelected.creationDate}">
 							<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
 						</h:outputText>
-						<h:outputText rendered="#{userBean.reportSelected.creationdate == null}" value="--/--/----  --:--" />
+						<h:outputText rendered="#{userBean.reportSelected.creationDate == null}" value="--/--/----  --:--" />
 						<br/>
 					</div>
 					<br/>

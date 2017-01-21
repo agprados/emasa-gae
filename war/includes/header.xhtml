@@ -1,17 +1,19 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml" 
-	  xmlns:h="http://xmlns.jcp.org/jsf/html"
-	  xmlns:p="http://primefaces.org/ui">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 	  
 <h:body>
 	<h:panelGroup layout="block" class="container-header">
 		<nav class="navbar navbar-default padd" style="width: 100%;">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<h:link class="navbar-brand" style="padding: 3px 0 0;" outcome="index" >
-					<img style="height: 70px;" src="images/emasaoperator.png" class="img-responsive" alt="logo" />
+				<h:link style="padding: 3px 0 0;" outcome="/index.xhtml" >
+					<h:graphicImage style="height: 70px;" value="images/emasaoperator.png" class="img-responsive" alt="logo" />
 				</h:link>
 			</div>
 			<div style="float: right; margin-top: 28px;" class="dropdown">
