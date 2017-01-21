@@ -5,7 +5,8 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:a="http://java.sun.com/jsf/passthrough"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
 	<title>EMASA</title>
@@ -86,42 +87,29 @@
 				class="alert alert-info info" a:role="alert">                        
                         Sin avisos en el sistema.                  
                     </h:panelGroup>
-			<h:panelGroup rendered="#{not empty reportBean.reports}">
-				<h:form>
-					<h:dataTable value="#{reportBean.reports}" var="report"
-						width="100%">
-						<h:column>
-							<f:facet name="header">
-								<center>FECHA CREACIÓN</center>
-							</f:facet>
-							<center>
+			<h:panelGroup rendered="#{not empty reportBean.reports}" layout="block">
+			<f:view>
+				<h:form>				
+					<p:dataTable value="#{reportBean.reports}" var="report"
+						style="text-align: center; width:75%; margin: 15px auto;">
+						<p:column headerText="FECHA CREACIÓN" sortBy="#{report.creationDate}" style="width:20%;">	
 								<h:outputText value="#{report.creationDate}">
 									<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
 								</h:outputText>
-							</center>
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<center>DIRECCI&Oacute;N</center>
-							</f:facet>
-							<center>
+						</p:column>
+						<p:column headerText="DIRECCIÓN" sortBy="#{report.address}">
 								<h:commandLink value="#{report.address}"
 									action="#{reportBean.doViewReport(report)}" />
-							</center>
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<center>CP</center>
-							</f:facet>
-							<center>#{report.zip}</center>
-						</h:column>
-					</h:dataTable>
+						</p:column>
+						<p:column headerText="CÓDIGO POSTAL" sortBy="#{report.zip}" style="width:15%;">
+							<h:outputText value="#{report.zip}"/>
+						</p:column>
+					</p:dataTable>
 					
 				</h:form>
+				</f:view>
 			</h:panelGroup>
-			<h:button value="Crear aviso" outcome="createReport"
-							style="margin: 8px 0 0 5px;" class="btn btn-success"
-							a:aria-expanded="false" />
+			
 			<center>
 				<div id="map" style="height: 500px; width: 750px; margin-top: 20px"></div>
 			</center>

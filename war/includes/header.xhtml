@@ -16,7 +16,11 @@
 					<h:graphicImage style="height: 70px;" value="images/emasaoperator.png" class="img-responsive" alt="logo" />
 				</h:link>
 			</div>
-			<div style="float: right; margin-top: 28px;" class="dropdown">
+			<div style="float: right; margin-top: 23px;">
+			<h:button value="Crear aviso" outcome="createReport"
+							style="margin: 0 5px; " class="btn btn-success"
+							a:aria-expanded="false" />			
+			<div style="display: inline;" class="dropdown">
 				<h:panelGroup rendered="#{not empty userBean.email}">
 					<button style="border: 1px solid #000;" class="btn btn-default dropdown-toggle" type="button" id="dropdownUser" data-toggle="dropdown" aria-haspopup="true"	aria-expanded="true">
 						<span style="font-weight: 500;">Usuario: </span>#{userBean.email}
@@ -29,6 +33,7 @@
 						</h:form>
 					</li>
 				</ul>
+			</div>
 			</div>
 		</div>
 		</nav>

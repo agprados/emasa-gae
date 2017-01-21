@@ -159,3 +159,58 @@ html body {
 .fsize20 {
 	font-size: 20px;
 }
+
+.ui-datatable table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: auto;
+}
+
+.ui-datatable th.ui-state-default {
+    background: #ebedf0;
+    border-color: #d9d9d9;
+}
+.ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td, .ui-datatable tfoot th {
+    padding: 2px 5px;
+    overflow: hidden;
+    border-width: 1px;
+    border-style: solid;
+    font-size: 14px;
+}
+.ui-datatable thead th, .ui-datatable tfoot td {
+    text-align: center;
+}
+.ui-datatable th {
+    font-weight: bold;
+}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    border: 1px solid #d6d6d6;
+    background: #fff;
+    font-weight: normal;
+    color: #555;
+}
+
+.ui-widget-content a {
+    color: #337ab7;
+}
+
+.ui-widget {
+    font-size: 14px;
+    font-family: Avenir, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+.ui-datepicker-current-day a {
+    background: #5bc0de!important;
+    filter: none!important;
+    color: #fff!important;
+}
+
+.ui-datepicker-today a.ui-state-highlight {
+    text-shadow: 1px 1px 1px #156090;
+}
+
+.ui-button, button.ui-button.ui-state-default, .ui-button.ui-state-default {
+    border: 1px solid #46b8da;
+    color: #fff;
+    background-color: #5bc0de;
+}
