@@ -73,9 +73,6 @@ public class UserBean implements Serializable {
 		if (user != null) {			
 			ObjectifyReportUserDAO d = new ObjectifyReportUserDAO();			
 			String email = user.getEmail();
-			if(user.getEmail().isEmpty()) {
-				email = user.getNickname();
-			}
 			ReportUser u = d.findByProperty("email", email);
 			if (u == null) {
 				loginUser.setEmail(email);

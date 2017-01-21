@@ -7,7 +7,7 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Parent;
-
+import com.googlecode.objectify.annotation.Index;
 
 @Entity
 public class Operation implements Serializable {	
@@ -20,6 +20,7 @@ public class Operation implements Serializable {
  	private Key<Report> report;
     private String type;
     private String description;
+    @Index
     private Date creationDate;
     private Date startDate;
     private Key<ReportUser> reportUser;
