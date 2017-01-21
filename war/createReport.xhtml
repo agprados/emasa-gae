@@ -37,6 +37,7 @@
 
 <h:body>
 	<f:phaseListener type="com.emasagae.config.SessionPhaseListener" />
+	#{userBean.doCheckLogin()}
 	<ui:include src="/includes/header.xhtml" />
 	<div class="container-fluid container">
 		<div class="row padd">
@@ -44,17 +45,13 @@
 				<div class="container-main-title">
 					<h1 class="fsize50" style="color: #00A2DB;">CREAR AVISO</h1>
 				</div>
-				<h:form>
-					<div class="form-group">
-						<label for="inputEmail" class="form-text-input">Email *</label>
-						<h:inputText id="inputEmail" maxlength="70"	value="#{reportBean.email}" style="border-radius: 5px" class="form-control" a:autofocus="true" />
-					</div>
+				<h:form style="text-align: left; padding: 20px 70px 0;">
 					<div class="form-group">
 						<label for="inputAddress" class="form-text-input">Dirección*</label>
 						<h:inputText id="inputAddress" maxlength="100" value="#{reportBean.address}" style="border-radius: 5px"	class="form-control" />
 					</div>
 					<div class="form-group">
-						<label for="inputZip" class="form-text-input">Código	postal</label> #{reportBean.setZip(null)}
+						<label for="inputZip" class="form-text-input">Código postal</label> #{reportBean.setZip(null)}
 						<h:inputText id="inputZip" maxlength="5" value="#{reportBean.zip}" style="border-radius: 5px;" class="form-control" />
 					</div>
 					<div class="form-group" style="width: 300px;">

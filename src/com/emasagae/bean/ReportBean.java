@@ -143,8 +143,6 @@ public class ReportBean implements Serializable {
 		
 	public String doCreateReport(){
 		Report r = new Report();
-		ReportUser reportuser = new ReportUser();
-		reportuser.setEmail(email);  
 		r.setStartDate(startDate);
 		r.setPriority(priority);
 		r.setState("NUEVO");
@@ -156,8 +154,7 @@ public class ReportBean implements Serializable {
 		r.setLabel(label);
 		
 		ObjectifyReportUserDAO du = new ObjectifyReportUserDAO();
-		Key<ReportUser> keyReportUser = du.save(reportuser);
-		
+		Key<ReportUser> keyReportUser = du.getKey(userBean.getLoginUser().getId());		
 		r.setReportUser(keyReportUser);
 		
 		ObjectifyReportDAO dao = new ObjectifyReportDAO();

@@ -16,7 +16,10 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @ManagedBean (name = "userBean")
 @SessionScoped
@@ -90,6 +93,17 @@ public class UserBean implements Serializable {
 		UserService userService = UserServiceFactory.getUserService();
 		loginUser = new ReportUser();
 	    return userService.createLogoutURL("/");
+    }
+	
+	public void doCheckLogin() {
+        try {
+            if (loginUser == null || loginUser.getEmail() == null) {
+                ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+                context.redirect(context.getRequestContextPath() + "/faces/index.xhtml");
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(UserBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 	
 	private void initEmasa() {

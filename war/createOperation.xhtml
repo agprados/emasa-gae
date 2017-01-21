@@ -38,6 +38,7 @@
 
 <h:body>
 	<f:phaseListener type="com.emasagae.config.SessionPhaseListener" />
+	#{userBean.doCheckLogin()}
 	<ui:include src="/includes/header.xhtml" />
 	<div class="container-fluid container">
             <div class="row padd">
@@ -46,7 +47,7 @@
                         <h1 class="fsize50" style="color: #00A2DB;">CREAR OPERACIÓN</h1>
                         <span class="fsize25">Aviso </span><span class="fsize20">#{userBean.reportSelected.id}</span>
                     </div>
-                    <h:form style="text-align: left; padding: 25px 50px 0;">
+                    <h:form style="text-align: left; padding: 20px 70px 0;">
                         <h:panelGroup rendered="#{operationBean.errorOperation.length() != 0}" layout="block" class="alert alert-danger" a:role="alert" style="text-align: center; margin: 30px 30px 25px;">
                             #{operationBean.errorOperation} 
                         </h:panelGroup> 
