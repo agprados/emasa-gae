@@ -13,13 +13,13 @@
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<h:link style="padding: 3px 0 0;" outcome="/index.xhtml" >
-					<h:graphicImage style="height: 70px;" value="images/emasaoperator.png" class="img-responsive" alt="logo" />
+					<h:graphicImage style="height: 70px;" value="/images/emasaoperator.png" class="img-responsive" alt="logo" />
 				</h:link>
 			</div>
 			<div style="float: right; margin-top: 23px;">
-			<h:button value="Crear aviso" outcome="createReport"
+			<h:link outcome="createReport"
 							style="margin: 0 5px; " class="btn btn-success"
-							a:aria-expanded="false" />			
+							a:aria-expanded="false"><span class="glyphicon glyphicon-plus"></span> Crear aviso</h:link>			
 			<div style="display: inline;" class="dropdown">
 				<h:panelGroup rendered="#{not empty userBean.email}">
 					<button style="border: 1px solid #000;" class="btn btn-default dropdown-toggle" type="button" id="dropdownUser" data-toggle="dropdown" aria-haspopup="true"	aria-expanded="true">
