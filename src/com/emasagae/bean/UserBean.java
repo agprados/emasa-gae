@@ -101,7 +101,7 @@ public class UserBean implements Serializable {
         try {
             if (loginUser == null || loginUser.getEmail() == null) {
                 ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-                context.redirect(context.getRequestContextPath() + "/faces/index.xhtml");
+                context.redirect(context.getRequestContextPath() + "index.xhtml");
             }
         } catch (IOException ex) {
             Logger.getLogger(UserBean.class.getName()).log(Level.SEVERE, null, ex);

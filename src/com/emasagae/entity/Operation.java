@@ -20,8 +20,8 @@ public class Operation implements Serializable {
  	private Key<Report> report;
     private String type;
     private String description;
-    private Date creationdate;
-    private Date startdate;
+    private Date creationDate;
+    private Date startDate;
     private Key<ReportUser> reportUser;
     
     public Operation() {
@@ -31,10 +31,10 @@ public class Operation implements Serializable {
         this.id = id;
     }
 
-    public Operation(Long id, String type, Date creationdate) {
+    public Operation(Long id, String type, Date creationDate) {
         this.id = id;
         this.type = type;
-        this.creationdate = creationdate;
+        this.creationDate = creationDate;
     }
 
     public Long getId() {
@@ -61,23 +61,23 @@ public class Operation implements Serializable {
         this.description = description;
     }
 
-    public Date getCreationdate() {
-        return creationdate;
-    }
+    public Date getCreationDate() {
+		return creationDate;
+	}
 
-    public void setCreationdate(Date creationdate) {
-        this.creationdate = creationdate;
-    }
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
 
-    public Date getStartdate() {
-        return startdate;
-    }
+	public Date getStartDate() {
+		return startDate;
+	}
 
-    public void setStartdate(Date startdate) {
-        this.startdate = startdate;
-    }
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
 
-    public Key<Report> getReport() {
+	public Key<Report> getReport() {
         return report;
     }
 

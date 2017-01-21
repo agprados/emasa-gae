@@ -156,13 +156,13 @@
 						<h:form>
 							<p:dataTable value="#{operationBean.operations}" var="operation"
 								style="margin-top: 20px; text-align: center;">
-								<p:column headerText="FECHA CREACIÓN" sortBy="#{operation.creationdate}" style="width:17%;">
-									<h:outputText value="#{operation.creationdate}" >
+								<p:column headerText="FECHA CREACIÓN" sortBy="#{operation.creationDate}" style="width:17%;">
+									<h:outputText value="#{operation.creationDate}" >
                                             <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="Europe/Madrid"/>
                                         </h:outputText>
                                     </p:column>
-                                    <p:column headerText="FECHA INICIO" sortBy="#{operation.startdate}" style="width:17%;">
-                                        <h:outputText value="#{operation.startdate}" >
+                                    <p:column headerText="FECHA INICIO" sortBy="#{operation.startDate}" style="width:17%;">
+                                        <h:outputText value="#{operation.startDate}" >
                                             <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="Europe/Madrid"/>
                                         </h:outputText>
                                     </p:column>
@@ -177,11 +177,11 @@
 					</f:view>
 				</h:panelGroup>
 				<h:panelGroup rendered="#{not empty userBean.loginUser.email}" layout="block" style="margin-top: 15px; padding: 0 20px;">
-					<h:outputLink class="btn btn-info btn-crear-aviso"
-						value="createOperation">
+					<h:link class="btn btn-info btn-crear-aviso"
+						outcome="createOperation">
 						<span class="glyphicon glyphicon-plus"></span>
-                                Nueva operaci&oacute;n
-                        </h:outputLink>
+                                Nueva operación
+                        </h:link>
                   </h:panelGroup>
 
 				<center>

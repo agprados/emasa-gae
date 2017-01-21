@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
+import com.emasagae.dao.ObjectifyOperationDAO;
 import com.emasagae.dao.ObjectifyReportDAO;
 import com.emasagae.dao.ObjectifyReportUserDAO;
 import com.emasagae.entity.Report;
@@ -185,13 +186,12 @@ public class ReportBean implements Serializable {
 	
 	public String doDelete() {
 		ObjectifyReportDAO db = new ObjectifyReportDAO();
-		
-		// eliminar de la lista aqui no tiene sentido porque el bean es de request y se actualiza la lista cada vez que pasamos por index
-		// es ineficiente, deberiamos mover esa lista al session para no traerla mas veces de las necesarias
-		//reports.remove(user.getReportSelected());
+	
+		//reports.remove(userBean.getReportSelected());
 		db.delete(userBean.getReportSelected());
 		
-		return "index";
+		
+		return "index?faces-redirect=true";
 	}
 	
 }

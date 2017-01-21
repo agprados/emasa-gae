@@ -39,7 +39,8 @@ public class OperationBean implements Serializable {
     @PostConstruct
     public void init() {
     	dao = new ObjectifyOperationDAO();    	
-    	operations = dao.findAll();
+    	findOperations();
+		
     	errorOperation = "";
     }
     
@@ -93,15 +94,17 @@ public class OperationBean implements Serializable {
 	   
     public String doSaveOperation() {         
         Operation operation = new Operation();
-        if(startDate!=null) {
-        	operation.setStartdate(startDate);        	
+        if(startDate == null) {
+        	errorOperation = "La fecha no puede estar vacía";
+            return "createOperation";        	
         }        
         	
         if(type == null || type.isEmpty()) {
             errorOperation = "El tipo no puede estar vacío";
-            return "crearOperacion";
+            return "createOperation";
         }
-        operation.setCreationdate(new Date());
+        operation.setStartDate(startDate);
+        operation.setCreationDate(new Date());
         operation.setType(type);
         operation.setDescription(description);
         
@@ -114,8 +117,17 @@ public class OperationBean implements Serializable {
 		operation.setReportUser(keyReportUser);
                 
         dao.save(operation);
+        findOperations();
                
         return "viewReport";
+    }
+    
+    private void findOperations() {
+    	if(userBean.getReportSelected() != null) {
+    		ObjectifyReportDAO d = new ObjectifyReportDAO();
+    		Key<Report> keyReport = d.getKey(userBean.getReportSelected().getId());
+        	operations = dao.findAllByReportSortedByCreationDate(keyReport);
+    	}
     }
     
 }
