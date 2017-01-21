@@ -1,6 +1,7 @@
 package com.emasagae.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import javax.faces.bean.RequestScoped;
 
 import com.emasagae.dao.ObjectifyReportDAO;
 import com.emasagae.dao.ObjectifyReportUserDAO;
+import com.emasagae.entity.Operation;
 import com.emasagae.entity.Report;
 import com.emasagae.entity.ReportUser;
 import com.google.gson.Gson;
@@ -22,6 +24,9 @@ public class ReportBean implements Serializable {
 
 	@ManagedProperty(value="#{userBean}")
     private UserBean userBean;
+	
+	
+    private List<Operation> operations;
 	
 	private List<Report> reports;
 	
@@ -37,6 +42,8 @@ public class ReportBean implements Serializable {
     private String email;   
     private String errorReport;
     private String label;
+
+
     
 	private static final long serialVersionUID = 1L;
 	
@@ -47,6 +54,12 @@ public class ReportBean implements Serializable {
     public void init() {
     	ObjectifyReportDAO db = new ObjectifyReportDAO();
     	reports = db.findAllSortedByCreationDate();
+    	operations = new ArrayList<>();
+    	/*if(userBean.getReportSelected() != null) {
+            Iterable<Operation> operation = ofy().load().type(Operation.class).filter("report",userBean.getReportSelected().getEmasa());
+            operations.add(operation.iterator().next()); 
+        } */
+    	
     }
 
 	public List<Report> getReports() {
@@ -194,6 +207,7 @@ public class ReportBean implements Serializable {
 	}
 	
 	public String doViewReport(Report report){
+					
 		ObjectifyReportUserDAO du = new ObjectifyReportUserDAO();
 		ReportUser ru = du.findByKey(report.getReportUser());
 		
@@ -220,6 +234,14 @@ public class ReportBean implements Serializable {
 		db.delete(userBean.getReportSelected());
 		
 		return "index";
+	}
+
+	public List<Operation> getOperations() {
+		return operations;
+	}
+
+	public void setOperations(List<Operation> operations) {
+		this.operations = operations;
 	}
 	
 }

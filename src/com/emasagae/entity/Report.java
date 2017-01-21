@@ -2,7 +2,7 @@ package com.emasagae.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-
+import java.util.List;
 
 /**
  * The @Entity tells Objectify about our entity.  We also register it in {@link OfyHelper}
@@ -20,7 +20,7 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Parent;
-
+import static com.googlecode.objectify.ObjectifyService.ofy;
 @Entity
 public class Report implements Serializable {
 	
@@ -43,7 +43,7 @@ public class Report implements Serializable {
     private Key<ReportUser> reportUser;
     @Parent
     private Key<Emasa> emasa;
-    
+    private List<Operation> operations;
 
     public Report() {
     }
@@ -167,6 +167,14 @@ public class Report implements Serializable {
 
 	public void setLabel(String label) {
 		this.label = label;
+	}
+
+	public List<Operation> getOperations() {
+		return operations;
+	}
+
+	public void setOperations(List<Operation> operations) {
+		this.operations = operations;
 	}
 }
 	

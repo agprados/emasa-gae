@@ -38,6 +38,7 @@ public class UserBean implements Serializable {
     	initEmasa();
     	reportSelected = new Report();
     	loginUser = new ReportUser();
+    	
     }
 
 	public ReportUser getLoginUser() {

@@ -113,9 +113,48 @@
 				<h3>Descripción</h3>
 				<div class="separador"></div>
 				<p style="word-wrap: break-word; white-space: pre-wrap;">#{userBean.reportSelected.description}</p>
+				<h3>Operaciones</h3>
+                <div class="separador"></div>
+					<h:outputText rendered="#{userBean.reportSelected.operations == null || empty userBean.reportSelected.operations}" value="No hay ninguna operaci&oacute;n todav&iacute;a" />
+                    	<h:panelGroup rendered="#{not empty userBean.reportSelected.operations}" layout="block" style="padding: 3px 20px;">    
+                       	 <f:view>
+                            <h:form>
+                                <h:dataTable value="#{userBean.reportSelected.operations}" var="operation" width="50%" style="text-align: left;">
+                                    <h:column>
+                                        <f:facet name="header">
+                                            Fecha Creacion
+                                        </f:facet>
+                                        #{operation.creationdate}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            Descripcion
+                                        </f:facet>
+                                        #{operation.description}
+                                    </h:column>
+                                    
+                    </h:dataTable>
+                            </h:form>
+                        </f:view>
+                    </h:panelGroup>
+					
+					<div style="margin-top: 15px;">
+                        <h:link class="btn btn-info btn-crear-aviso" outcome="createOperation">                            
+                                <span class="glyphicon glyphicon-plus"></span>
+                                Nueva operaci&oacute;n
+                        </h:link>
+                    </div>
+				
+				
 				<center>
 					<div id="map" style="height: 500px; width: 750px; margin-top: 20px"></div>
 				</center>
+				
+				<h:panelGroup rendered="#{empty reportBean.reports}" layout="block"
+				class="alert alert-info info" a:role="alert">                        
+                        Sin avisos en el sistema.                  
+                    </h:panelGroup>
+			
 				<script
 					src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDaKC_fQZyaRvwbfuE6U6YFeuUzE1pmhq8&amp;callback=initMap"></script>
 				<center>

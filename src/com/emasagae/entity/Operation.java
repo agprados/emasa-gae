@@ -6,6 +6,7 @@ import java.util.Date;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Parent;
 
 
@@ -16,14 +17,15 @@ public class Operation implements Serializable {
     
  	@Id	
  	private Long id;
- 	@Parent
-    private Key<Report> report;
+ 	@Parent @Index private Key<Emasa> report;
     private String type;
     private String description;
+    private String IdReport;
     private Date creationdate;
     private Date startdate;
+    private Date scheduleddate;
     private Key<ReportUser> reportUser;
-
+    
     public Operation() {
     }
 
@@ -77,12 +79,12 @@ public class Operation implements Serializable {
         this.startdate = startdate;
     }
 
-    public Key<Report> getReport() {
+    public Key<Emasa> getReport() {
         return report;
     }
 
-    public void setReport(Key<Report> report) {
-        this.report = report;
+    public void setReport(Key<Emasa> key) {
+        this.report = key;
     }
 
     public Key<ReportUser> getReportUser() {
@@ -92,5 +94,23 @@ public class Operation implements Serializable {
     public void setReportUser(Key<ReportUser> reportUser) {
         this.reportUser = reportUser;
     }
+
+	public String getIdReport() {
+		return IdReport;
+	}
+
+	public void setIdReport(String idReport) {
+		IdReport = idReport;
+	}
+
+	public Date getScheduleddate() {
+		return scheduleddate;
+	}
+
+	public void setScheduleddate(Date scheduleddate) {
+		this.scheduleddate = scheduleddate;
+	}
+
+	
     
 }
