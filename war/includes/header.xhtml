@@ -6,34 +6,42 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
-	  
+
 <h:body>
 	<h:panelGroup layout="block" class="container-header">
 		<nav class="navbar navbar-default padd" style="width: 100%;">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<h:link style="padding: 3px 0 0;" outcome="/index.xhtml" >
-					<h:graphicImage style="height: 70px;" value="/images/emasaoperator.png" class="img-responsive" alt="logo" />
+				<h:link style="padding: 3px 0 0;" outcome="/index.xhtml">
+					<h:graphicImage style="height: 70px;"
+						value="/images/emasaoperator.png" class="img-responsive"
+						alt="logo" />
 				</h:link>
 			</div>
 			<div style="float: right; margin-top: 23px;">
-			<h:link outcome="createReport"
-							style="margin: 0 5px; " class="btn btn-info btn-crear-aviso"
-							a:aria-expanded="false"><span class="glyphicon glyphicon-plus"></span> Crear aviso</h:link>			
-			<div style="display: inline;" class="dropdown">
-				<h:panelGroup rendered="#{not empty userBean.email}">
-					<button style="border: 1px solid #000;" class="btn btn-default dropdown-toggle" type="button" id="dropdownUser" data-toggle="dropdown" aria-haspopup="true"	aria-expanded="true">
-						<span style="font-weight: 500;">Usuario: </span>#{userBean.email}
-					</button>
-				</h:panelGroup>
-				<ul class="dropdown-menu pull-right" style="min-width: 115px;">
-					<li class="cerrarSesion">
-						<h:form style="margin-left: 15px;">
-							<p:commandLink style="color: black; text-decoration: none;" action="#{userBean.doLogout()}">Cerrar sesión</p:commandLink>
-						</h:form>
-					</li>
-				</ul>
-			</div>
+				<h:link outcome="createReport" style="margin: 0 5px; "
+					class="btn btn-info btn-crear-aviso" a:aria-expanded="false">
+					<span class="glyphicon glyphicon-plus"></span> Crear aviso</h:link>				
+				
+			<h:outputLink value="#{userBean.doLogin()}" rendered="#{empty userBean.loginUser.email}"
+						style="margin: 0 5px; display: inline;"
+						class="btn btn-block btn-social btn-google"><span
+						class="fa fa-google"></span> Iniciar sesión</h:outputLink>
+
+				<div style="display: inline;" class="dropdown">
+					<h:panelGroup rendered="#{not empty userBean.loginUser.email}">
+						<button style="border: 1px solid #000;"
+							class="btn btn-default dropdown-toggle" type="button"
+							id="dropdownUser" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="true">
+							<span style="font-weight: 500;">Usuario: </span>#{userBean.loginUser.email}
+						</button>
+					</h:panelGroup>
+					<ul class="dropdown-menu pull-right" style="min-width: 115px;">
+						<li class="cerrarSesion"><a href="#{userBean.doLogout()}">Cerrar
+								sesión</a></li>
+					</ul>
+				</div>
 			</div>
 		</div>
 		</nav>

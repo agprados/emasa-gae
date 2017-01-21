@@ -25,12 +25,12 @@ public class UserBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private ReportUser loginUser;
-	private String email;
 	private String reportSelectedEmail;
 	private Report reportSelected;
 	
 	public UserBean() {
 		initEmasa();
+		loginUser = new ReportUser();
     }
     
     @PostConstruct
@@ -38,7 +38,6 @@ public class UserBean implements Serializable {
     	initEmasa();
     	reportSelected = new Report();
     	loginUser = new ReportUser();
-    	
     }
 
 	public ReportUser getLoginUser() {
@@ -47,14 +46,6 @@ public class UserBean implements Serializable {
 
 	public void setLoginUser(ReportUser loginUser) {
 		this.loginUser = loginUser;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public String getReportSelectedEmail() {
@@ -90,7 +81,7 @@ public class UserBean implements Serializable {
 				loginUser.setEmail(user.getNickname());
 			}
 		}
-		System.out.println(loginUser.getEmail());
+		
 		return userService.createLoginURL(request.getRequestURI());
 	}
 	
