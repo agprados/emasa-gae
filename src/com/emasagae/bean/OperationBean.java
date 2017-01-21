@@ -2,6 +2,7 @@ package com.emasagae.bean;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -9,8 +10,10 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
 import com.emasagae.dao.ObjectifyOperationDAO;
+import com.emasagae.dao.ObjectifyReportDAO;
 import com.emasagae.entity.Operation;
 import com.emasagae.entity.Report;
+import com.googlecode.objectify.Key;
 
 @ManagedBean (name = "operationBean")
 @RequestScoped
@@ -20,16 +23,12 @@ public class OperationBean implements Serializable {
 	
 	@ManagedProperty(value="#{userBean}")
     private UserBean userBean;
-
 	
-	private int id;
+	ObjectifyOperationDAO dao;
+	private List<Operation> operations;
     private String type;
-    private String state;
     private String description;
-    private Date startDate;   
-    private Date scheduledDate;
-    private String notes;
-    private Report report;
+    private Date startDate;  
     private String errorOperation;
 
 	
@@ -37,8 +36,18 @@ public class OperationBean implements Serializable {
     
     @PostConstruct
     public void init() {
-    
+    	dao = new ObjectifyOperationDAO();    	
+    	operations = dao.findAll();
+    	errorOperation = "";
     }
+    
+    public List<Operation> getOperations() {
+		return operations;
+	}
+
+	public void setOperations(List<Operation> operations) {
+		this.operations = operations;
+	}
     
     public UserBean getUserBean() {
 		return userBean;
@@ -48,28 +57,12 @@ public class OperationBean implements Serializable {
 		this.userBean = userBean;
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public String getType() {
 		return type;
 	}
 
 	public void setType(String type) {
 		this.type = type;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
 	}
 
 	public String getDescription() {
@@ -88,30 +81,6 @@ public class OperationBean implements Serializable {
 		this.startDate = startDate;
 	}
 
-	public Date getScheduledDate() {
-		return scheduledDate;
-	}
-
-	public void setScheduledDate(Date scheduledDate) {
-		this.scheduledDate = scheduledDate;
-	}
-
-	public String getNotes() {
-		return notes;
-	}
-
-	public void setNotes(String notes) {
-		this.notes = notes;
-	}
-
-	public Report getReport() {
-		return report;
-	}
-
-	public void setReport(Report report) {
-		this.report = report;
-	}
-
 	public String getErrorOperation() {
 		return errorOperation;
 	}
@@ -119,33 +88,27 @@ public class OperationBean implements Serializable {
 	public void setErrorOperation(String errorOperation) {
 		this.errorOperation = errorOperation;
 	}
-
-	
-    
+	   
     public String doSaveOperation() {         
         Operation operation = new Operation();
         if(startDate!=null) {
-            //operation.setStartdate(convertDateToXMLGregorianCalendar(startDate));
-        	operation.setStartdate(startDate);
-        	
-        }
-        if(scheduledDate!=null) {
-            //operation.setScheduleddate(convertDateToXMLGregorianCalendar(scheduledDate));
-        	operation.setScheduleddate(scheduledDate);
+        	operation.setStartdate(startDate);        	
+        }        
         	
         if(type == null || type.isEmpty()) {
             errorOperation = "El tipo no puede estar vacío";
             return "crearOperacion";
         }
+        operation.setCreationdate(new Date());
         operation.setType(type);
         operation.setDescription(description);
-        operation.setReport(userBean.getReportSelected().getEmasa());
         
-        ObjectifyOperationDAO daop = new ObjectifyOperationDAO();
-        daop.save(operation);
-        
-        }
-        
+        ObjectifyReportDAO d = new ObjectifyReportDAO();
+		Key<Report> keyReport = d.getKey(userBean.getReportSelected().getId());
+        operation.setReport(keyReport);
+                
+        dao.save(operation);
+               
         return "viewReport";
     }
     

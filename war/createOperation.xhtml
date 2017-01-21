@@ -11,7 +11,7 @@
 <h:head>
 	<title>EMASA</title>
 	<meta charset="UTF-8" />
-	<meta name="createOperation" content="width=device-width, initial-scale=1.0" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link rel="stylesheet" type="text/css" href="/resources/css/style.css" />
 
 	<!-- Compiled and minified Bootstrap CSS -->
@@ -34,24 +34,15 @@
             <div class="row padd">
                 <div style="margin: auto; width: 100%; text-align: center;">
                     <div class="container-main-title">
-                        <h1 class="fsize50" style="color: #00A2DB;">CREAR OPERACI&Oacute;N</h1>
+                        <h1 class="fsize50" style="color: #00A2DB;">CREAR OPERACIÓN</h1>
                         <span class="fsize25">Aviso </span><span class="fsize20">#{userBean.reportSelected.id}</span>
                     </div>
                     <h:form style="text-align: left; padding: 25px 50px 0;">
                         <h:panelGroup rendered="#{operationBean.errorOperation.length() != 0}" layout="block" class="alert alert-danger" a:role="alert" style="text-align: center; margin: 30px 30px 25px;">
                             #{operationBean.errorOperation} 
-                        </h:panelGroup>                        
+                        </h:panelGroup> 
                         <div class="form-group">
-                            <label for="inputScheduledtDate" class="form-text-input">Fecha planeada</label>
-                            <p:calendar id="inputScheduledtDate" style="display: block;" value="#{operationBean.scheduledDate}" pattern="dd/MM/yyyy HH:mm" showOn="both"/>                      
-                            <p:dialog modal="true" resizable="false" header="Values" widgetVar="dlg" showEffect="fold">
-                                <h:outputText value="#{operationBean.scheduledDate}" >
-                                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
-                                </h:outputText>
-                            </p:dialog>               
-                        </div>
-                        <div class="form-group">
-                            <label for="inputStartDate" class="form-text-input">Fecha inicio operaci&oacute;n</label>
+                            <label for="inputStartDate" class="form-text-input">Fecha inicio operación *</label>
                             <p:calendar id="inputStartDate" style="display: block;" value="#{operationBean.startDate}" pattern="dd/MM/yyyy HH:mm" showOn="both"/>                      
                             <p:dialog modal="true" resizable="false" header="Values" widgetVar="dlg" showEffect="fold">
                                 <h:outputText value="#{operationBean.startDate}" >
@@ -60,24 +51,19 @@
                             </p:dialog>                                  
                         </div>
                         <div class="form-group">
-                            <label for="inputType" class="form-text-input">Tipo de operaci&oacute;n *</label>  
+                            <label for="inputType" class="form-text-input">Tipo de operación *</label>  
                             <h:inputText id="inputType" maxlength="20" value="#{operationBean.type}" style="border-radius: 5px;" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="inputDescription" class="form-text-input">Descripci&oacute;n *</label>
+                            <label for="inputDescription" class="form-text-input">Descripción *</label>
                             <h:inputTextarea id="inputDescription" rows="4" cols="500" maxlength="500" autoResize="false" value="#{operationBean.description}" style="border-radius: 5px; resize: none;" class="form-control" />
                         </div>
-                        <div class="form-group">
-                            <label for="inputNotes" class="form-text-input">Observaciones</label>
-                            <h:inputTextarea id="inputNotes" rows="3" cols="500" maxlength="400" autoResize="false" value="#{operationBean.notes}" style="border-radius: 5px; resize: none;" class="form-control" />
-                        </div> 
                         
                         * Campo obligatorio                 
                         <center>
                             <h:button value="Cancelar" style="margin-top: 8px;" outcome="index?faces-redirect=true" class="btn btn-default" a:aria-expanded="false" />
-                            <h:commandButton value="Crear Operacion" action="#{operationBean.doSaveOperation()}" style="margin: 8px 0 0 5px;" class="btn btn-success" a:aria-expanded="false" >
-                                
-                            </h:commandButton>
+                            <h:commandButton value="Crear Operacion" action="#{operationBean.doSaveOperation()}" style="margin: 8px 0 0 5px;" class="btn btn-success" a:aria-expanded="false" />
+                             
                         </center>
                     </h:form> 
                     

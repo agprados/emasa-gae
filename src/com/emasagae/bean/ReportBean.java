@@ -1,7 +1,6 @@
 package com.emasagae.bean;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +11,6 @@ import javax.faces.bean.RequestScoped;
 
 import com.emasagae.dao.ObjectifyReportDAO;
 import com.emasagae.dao.ObjectifyReportUserDAO;
-import com.emasagae.entity.Operation;
 import com.emasagae.entity.Report;
 import com.emasagae.entity.ReportUser;
 import com.google.gson.Gson;
@@ -21,31 +19,22 @@ import com.googlecode.objectify.Key;
 @ManagedBean (name = "reportBean")
 @RequestScoped
 public class ReportBean implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 
 	@ManagedProperty(value="#{userBean}")
     private UserBean userBean;
 	
-	
-    private List<Operation> operations;
-	
-	private List<Report> reports;
-	
-	private String state;
+	private List<Report> reports;	
     private String type;
     private String address;
     private Integer zip;
     private String description;
     private String priority;
-    private Date creationDate;
     private Date startDate;
-    private Date finishDate;
     private String email;   
     private String errorReport;
-    private String label;
-
-
-    
-	private static final long serialVersionUID = 1L;
+    private String label;	
 	
 	public ReportBean() {
     }
@@ -53,25 +42,11 @@ public class ReportBean implements Serializable {
     @PostConstruct
     public void init() {
     	ObjectifyReportDAO db = new ObjectifyReportDAO();
-    	reports = db.findAllSortedByCreationDate();
-    	operations = new ArrayList<>();
-    	/*if(userBean.getReportSelected() != null) {
-            Iterable<Operation> operation = ofy().load().type(Operation.class).filter("report",userBean.getReportSelected().getEmasa());
-            operations.add(operation.iterator().next()); 
-        } */
-    	
+    	reports = db.findAllSortedByCreationDate();    	    	
     }
 
 	public List<Report> getReports() {
 		return reports;
-	}
-	
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
 	}
 
 	public String getType() {
@@ -114,28 +89,12 @@ public class ReportBean implements Serializable {
 		this.priority = priority;
 	}
 
-	public Date getCreationDate() {
-		return creationDate;
-	}
-
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
-	}
-
 	public Date getStartDate() {
 		return startDate;
 	}
 
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
-	}
-
-	public Date getFinishDate() {
-		return finishDate;
-	}
-
-	public void setFinishDate(Date finishDate) {
-		this.finishDate = finishDate;
 	}
 
 	public String getEmail() {
@@ -156,6 +115,14 @@ public class ReportBean implements Serializable {
 
 	public void setReports(List<Report> reports) {
 		this.reports = reports;
+	}
+	
+	public String getErrorReport() {
+		return errorReport;
+	}
+
+	public void setErrorReport(String errorReport) {
+		this.errorReport = errorReport;
 	}
 
 	public String getLabel() {
@@ -180,7 +147,7 @@ public class ReportBean implements Serializable {
 		reportuser.setEmail(userBean.getEmail()); //cuando se implemente el API de identificaci�n de GAE el mail se a�adira automaticmente 
 		r.setStartDate(this.startDate);
 		r.setPriority(this.priority);
-		r.setState(this.state);
+		r.setState("NUEVO");
 		r.setType(this.type);		
 		r.setAddress(this.address);
 		r.setDescription(this.description);
@@ -217,13 +184,7 @@ public class ReportBean implements Serializable {
 		return "viewReport";
 	}
 
-	public String getErrorReport() {
-		return errorReport;
-	}
-
-	public void setErrorReport(String errorReport) {
-		this.errorReport = errorReport;
-	}
+	
 	
 	public String doDelete() {
 		ObjectifyReportDAO db = new ObjectifyReportDAO();
@@ -234,14 +195,6 @@ public class ReportBean implements Serializable {
 		db.delete(userBean.getReportSelected());
 		
 		return "index";
-	}
-
-	public List<Operation> getOperations() {
-		return operations;
-	}
-
-	public void setOperations(List<Operation> operations) {
-		this.operations = operations;
 	}
 	
 }
