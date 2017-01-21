@@ -28,8 +28,8 @@ public class ObjectifyGenericDAO<T> implements IGenericDAO<T>{
 	}
 
 	@Override
-	public Key<T> save(T entity) {
-		return ofy().save().entity(entity).now();
+	public Long save(T entity) {
+		return ofy().save().entity(entity).now().getId();
 	}
 
 	@Override

@@ -15,7 +15,7 @@ import com.emasagae.entity.Operation;
 import com.emasagae.entity.Report;
 import com.googlecode.objectify.Key;
 
-@ManagedBean (name = "operationBean")
+@ManagedBean
 @RequestScoped
 public class OperationBean implements Serializable {
 	

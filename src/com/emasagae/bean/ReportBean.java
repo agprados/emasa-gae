@@ -16,7 +16,7 @@ import com.emasagae.entity.ReportUser;
 import com.google.gson.Gson;
 import com.googlecode.objectify.Key;
 
-@ManagedBean (name = "reportBean")
+@ManagedBean
 @RequestScoped
 public class ReportBean implements Serializable {
 	
@@ -108,9 +108,9 @@ public class ReportBean implements Serializable {
 	public UserBean getUserBean() {
 		return userBean;
 	}
-	
-	public void setUserBean(UserBean user) {
-		this.userBean = user;
+
+	public void setUserBean(UserBean userBean) {
+		this.userBean = userBean;
 	}
 
 	public void setReports(List<Report> reports) {
@@ -178,7 +178,7 @@ public class ReportBean implements Serializable {
 		userBean.setReportSelectedEmail(ru.getEmail());
 		userBean.setReportSelected(report);
 		
-		return "viewReport";
+		return "viewReport?faces-redirect=true";
 	}
 
 	

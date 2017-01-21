@@ -17,7 +17,7 @@ import com.emasagae.flickr.FlickrResponse;
 import com.emasagae.flickr.Photo;
 import com.google.gson.Gson;
 
-@ManagedBean (name = "galleryBean")
+@ManagedBean
 @ViewScoped
 public class GalleryBean implements Serializable {
 	

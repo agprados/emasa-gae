@@ -39,8 +39,9 @@
 						</button>
 					</h:panelGroup>
 					<ul class="dropdown-menu pull-right" style="min-width: 115px;">
-						<li class="cerrarSesion"><a href="#{userBean.doLogout()}">Cerrar
-								sesión</a></li>
+						<li class="cerrarSesion"><h:outputLink
+								value="#{userBean.doLogin()}"
+								rendered="#{not empty userBean.loginUser.email}">Cerrar sesión</h:outputLink></li>
 					</ul>
 				</div>
 			</div>

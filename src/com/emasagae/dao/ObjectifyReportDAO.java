@@ -17,10 +17,10 @@ public class ObjectifyReportDAO extends ObjectifyGenericDAO<Report> implements I
 	}
 	
 	@Override
-	public Key<Report> save(Report entity) {
+	public Long save(Report entity) {
 		Key<Emasa> k = Key.create(Emasa.class, EMASA_GROUP);
 		entity.setEmasa(k);
-		return ofy().save().entity(entity).now();
+		return ofy().save().entity(entity).now().getId();
 	} 
 	
 }

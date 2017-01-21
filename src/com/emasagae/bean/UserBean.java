@@ -21,7 +21,7 @@ import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@ManagedBean (name = "userBean")
+@ManagedBean
 @SessionScoped
 public class UserBean implements Serializable {
 	 
@@ -33,14 +33,11 @@ public class UserBean implements Serializable {
 	
 	public UserBean() {
 		initEmasa();
-		loginUser = new ReportUser();
     }
     
     @PostConstruct
     public void init() {
     	initEmasa();
-    	reportSelected = new Report();
-    	loginUser = new ReportUser();
     }
 
 	public ReportUser getLoginUser() {
@@ -78,10 +75,13 @@ public class UserBean implements Serializable {
 			ReportUser u = d.findByProperty("email", user.getNickname());
 			if (u == null) {				
 				loginUser.setEmail(user.getNickname());
-				d.save(loginUser);
+				System.out.println("me logueo");
+				Long id = d.save(loginUser);
+				loginUser.setId(id);
 			} else {
 				loginUser = u;
 				loginUser.setEmail(user.getNickname());
+				System.out.println("me logueo2");
 			}
 		}
 		
@@ -89,10 +89,10 @@ public class UserBean implements Serializable {
 	}
 	
 	public String doLogout(){
-        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-		UserService userService = UserServiceFactory.getUserService();
-		loginUser = new ReportUser();
-	    return userService.createLogoutURL("/");
+		System.out.println("me deslogueo");
+        loginUser = new ReportUser();		
+		UserService userService = UserServiceFactory.getUserService();		
+	    return userService.createLogoutURL("/faces/index.xhtml?faces-redirect=true");
     }
 	
 	public void doCheckLogin() {

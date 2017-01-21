@@ -7,7 +7,7 @@ import com.googlecode.objectify.Key;
 
 public interface IGenericDAO<T> {
 
-	public Key<T> save(T entity);
+	public Long save(T entity);
 	public Map<Key<T>, T> saveAll(Iterable<T> entities);
 	public void delete(T entity);
 	public void deleteById(Long id);

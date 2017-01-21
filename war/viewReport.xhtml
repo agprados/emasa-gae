@@ -144,7 +144,7 @@
 					rendered="#{operationBean.operations == null || empty operationBean.operations}"
 					value="No hay ninguna operaci&oacute;n todav&iacute;a" />
 				<h:panelGroup rendered="#{not empty operationBean.operations}"
-					layout="block" style="padding: 3px 20px;">
+					layout="block" style="padding: 0 20px 5px;">
 					<f:view>
 						<h:form>
 							<p:dataTable value="#{operationBean.operations}" var="operation"
@@ -169,18 +169,16 @@
 						</h:form>
 					</f:view>
 				</h:panelGroup>
-
-				<div style="margin-top: 15px;">
-					<h:link class="btn btn-info btn-crear-aviso"
-						outcome="createOperation">
+				<h:panelGroup rendered="#{not empty userBean.loginUser.email}" layout="block" style="margin-top: 15px; padding: 0 20px;">
+					<h:outputLink class="btn btn-info btn-crear-aviso"
+						value="createOperation">
 						<span class="glyphicon glyphicon-plus"></span>
                                 Nueva operaci&oacute;n
-                        </h:link>
-				</div>
-
+                        </h:outputLink>
+                  </h:panelGroup>
 
 				<center>
-					<div id="map" style="height: 500px; width: 750px; margin-top: 20px"></div>
+					<div id="map" style="height: 400px; width: 600px; margin-top: 20px"></div>
 				</center>
 
 				<h:panelGroup rendered="#{empty reportBean.reports}" layout="block"
@@ -214,6 +212,7 @@
 						<h:button value="Volver" outcome="index?faces-redirect=true"
 							style="margin: 20px 0 0 5px;" class="btn btn-default"
 							a:aria-expanded="false" />
+							<h:panelGroup rendered="#{not empty userBean.loginUser.email}">
 						<h:button value="Modificar"
 							outcome="updateReport?faces-redirect=true"
 							style="margin: 20px 0 0 5px;" class="btn btn-success"
@@ -221,6 +220,7 @@
 						<h:commandButton value="Eliminar"
 							action="#{reportBean.doDelete()}" style="margin: 20px 0 0 5px;"
 							class="btn btn-danger" a:aria-expanded="false" />
+							</h:panelGroup>
 					</h:form>
 				</center>
 			</div>
