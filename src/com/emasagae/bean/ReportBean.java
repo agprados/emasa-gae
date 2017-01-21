@@ -1,20 +1,20 @@
 package com.emasagae.bean;
 
-import com.emasagae.dao.ObjectifyReportDAO;
-import com.emasagae.dao.ObjectifyReportUserDAO;
-import com.emasagae.entity.Report;
-import com.emasagae.entity.ReportUser;
-import com.google.gson.Gson;
-import com.googlecode.objectify.Key;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
+import com.emasagae.dao.ObjectifyReportDAO;
+import com.emasagae.dao.ObjectifyReportUserDAO;
+import com.emasagae.entity.Report;
+import com.emasagae.entity.ReportUser;
+import com.google.gson.Gson;
+import com.googlecode.objectify.Key;
 
 @ManagedBean (name = "reportBean")
 @RequestScoped
@@ -30,9 +30,9 @@ public class ReportBean implements Serializable{
     private Integer zip;
     private String description;
     private String priority;
-    private Date creationdate;
+    private Date creationDate;
     private Date startDate;
-    private Date finishdate;
+    private Date finishDate;
     private String email;   
     private String errorReport;
     private String label;
@@ -101,11 +101,11 @@ public class ReportBean implements Serializable{
 	}
 
 	public Date getCreationdate() {
-		return creationdate;
+		return creationDate;
 	}
 
 	public void setCreationdate(Date creationdate) {
-		this.creationdate = creationdate;
+		this.creationDate = creationdate;
 	}
 
 	public Date getStartdate() {
@@ -117,11 +117,11 @@ public class ReportBean implements Serializable{
 	}
 
 	public Date getFinishdate() {
-		return finishdate;
+		return finishDate;
 	}
 
 	public void setFinishdate(Date finishdate) {
-		this.finishdate = finishdate;
+		this.finishDate = finishdate;
 	}
 
 	public String getEmail() {
@@ -137,7 +137,7 @@ public class ReportBean implements Serializable{
 	}
 	
 	public void setUser(UserBean user) {
-		this.user=user;
+		this.user = user;
 	}
 
 	public void setReports(List<Report> reports) {
@@ -171,7 +171,7 @@ public class ReportBean implements Serializable{
 	public String doSaveReport(){
 		Report r = new Report();
 		ReportUser reportuser = new ReportUser();
-		reportuser.setEmail(user.getEmail()); //cuando se implemente el API de identificación de GAE el mail se añadira automaticmente 
+		reportuser.setEmail(user.getEmail()); //cuando se implemente el API de identificaciï¿½n de GAE el mail se aï¿½adira automaticmente 
 		r.setStartDate(this.startDate);
 		r.setPriority(this.priority);
 		r.setState(this.state);
