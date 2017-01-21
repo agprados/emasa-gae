@@ -40,8 +40,7 @@ public class ReportBean implements Serializable {
     
 	private static final long serialVersionUID = 1L;
 	
-	public ReportBean() {
-    }
+	public ReportBean() {}
     
     @PostConstruct
     public void init() {
@@ -162,6 +161,17 @@ public class ReportBean implements Serializable {
 	}
 		
 	public String doSaveReport(){
+		save();
+		
+		return "index";
+	}
+	
+	public String doSaveUpdate() {
+		save();
+		return doViewReport(userBean.getReportSelected());
+	}
+
+	private void save() {
 		Report r = new Report();
 		ReportUser reportuser = new ReportUser();
 		reportuser.setEmail(userBean.getEmail()); //cuando se implemente el API de identificaci�n de GAE el mail se a�adira automaticmente 
@@ -182,8 +192,6 @@ public class ReportBean implements Serializable {
 		
 		ObjectifyReportDAO dao = new ObjectifyReportDAO();
 		dao.save(r);
-		
-		return "index";
 	}
 	
 	public String doViewReport(Report report){
@@ -215,11 +223,4 @@ public class ReportBean implements Serializable {
 		return "index";
 	}
 	
-	public String doUpdate() {
-		return "updateReport";
-	}
-	
-	public String doSaveUpdate() {
-		return doViewReport(userBean.getReportSelected());
-	}
 }
