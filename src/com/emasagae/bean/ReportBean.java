@@ -108,28 +108,28 @@ public class ReportBean implements Serializable{
 		this.priority = priority;
 	}
 
-	public Date getCreationdate() {
+	public Date getCreationDate() {
 		return creationDate;
 	}
 
-	public void setCreationdate(Date creationdate) {
-		this.creationDate = creationdate;
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
 	}
 
-	public Date getStartdate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
-	public void setStartdate(Date startdate) {
-		this.startDate = startdate;
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
 	}
 
-	public Date getFinishdate() {
+	public Date getFinishDate() {
 		return finishDate;
 	}
 
-	public void setFinishdate(Date finishdate) {
-		this.finishDate = finishdate;
+	public void setFinishDate(Date finishDate) {
+		this.finishDate = finishDate;
 	}
 
 	public String getEmail() {
@@ -150,14 +150,6 @@ public class ReportBean implements Serializable{
 
 	public void setReports(List<Report> reports) {
 		this.reports = reports;
-	}
-
-	public Date getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
 	}
 
 	public String getLabel() {
