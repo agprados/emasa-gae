@@ -20,11 +20,13 @@
 			</div>
 			<div style="float: right; margin-top: 23px;">
 				<div style="margin-top: 6px;">
-					<h:outputLink value="#{userBean.doLogin()}"
+				<h:form>
+					<h:commandLink action="#{userBean.doLogin()}"
 						rendered="#{empty userBean.loginUser.email}"
 						style="display: inline;"
 						class="btn btn-block btn-social btn-google">
-						<span class="fa fa-google"></span> Iniciar sesión</h:outputLink>
+						<span class="fa fa-google"></span> Iniciar sesión</h:commandLink>
+						</h:form>
 				</div>
 				<div style="display: inline;" class="dropdown">
 					<h:panelGroup rendered="#{not empty userBean.loginUser.email}">
@@ -36,12 +38,12 @@
 							id="dropdownUser" data-toggle="dropdown" aria-haspopup="true"
 							aria-expanded="true">
 							<span style="font-weight: 500;">Usuario: </span>#{userBean.loginUser.email}
-						</button>
+						</button>						
 					</h:panelGroup>
 					<ul class="dropdown-menu pull-right" style="min-width: 115px;">
-						<li class="cerrarSesion"><h:outputLink
-								value="#{userBean.doLogin()}"
-								rendered="#{not empty userBean.loginUser.email}">Cerrar sesión</h:outputLink></li>
+						<li class="cerrarSesion"><h:form>
+						<h:commandLink value="Cerrar sesión"
+								action="#{userBean.doLogout()}" class="btn-logout"/></h:form></li>
 					</ul>
 				</div>
 			</div>

@@ -73,15 +73,13 @@ public class UserBean implements Serializable {
 		if (user != null) {			
 			ObjectifyReportUserDAO d = new ObjectifyReportUserDAO();
 			ReportUser u = d.findByProperty("email", user.getNickname());
-			if (u == null) {				
+			if (u == null) {	
 				loginUser.setEmail(user.getNickname());
-				System.out.println("me logueo");
 				Long id = d.save(loginUser);
 				loginUser.setId(id);
 			} else {
 				loginUser = u;
 				loginUser.setEmail(user.getNickname());
-				System.out.println("me logueo2");
 			}
 		}
 		
@@ -89,10 +87,10 @@ public class UserBean implements Serializable {
 	}
 	
 	public String doLogout(){
-		System.out.println("me deslogueo");
-        loginUser = new ReportUser();		
+        loginUser = new ReportUser();
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 		UserService userService = UserServiceFactory.getUserService();		
-	    return userService.createLogoutURL("/faces/index.xhtml?faces-redirect=true");
+	    return userService.createLogoutURL("/faces/index.xhtml");
     }
 	
 	public void doCheckLogin() {
