@@ -3,12 +3,11 @@ package com.emasagae.bean;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.xml.datatype.XMLGregorianCalendar;
 
+import com.emasagae.dao.ObjectifyEmasaDAO;
+import com.emasagae.entity.Emasa;
 import com.emasagae.entity.Report;
-import static com.emasagae.utils.UtilsMix.convertDateToXMLGregorianCalendar;
 import java.io.Serializable;
-import java.util.Date;
 
 @ManagedBean (name = "userBean")
 @SessionScoped
@@ -25,6 +24,7 @@ public class UserBean implements Serializable {
     
     @PostConstruct
     public void init() {
+    	initEmasa();
     	reportSelected = new Report();
     }
 
@@ -56,11 +56,14 @@ public class UserBean implements Serializable {
 		return "index";
 	}
 	
-    public Date convertToDate(XMLGregorianCalendar cal){
-        if (cal != null) {
-            return cal.toGregorianCalendar().getTime();
-        }
-        return null;
-    }
-
+	private void initEmasa() {
+		ObjectifyEmasaDAO dao = new ObjectifyEmasaDAO();
+		Emasa emasa = dao.findById("EMASA");
+		if (emasa == null) {
+			emasa = new Emasa("EMASA");
+			dao.save(emasa);
+		}
+	}
+		
+	
 }

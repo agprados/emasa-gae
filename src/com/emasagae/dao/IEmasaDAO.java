@@ -5,6 +5,8 @@ import com.googlecode.objectify.Key;
 
 public interface IEmasaDAO extends IGenericDAO<Emasa>{
 	
+	public Emasa findById(String id);
+	
 	public Key<Emasa> getKey();
 	
 }

@@ -35,11 +35,10 @@ public class Report implements Serializable {
     private String description;
     private String priority;
     @Index
-    private Date creationdate;
+    private Date creationDate;
     private Date startDate;
-    private Date finishdate;
+    private Date finishDate;
     private String label;
-	@Parent
     private Key<ReportUser> reportUser;
     @Parent
     private Key<Emasa> emasa;
@@ -52,13 +51,13 @@ public class Report implements Serializable {
         this.id = id;
     }
 
-    public Report(Long id, String state, String address, String description, String priority, Date creationdate) {
+    public Report(Long id, String state, String address, String description, String priority, Date creationDate) {
         this.id = id;
         this.state = state;
         this.address = address;
         this.description = description;
         this.priority = priority;
-        this.creationdate = creationdate;
+        this.creationDate = creationDate;
     }
 
     public Long getId() {
@@ -117,12 +116,12 @@ public class Report implements Serializable {
         this.priority = priority;
     }
 
-    public Date getCreationdate() {
-        return creationdate;
+    public Date getCreationDate() {
+        return creationDate;
     }
 
-    public void setCreationdate(Date creationdate) {
-        this.creationdate = creationdate;
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 
     public Date getStartdate() {
@@ -136,9 +135,13 @@ public class Report implements Serializable {
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
+	
+	public Date getFinishDate() {
+		return finishDate;
+	}
 
-    public void setFinishdate(Date finishdate) {
-        this.finishdate = finishdate;
+    public void setFinishDate(Date finishDate) {
+        this.finishDate = finishDate;
     }  
     
     public Key<ReportUser> getReportUser() {
@@ -155,9 +158,7 @@ public class Report implements Serializable {
 
 	public void setEmasa(Key<Emasa> emasa) {
 		this.emasa = emasa;
-	}
-    
-    
+	}   
 
 	public String getLabel() {
 		return label;

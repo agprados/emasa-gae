@@ -178,9 +178,9 @@ public class ReportBean implements Serializable{
 		r.setType(this.type);		
 		r.setAddress(this.address);
 		r.setDescription(this.description);
-		r.setCreationdate(new Date());
+		r.setCreationDate(new Date());
 		r.setZip(this.zip);
-		r.setCreationdate(new Date());
+		r.setCreationDate(new Date());
 		
 		ObjectifyReportUserDAO du = new ObjectifyReportUserDAO();
 		du.save(reportuser);

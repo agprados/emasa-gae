@@ -27,7 +27,6 @@ public class ObjectifyGenericDAO<T> implements IGenericDAO<T>{
 		this.clazz = clazz;
 	}
 
-
 	@Override
 	public Key<T> save(T entity) {
 		return ofy().save().entity(entity).now();
