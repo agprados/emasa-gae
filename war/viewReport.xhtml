@@ -58,7 +58,7 @@
 	                });
 	
 	                var contentString = '<p>ID: ' + report.id + '</p>' +
-	                      				'<p>Direcci&oacute;n: ' + report.address + '</p>' +
+	                      				'<p>Dirección: ' + report.address + '</p>' +
 	                        			'<p>Prioridad: ' + report.priority + '</p>';     
 	                        
 	                bindInfoWindow(marker, map, infowindow, contentString);
@@ -132,7 +132,7 @@
                             <h:outputText value="#{userBean.reportSelected.finishDate}">
                                 <f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="Europe/Madrid"/>
                             </h:outputText>
-                            <h:outputText rendered="#{userBean.reportSelected.finishDate == null}" value="--/--/----  --:--" />&nbsp;
+                            <h:outputText rendered="#{userBean.reportSelected.finishDate == null}" value="--/--/----  --:-- " />
                         </div>
 					<br />
 				</div>
