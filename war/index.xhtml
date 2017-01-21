@@ -18,12 +18,13 @@
 		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
 		integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
 		crossorigin="anonymous" />
-		
+
 	<!-- Compiled and minified Bootstrap JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
 		integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
 		crossorigin="anonymous"></script>
-		
+
 	<script type="text/javascript">
 		var map;
 		function initMap() {
@@ -70,7 +71,7 @@
 </h:head>
 
 <h:body>
-	<f:phaseListener type="com.emasagae.config.SessionPhaseListener"/>
+	<f:phaseListener type="com.emasagae.config.SessionPhaseListener" />
 	<ui:include src="/includes/header.xhtml" />
 	<div class="container-fluid container">
 		<div class="row padd">
@@ -81,42 +82,51 @@
 			</div>
 		</div>
 		<div>
-			<h:form>
-				<h:dataTable value="#{reportBean.reports}" var="report" width="100%">
-					<h:column>
-						<f:facet name="header">
-							<center>FECHA CREACIÓN</center>
-						</f:facet>
-						<center>
-							<h:outputText value="#{report.creationDate}">
-								<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
-							</h:outputText>
-						</center>
-					</h:column>
-					<h:column>
-						<f:facet name="header">
-							<center>DIRECCI&Oacute;N</center>
-						</f:facet>
-						<center>
-							<h:commandLink value="#{report.address}"
-								action="#{reportBean.doViewReport(report)}" />
-						</center>
-					</h:column>
-					<h:column>
-						<f:facet name="header">
-							<center>CP</center>
-						</f:facet>
-						<center>#{report.zip}</center>
-					</h:column>					
-				</h:dataTable>			
-		   		<center>
-	           		<h:commandButton value="Crear aviso" action="createReport" style="margin: 8px 0 0 5px;" class="btn btn-success" a:aria-expanded="false" />
-           		</center>
-           </h:form>
-		   <center>
-		   		<div id="map" style="height: 500px; width: 750px; margin-top: 20px"></div>
-		   </center>
-			<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDaKC_fQZyaRvwbfuE6U6YFeuUzE1pmhq8&amp;callback=initMap"></script>
+			<h:panelGroup rendered="#{empty reportBean.reports}" layout="block"
+				class="alert alert-info info" a:role="alert">                        
+                        Sin avisos en el sistema.                  
+                    </h:panelGroup>
+			<h:panelGroup rendered="#{not empty reportBean.reports}">
+				<h:form>
+					<h:dataTable value="#{reportBean.reports}" var="report"
+						width="100%">
+						<h:column>
+							<f:facet name="header">
+								<center>FECHA CREACIÓN</center>
+							</f:facet>
+							<center>
+								<h:outputText value="#{report.creationDate}">
+									<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+								</h:outputText>
+							</center>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<center>DIRECCI&Oacute;N</center>
+							</f:facet>
+							<center>
+								<h:commandLink value="#{report.address}"
+									action="#{reportBean.doViewReport(report)}" />
+							</center>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<center>CP</center>
+							</f:facet>
+							<center>#{report.zip}</center>
+						</h:column>
+					</h:dataTable>
+					
+				</h:form>
+			</h:panelGroup>
+			<h:button value="Crear aviso" outcome="createReport"
+							style="margin: 8px 0 0 5px;" class="btn btn-success"
+							a:aria-expanded="false" />
+			<center>
+				<div id="map" style="height: 500px; width: 750px; margin-top: 20px"></div>
+			</center>
+			<script
+				src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDaKC_fQZyaRvwbfuE6U6YFeuUzE1pmhq8&amp;callback=initMap"></script>
 		</div>
 	</div>
 </h:body>
