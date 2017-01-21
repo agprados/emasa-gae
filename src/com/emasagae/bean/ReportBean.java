@@ -1,6 +1,11 @@
 package com.emasagae.bean;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +18,8 @@ import com.emasagae.dao.ObjectifyReportDAO;
 import com.emasagae.dao.ObjectifyReportUserDAO;
 import com.emasagae.entity.Report;
 import com.emasagae.entity.ReportUser;
+import com.emasagae.flickr.FlickrResponse;
+import com.emasagae.flickr.Photo;
 import com.google.gson.Gson;
 import com.googlecode.objectify.Key;
 
@@ -36,6 +43,7 @@ public class ReportBean implements Serializable{
     private String email;   
     private String errorReport;
     private String label;
+    private List<String> imagesUrl;
     
 	private static final long serialVersionUID = 1L;
 	
@@ -160,6 +168,14 @@ public class ReportBean implements Serializable{
 		this.label = label;
 	}
 
+	public List<String> getImagesUrl() {
+		return imagesUrl;
+	}
+
+	public void setImagesUrl(List<String> imagesUrl) {
+		this.imagesUrl = imagesUrl;
+	}
+
 	public String getReportsForMap() {
         return new Gson().toJson(reports);
 	}
@@ -180,6 +196,7 @@ public class ReportBean implements Serializable{
 		r.setDescription(this.description);
 		r.setCreationDate(new Date());
 		r.setZip(this.zip);
+		r.setLabel(this.label);
 		
 		ObjectifyReportUserDAO du = new ObjectifyReportUserDAO();
 		Key<ReportUser> keyReportUser = du.save(reportuser);
@@ -198,6 +215,35 @@ public class ReportBean implements Serializable{
 		
 		user.setReportSelectedEmail(ru.getEmail());
 		user.setReportSelected(report);
+		
+		if(user.getReportSelected().getLabel() != null && !user.getReportSelected().getLabel().isEmpty()) {
+			String line, reply = "";
+			try {
+				URL url = new URL("https://api.flickr.com/services/rest/?method=flickr.photos.search&format=json&api_key=48f2342467e41b00b8e55c9896d81629&tags=" + user.getReportSelected().getLabel());
+				BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+			
+				while ((line = reader.readLine()) != null) { 
+					reply += line; 
+				}
+			
+				reader.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			reply = reply.replace("jsonFlickrApi(", "");
+			reply = reply.substring(0, reply.length()-1);
+			Gson gson = new Gson();
+			FlickrResponse fr = gson.fromJson(reply, FlickrResponse.class);
+			imagesUrl = new ArrayList<String>();
+			Photo p;
+			
+			for(int i=0;i<fr.getPhotos().getPhoto().size();i++) {
+				p = fr.getPhotos().getPhoto().get(i);
+				imagesUrl.add("http://farm"+p.getFarm()+".staticflickr.com/"+p.getServer()+"/"+p.getId()+"_"+p.getSecret()+"_z.jpg");
+			}
+		}
 		
 		return "viewReport";
 	}
