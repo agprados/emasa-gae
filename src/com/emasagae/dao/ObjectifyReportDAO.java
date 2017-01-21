@@ -13,7 +13,7 @@ public class ObjectifyReportDAO extends ObjectifyGenericDAO<Report> implements I
 	
 	public List<Report> findAllSortedByCreationDate() {
 		Key<Emasa> k = Key.create(Emasa.class, EMASA_GROUP);
-		return ofy().load().type(Report.class).ancestor(k).order("creationDate").list();
+		return ofy().load().type(Report.class).order("-creationDate").ancestor(k).list();
 	}
 	
 	@Override

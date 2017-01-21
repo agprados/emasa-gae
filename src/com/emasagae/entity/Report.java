@@ -30,6 +30,7 @@ public class Report implements Serializable {
 	private Long id;	
 	private String state;
     private String type;
+    @Index
     private String address;
     private Integer zip;
     private String description;
