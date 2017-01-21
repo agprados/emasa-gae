@@ -71,15 +71,19 @@ public class UserBean implements Serializable {
 		User user = userService.getCurrentUser();
 		loginUser = new ReportUser();
 		if (user != null) {			
-			ObjectifyReportUserDAO d = new ObjectifyReportUserDAO();
-			ReportUser u = d.findByProperty("email", user.getNickname());
-			if (u == null) {	
-				loginUser.setEmail(user.getNickname());
+			ObjectifyReportUserDAO d = new ObjectifyReportUserDAO();			
+			String email = user.getEmail();
+			if(user.getEmail().isEmpty()) {
+				email = user.getNickname();
+			}
+			ReportUser u = d.findByProperty("email", email);
+			if (u == null) {
+				loginUser.setEmail(email);
 				Long id = d.save(loginUser);
 				loginUser.setId(id);
 			} else {
 				loginUser = u;
-				loginUser.setEmail(user.getNickname());
+				loginUser.setEmail(email);
 			}
 		}
 		

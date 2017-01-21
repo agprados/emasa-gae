@@ -72,7 +72,7 @@
 						<p:calendar id="inputStartDate" style="display: block;"	value="#{userBean.reportSelected.startDate}" pattern="dd/MM/yyyy HH:mm" showOn="both" />
 						<p:dialog modal="true" resizable="false" header="Values" widgetVar="dlg" showEffect="fold">
 							<h:outputText value="#{userBean.reportSelected.startDate}">
-								<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="Europe/Madrid"/>
 							</h:outputText>
 						</p:dialog>
 					</div>
@@ -81,7 +81,7 @@
 						<p:calendar id="inputFinishDate" style="display: block;" value="#{userBean.reportSelected.finishDate}" pattern="dd/MM/yyyy HH:mm" showOn="both" />
 						<p:dialog modal="true" resizable="false" header="Values" widgetVar="dlg" showEffect="fold">
 							<h:outputText value="#{userBean.reportSelected.finishDate}">
-								<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="Europe/Madrid"/>
 							</h:outputText>
 						</p:dialog>
 					</div>

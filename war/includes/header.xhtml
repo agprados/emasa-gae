@@ -19,15 +19,14 @@
 				</h:link>
 			</div>
 			<div style="float: right; margin-top: 23px;">
-				<div style="margin-top: 6px;">
+				<h:panelGroup style="margin-top: 6px;" layout="block" rendered="#{empty userBean.loginUser.email}">
 				<h:form>
-					<h:commandLink action="#{userBean.doLogin()}"
-						rendered="#{empty userBean.loginUser.email}"
+					<h:commandLink action="#{userBean.doLogin()}"						
 						style="display: inline;"
 						class="btn btn-block btn-social btn-google">
 						<span class="fa fa-google"></span> Iniciar sesión</h:commandLink>
 						</h:form>
-				</div>
+				</h:panelGroup>
 				<div style="display: inline;" class="dropdown">
 					<h:panelGroup rendered="#{not empty userBean.loginUser.email}">
 						<h:link outcome="createReport" style="margin: 0 5px;"

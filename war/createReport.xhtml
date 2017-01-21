@@ -70,7 +70,7 @@
 						<p:calendar id="inputStartDate" style="display: block;"	value="#{reportBean.startDate}" pattern="dd/MM/yyyy HH:mm" showOn="both" />
 						<p:dialog modal="true" resizable="false" header="Values" widgetVar="dlg" showEffect="fold">
 							<h:outputText value="#{reportBean.startDate}">
-								<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="Europe/Madrid"/>
 							</h:outputText>
 						</p:dialog>
 					</div>

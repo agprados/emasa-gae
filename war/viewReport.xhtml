@@ -114,18 +114,26 @@
 							rendered="#{userBean.reportSelected.priority.equalsIgnoreCase('MAX')}"
 							value=" Urgente" style="color: red; font-size: 16px" />
 					</div>
-					<div
-						class="col-md-3 col-md-offset-2 col-sm-3 col-sm-offset-2 col-xs-5"
-						style="text-align: right;">
-						Creación:
-						<h:outputText value="#{userBean.reportSelected.creationDate}">
-							<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
-						</h:outputText>
-						<h:outputText
-							rendered="#{userBean.reportSelected.creationDate == null}"
-							value="--/--/----  --:--" />
-						<br />
-					</div>
+					 <div class="col-md-3 col-md-offset-2 col-sm-3 col-sm-offset-2 col-xs-5" style="text-align: right;">
+					 		<br />
+                            Creación:
+                            <h:outputText value="#{userBean.reportSelected.creationDate}">
+                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="Europe/Madrid"/>
+                            </h:outputText>
+                            <h:outputText rendered="#{userBean.reportSelected.creationDate == null}" value="--/--/----  --:--" />
+                            <br/>
+                            Inicio:
+                            <h:outputText value="#{userBean.reportSelected.startDate}">
+                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="Europe/Madrid"/>
+                            </h:outputText>                            
+                            <h:outputText rendered="#{userBean.reportSelected.startDate == null}" value="--/--/----  --:--" />
+                            <br/>
+                            Fin:
+                            <h:outputText value="#{userBean.reportSelected.finishDate}">
+                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="Europe/Madrid"/>
+                            </h:outputText>
+                            <h:outputText rendered="#{userBean.reportSelected.finishDate == null}" value="--/--/----  --:--" />&nbsp;
+                        </div>
 					<br />
 				</div>
 				<div style="text-align: center; padding-top: 15px;">
@@ -133,7 +141,6 @@
 					<h:outputText style="display: block;"
 						rendered="#{userBean.reportSelected.zip != null}"
 						value="#{userBean.reportSelected.zip}" />
-					&nbsp;
 				</div>
 				<h3>Descripción</h3>
 				<div class="separador"></div>
@@ -151,12 +158,12 @@
 								style="margin-top: 20px; text-align: center;">
 								<p:column headerText="FECHA CREACIÓN" sortBy="#{operation.creationdate}" style="width:17%;">
 									<h:outputText value="#{operation.creationdate}" >
-                                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss"/>
+                                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="Europe/Madrid"/>
                                         </h:outputText>
                                     </p:column>
                                     <p:column headerText="FECHA INICIO" sortBy="#{operation.startdate}" style="width:17%;">
                                         <h:outputText value="#{operation.startdate}" >
-                                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss"/>
+                                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="Europe/Madrid"/>
                                         </h:outputText>
                                     </p:column>
                                     <p:column headerText="TIPO" sortBy="#{operation.type}">

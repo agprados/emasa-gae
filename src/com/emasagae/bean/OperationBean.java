@@ -11,8 +11,10 @@ import javax.faces.bean.RequestScoped;
 
 import com.emasagae.dao.ObjectifyOperationDAO;
 import com.emasagae.dao.ObjectifyReportDAO;
+import com.emasagae.dao.ObjectifyReportUserDAO;
 import com.emasagae.entity.Operation;
 import com.emasagae.entity.Report;
+import com.emasagae.entity.ReportUser;
 import com.googlecode.objectify.Key;
 
 @ManagedBean
@@ -106,6 +108,10 @@ public class OperationBean implements Serializable {
         ObjectifyReportDAO d = new ObjectifyReportDAO();
 		Key<Report> keyReport = d.getKey(userBean.getReportSelected().getId());
         operation.setReport(keyReport);
+        
+        ObjectifyReportUserDAO du = new ObjectifyReportUserDAO();
+		Key<ReportUser> keyReportUser = du.getKey(userBean.getLoginUser().getId());		
+		operation.setReportUser(keyReportUser);
                 
         dao.save(operation);
                

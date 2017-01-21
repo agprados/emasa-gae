@@ -102,7 +102,7 @@
 						style="text-align: center; width:75%; margin: 15px auto;">
 						<p:column headerText="FECHA CREACIÓN" sortBy="#{report.creationDate}" style="width:20%;">	
 								<h:outputText value="#{report.creationDate}">
-									<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+									<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="Europe/Madrid"/>
 								</h:outputText>
 						</p:column>
 						<p:column headerText="DIRECCIÓN" sortBy="#{report.address}">
