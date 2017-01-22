@@ -169,9 +169,19 @@
                                     <p:column headerText="TIPO" sortBy="#{operation.type}">
                                         <h:outputText value="#{operation.type}" />
                                     </p:column>   
-								<p:column headerText="DESCRIPCIÓN" sortBy="#{operation.description}">
+									<p:column headerText="DESCRIPCIÓN" sortBy="#{operation.description}">
                                         <h:outputText value="#{operation.description}" />
                                     </p:column>
+                                    <p:column>
+                                        <h:commandLink value="Editar" 
+                                        action="#{operationBean.doEditOperation(operation)}" />
+                                    </p:column>
+                                    <p:column>
+                                        <h:commandLink value="Eliminar" 
+                                        	action="#{operationBean.doDeleteOperation(operation)}" >
+                                            <f:ajax execute="@form" render="@form" />
+                                        </h:commandLink>
+									</p:column>
 							</p:dataTable>
 						</h:form>
 					</f:view>

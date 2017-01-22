@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.emasagae.dao.ObjectifyEmasaDAO;
 import com.emasagae.dao.ObjectifyReportUserDAO;
 import com.emasagae.entity.Emasa;
+import com.emasagae.entity.Operation;
 import com.emasagae.entity.Report;
 import com.emasagae.entity.ReportUser;
 import com.google.appengine.api.users.User;
@@ -30,6 +31,7 @@ public class UserBean implements Serializable {
 	private ReportUser loginUser;
 	private String reportSelectedEmail;
 	private Report reportSelected;
+	private Operation operationSelected;
 
 	public UserBean() {
 		initEmasa();
@@ -127,6 +129,14 @@ public class UserBean implements Serializable {
 			emasa = new Emasa("EMASA");
 			dao.save(emasa);
 		}
+	}
+
+	public Operation getOperationSelected() {
+		return operationSelected;
+	}
+
+	public void setOperationSelected(Operation operationSelected) {
+		this.operationSelected = operationSelected;
 	}
 
 }

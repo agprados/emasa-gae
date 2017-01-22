@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://java.sun.com/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>EMASA</title>
+	<meta charset="UTF-8" />
+	<meta name="viewOperation" content="width=device-width, initial-scale=1.0" />
+	
+	<link rel="stylesheet" type="text/css" href="/resources/css/style.css" />
+
+	<!-- Compiled and minified Bootstrap CSS -->
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+		integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+		crossorigin="anonymous" />
+
+	<!-- Compiled and minified Bootstrap JavaScript -->
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+		integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+		crossorigin="anonymous"></script>
+		
+	<!-- FontAwesome css -->
+	<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+	
+	<!-- Bootstrap social icons plugin -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.0.0/bootstrap-social.min.css"/>
+
+</h:head>
+
+<h:body>
+	<f:phaseListener type="com.emasagae.config.SessionPhaseListener" />
+	#{userBean.doCheckLogin()}
+	<ui:include src="/includes/header.xhtml" />
+	<div class="container-fluid container">
+            <div class="row padd">
+                <div style="margin: auto; width: 100%; text-align: center;">
+                    <div class="container-main-title">
+                        <h1 class="fsize50" style="color: #00A2DB;">EDITAR OPERACIÓN</h1>
+                        <span class="fsize25">Aviso </span><span class="fsize20">#{userBean.reportSelected.id}</span>
+                    </div>
+                    <h:form style="text-align: left; padding: 20px 70px 0;">
+                        <h:panelGroup rendered="#{operationBean.errorOperation.length() != 0}" layout="block" class="alert alert-danger" a:role="alert" style="text-align: center; margin: 30px 30px 25px;">
+                            #{operationBean.errorOperation} 
+                        </h:panelGroup> 
+                        <div class="form-group">
+                            <label for="inputStartDate" class="form-text-input">Fecha inicio operación *</label>
+                            <p:calendar id="inputStartDate" style="display: block;" value="#{userBean.operationSelected.startDate}" pattern="dd/MM/yyyy HH:mm" showOn="both"/>                      
+                            <p:dialog modal="true" resizable="false" header="Values" widgetVar="dlg" showEffect="fold">
+                                <h:outputText value="#{userBean.operationSelected.startDate}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="Europe/Madrid"/>
+                                </h:outputText>
+                            </p:dialog>                                  
+                        </div>
+                        <div class="form-group">
+                            <label for="inputType" class="form-text-input">Tipo de operación *</label>  
+                            <h:inputText id="inputType" maxlength="20" value="#{userBean.operationSelected.type}" style="border-radius: 5px;" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="inputDescription" class="form-text-input">Descripción *</label>
+                            <h:inputTextarea id="inputDescription" rows="4" cols="500" maxlength="500" autoResize="false" value="#{userBean.operationSelected.description}" style="border-radius: 5px; resize: none;" class="form-control" />
+                        </div>
+                        
+                        * Campo obligatorio                 
+                        <center>
+                            <h:button value="Cancelar" style="margin-top: 8px;" outcome="index?faces-redirect=true" class="btn btn-default" a:aria-expanded="false" />
+                            <h:commandButton value="Modificar Operación" action="#{operationBean.doConfirmChanges()}" style="margin: 8px 0 0 5px;" class="btn btn-success" a:aria-expanded="false" />
+                             
+                        </center>
+                    </h:form> 
+                    
+                </div>
+            </div>            
+        </div>        
+</h:body>
+
+</html>
