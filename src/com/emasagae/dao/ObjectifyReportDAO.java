@@ -1,6 +1,7 @@
 package com.emasagae.dao;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import java.util.List;
 
 import com.emasagae.entity.Emasa;
