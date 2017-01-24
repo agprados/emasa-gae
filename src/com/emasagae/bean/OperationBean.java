@@ -112,7 +112,7 @@ public class OperationBean implements Serializable {
 		Key<Report> keyReport = d.getKey(userBean.getReportSelected().getId());
         operation.setReport(keyReport);
         
-        ObjectifyReportUserDAO du = new ObjectifyReportUserDAO();
+		ObjectifyReportUserDAO du = new ObjectifyReportUserDAO();
 		Key<ReportUser> keyReportUser = du.getKey(userBean.getLoginUser().getId());		
 		operation.setReportUser(keyReportUser);
                 
@@ -137,7 +137,9 @@ public class OperationBean implements Serializable {
     
     public String doDeleteOperation(Operation operation) {  
         dao.delete(operation);
-    	return "viewReport";    
+        operations.remove(operation);
+        
+    	return "viewReport?faces-redirect=true";    
     } 
     
     public String doConfirmChanges() {   
@@ -152,7 +154,7 @@ public class OperationBean implements Serializable {
         dao.save(userBean.getOperationSelected());
         
         return "viewReport";
-}
+    }
     
 }
 
