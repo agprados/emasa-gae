@@ -1,7 +1,11 @@
 package com.emasagae.entity;
 
 import java.io.Serializable;
-import com.googlecode.objectify.annotation.*;
+
+import com.emasagae.config.OfyHelper;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 /**
  * The @Entity tells Objectify about our entity.  We also register it in {@link OfyHelper}
  * Our primary key @Id is set automatically by the Google Datastore for us.

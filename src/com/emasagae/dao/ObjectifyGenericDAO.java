@@ -1,12 +1,12 @@
 package com.emasagae.dao;
 
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Map;
-import java.lang.reflect.ParameterizedType;
 
 import com.googlecode.objectify.Key;
-
-import static com.googlecode.objectify.ObjectifyService.ofy;
 
 public class ObjectifyGenericDAO<T> implements IGenericDAO<T>{
 	

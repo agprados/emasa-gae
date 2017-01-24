@@ -3,6 +3,7 @@ package com.emasagae.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.emasagae.config.OfyHelper;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
