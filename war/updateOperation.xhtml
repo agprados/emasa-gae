@@ -48,14 +48,15 @@
                         <span class="fsize25">Aviso </span><span class="fsize20">#{userBean.reportSelected.id}</span>
                     </div>
                     <h:form style="text-align: left; padding: 20px 70px 0;">
-                        <h:panelGroup rendered="#{operationBean.errorOperation.length() != 0}" layout="block" class="alert alert-danger" a:role="alert" style="text-align: center; margin: 30px 30px 25px;">
+                        <h:panelGroup rendered="#{operationBean.errorOperation.length() != 0}" layout="block" class="alert alert-danger" a:role="alert" style="text-align: center; margin: 10px 30px 25px;">
                             #{operationBean.errorOperation} 
                         </h:panelGroup> 
                         <div class="form-group">
+                        	#{operationBean.setStartDate(userBean.operationSelected.startDate)}
                             <label for="inputStartDate" class="form-text-input">Fecha inicio operación *</label>
-                            <p:calendar id="inputStartDate" style="display: block;" value="#{userBean.operationSelected.startDate}" pattern="dd/MM/yyyy HH:mm" showOn="both"/>                      
+                            <p:calendar id="inputStartDate" style="display: block;" value="#{operationBean.startDate}" pattern="dd/MM/yyyy HH:mm" showOn="both"/>                      
                             <p:dialog modal="true" resizable="false" header="Values" widgetVar="dlg" showEffect="fold">
-                                <h:outputText value="#{userBean.operationSelected.startDate}" >
+                                <h:outputText value="#{operationBean.startDate}" >
                                     <f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="Europe/Madrid"/>
                                 </h:outputText>
                             </p:dialog>                                  

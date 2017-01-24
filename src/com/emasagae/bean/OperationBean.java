@@ -97,8 +97,7 @@ public class OperationBean implements Serializable {
         if(startDate == null){
         	errorOperation = "La fecha no puede estar vacía";
             return "createOperation";        	
-        }        
-        	
+        }  
         if(type == null || type.isEmpty()){
             errorOperation = "El tipo no puede estar vacío";
             return "createOperation";
@@ -119,7 +118,7 @@ public class OperationBean implements Serializable {
         dao.save(operation);
         findOperations();
                
-        return "viewReport";
+        return "viewReportt?faces-redirect=true";
     }
     
     private void findOperations() {
@@ -132,28 +131,30 @@ public class OperationBean implements Serializable {
     
     public String doEditOperation(Operation operation) {
         userBean.setOperationSelected(operation);
-        return "updateOperation";
+        return "updateOperation?faces-redirect=true";
     }
     
     public String doDeleteOperation(Operation operation) {  
         dao.delete(operation);
         operations.remove(operation);
         
-    	return "viewReport?faces-redirect=true";    
+    	return "viewReport";    
     } 
     
     public String doConfirmChanges() {   
         if(userBean.getOperationSelected().getType() == null || userBean.getOperationSelected().getType().isEmpty()) {
             errorOperation = "El tipo no puede estar vacío";
-            return "editOperation";
+            return "updateOperation";
         }
-        if(startDate != null) {
-        	userBean.getOperationSelected().setStartDate(startDate);
-        }
+        if(startDate == null){
+        	errorOperation = "La fecha no puede estar vacía";
+            return "updateOperation";        	
+        }         
+        userBean.getOperationSelected().setStartDate(startDate);
         
         dao.save(userBean.getOperationSelected());
         
-        return "viewReport";
+        return "viewReport?faces-redirect=true";
     }
     
 }

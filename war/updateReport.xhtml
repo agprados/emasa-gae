@@ -48,16 +48,19 @@
 					<span class="fsize25">Aviso </span><span class="fsize20">#{userBean.reportSelected.id}</span>
 				</div>
 				<h:form style="text-align: left; padding: 20px 70px 0;">
+					<h:panelGroup rendered="#{reportBean.errorReport.length() != 0}" layout="block" class="alert alert-danger" a:role="alert" style="text-align: center; margin: 10px 30px 25px;">
+      					#{reportBean.errorReport} 
+                    </h:panelGroup>
 					<div class="form-group">
-						<label for="outputAddress" class="form-text-input">Dirección*</label>
+						<label for="outputAddress" class="form-text-input">Dirección *</label>
 						<h:inputText id="outputAddress" maxlength="100" value="#{userBean.reportSelected.address}" style="border-radius: 5px" class="form-control" />
 					</div>
 					<div class="form-group">
-						<label for="outputZip" class="form-text-input">Código postal</label> #{reportBean.setZip(null)}
-						<h:inputText id="outputZip" maxlength="5" value="#{userBean.reportSelected.zip}" style="border-radius: 5px;" class="form-control" />
+						<label for="outputZip" class="form-text-input">Código postal</label>
+						<p:inputMask id="outputZip" value="#{userBean.reportSelected.zip}" style="border-radius: 5px;" styleClass="form-control" mask="99999" />
 					</div>
 					<div class="form-group" style="width: 300px;">
-						<label for="inputPriority" class="form-text-input">Prioridad*</label>
+						<label for="inputPriority" class="form-text-input">Prioridad *</label>
 						<div style="background: #efefef; padding: 10px; border: 1px solid #cccccc; border-radius: 5px;">
 							#{reportBean.setPriority("LOW")}
 							<h:selectOneRadio value="#{userBean.reportSelected.priority}" layout="pageDirection">
@@ -94,12 +97,12 @@
 						<h:inputText id="inputLabel" maxlength="20" value="#{userBean.reportSelected.label}" style="border-radius: 5px;" class="form-control" />
 					</div>
 					<div class="form-group">
-						<label for="inputDescription" class="form-text-input">Descripción*</label>
+						<label for="inputDescription" class="form-text-input">Descripción *</label>
 						<h:inputTextarea id="inputDescription" rows="4" cols="500" maxlength="500" autoResize="false" value="#{userBean.reportSelected.description}" style="border-radius: 5px; resize: none;" class="form-control" />
 					</div>                                             
 	                * Campo obligatorio<br/>
 	                <center>
-		               	<h:commandButton value="Cancelar" action="#{reportBean.doViewReport(userBean.reportSelected)}" style="margin: 8px 0 0 5px;" class="btn btn-default" a:aria-expanded="false" />
+		               	<h:button value="Cancelar" outcome="viewReport?faces-redirect=true" style="margin: 8px 0 0 5px;" class="btn btn-default" a:aria-expanded="false" />
 						<h:commandButton value="Guardar" action="#{reportBean.doEditReport()}" style="margin: 8px 0 0 5px;" class="btn btn-success" a:aria-expanded="false" />
 					</center>
 				</h:form>

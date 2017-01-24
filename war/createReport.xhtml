@@ -46,16 +46,19 @@
 					<h1 class="fsize50" style="color: #00A2DB;">CREAR AVISO</h1>
 				</div>
 				<h:form style="text-align: left; padding: 20px 70px 0;">
+					<h:panelGroup rendered="#{reportBean.errorReport.length() != 0}" layout="block" class="alert alert-danger" a:role="alert" style="text-align: center; margin: 10px 30px 25px;">
+      					#{reportBean.errorReport} 
+                    </h:panelGroup>
 					<div class="form-group">
-						<label for="inputAddress" class="form-text-input">Dirección*</label>
+						<label for="inputAddress" class="form-text-input">Dirección *</label>
 						<h:inputText id="inputAddress" maxlength="100" value="#{reportBean.address}" style="border-radius: 5px"	class="form-control" />
 					</div>
 					<div class="form-group">
-						<label for="inputZip" class="form-text-input">Código postal</label> #{reportBean.setZip(null)}
-						<h:inputText id="inputZip" maxlength="5" value="#{reportBean.zip}" style="border-radius: 5px;" class="form-control" />
+						<label for="inputZip" class="form-text-input">Código postal</label>
+						<p:inputMask id="inputZip" value="#{reportBean.zip}" style="border-radius: 5px;" styleClass="form-control" mask="99999"/>
 					</div>
 					<div class="form-group" style="width: 300px;">
-						<label for="inputPriority" class="form-text-input">Prioridad*</label>
+						<label for="inputPriority" class="form-text-input">Prioridad *</label>
 						<div style="background: #efefef; padding: 10px; border: 1px solid #cccccc; border-radius: 5px;">
 							#{reportBean.setPriority("LOW")}
 							<h:selectOneRadio value="#{reportBean.priority}" layout="pageDirection">
@@ -83,7 +86,7 @@
 						<h:inputText id="inputLabel" maxlength="20" value="#{reportBean.label}" style="border-radius: 5px;" class="form-control" />
 					</div>
 					<div class="form-group">
-						<label for="inputDescription" class="form-text-input">Descripción*</label>
+						<label for="inputDescription" class="form-text-input">Descripción *</label>
 						<h:inputTextarea id="inputDescription" rows="4" cols="500" maxlength="500" autoResize="false" value="#{reportBean.description}" style="border-radius: 5px; resize: none;" class="form-control" />
 					</div>                                             
 	                * Campo obligatorio                 

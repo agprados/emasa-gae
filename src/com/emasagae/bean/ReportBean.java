@@ -42,7 +42,8 @@ public class ReportBean implements Serializable {
     @PostConstruct
     public void init() {
     	ObjectifyReportDAO db = new ObjectifyReportDAO();
-    	reports = db.findAllSortedByCreationDate();    	    	
+    	reports = db.findAllSortedByCreationDate(); 
+    	errorReport = "";
     }
 
 	public List<Report> getReports() {
@@ -143,6 +144,18 @@ public class ReportBean implements Serializable {
 		
 	public String doCreateReport(){
 		Report r = new Report();
+		if(address == null || address.isEmpty()) {
+            errorReport = "La dirección no puede estar vacía";
+            return "createReport";
+        }
+        if(priority == null || priority.isEmpty()) {
+            errorReport = "La prioridad no puede estar vacía";
+            return "createReport";
+        }
+        if(description == null || description.isEmpty()) {
+            errorReport = "La descripción no puede estar vacía";
+            return "createReport";
+        }
 		r.setStartDate(startDate);
 		r.setPriority(priority);
 		r.setState("NUEVO");
@@ -164,10 +177,23 @@ public class ReportBean implements Serializable {
 	}
 	
 	public String doEditReport() {
+		if(userBean.getReportSelected().getAddress() == null || userBean.getReportSelected().getAddress().isEmpty()) {
+            errorReport = "La dirección no puede estar vacía";
+            return "editarAviso";
+        }
+        if(userBean.getReportSelected().getPriority() == null || userBean.getReportSelected().getPriority().isEmpty()) {
+            errorReport = "La prioridad no puede estar vacía";
+            return "editarAviso";
+        }
+        if(userBean.getReportSelected().getDescription() == null || userBean.getReportSelected().getDescription().isEmpty()) {
+            errorReport = "La descripción no puede estar vacía";
+            return "editarAviso";
+        }
+        
 		ObjectifyReportDAO dao = new ObjectifyReportDAO();
 		dao.save(userBean.getReportSelected());
 		
-		return doViewReport(userBean.getReportSelected());
+		return "viewReport?faces-redirect=true";
 	}
 	
 	public String doViewReport(Report report){
@@ -186,9 +212,7 @@ public class ReportBean implements Serializable {
 	public String doDelete() {
 		ObjectifyReportDAO db = new ObjectifyReportDAO();
 	
-		//reports.remove(userBean.getReportSelected());
-		db.delete(userBean.getReportSelected());
-		
+		db.delete(userBean.getReportSelected());		
 		
 		return "index?faces-redirect=true";
 	}
