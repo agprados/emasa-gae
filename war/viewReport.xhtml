@@ -147,51 +147,48 @@
 				<p style="word-wrap: break-word; white-space: pre-wrap;">#{userBean.reportSelected.description}</p>
 				<h3>Operaciones</h3>
 				<div class="separador"></div>
-				<h:outputText
-					rendered="#{operationBean.operations == null || empty operationBean.operations}"
-					value="No hay ninguna operación todavía" />
-				<h:panelGroup rendered="#{not empty operationBean.operations}"
-					layout="block" style="padding: 0 20px 5px;">
-					<f:view>
-						<h:form>
-							<p:dataTable value="#{operationBean.operations}" var="operation" rowExpandMode="single" 
-								style="margin-top: 20px; text-align: center;">
-								<p:column headerText="FECHA CREACIÓN" sortBy="#{operation.creationDate}" style="width: 16%;">
-									<h:outputText value="#{operation.creationDate}" >
-                                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="Europe/Madrid"/>
-                                        </h:outputText>
-                                    </p:column>
-                                    <p:column headerText="FECHA INICIO" sortBy="#{operation.startDate}" style="width: 16%;">
-                                        <h:outputText value="#{operation.startDate}" >
-                                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="Europe/Madrid"/>
-                                        </h:outputText>
-                                    </p:column>
-                                    <p:column headerText="TIPO" sortBy="#{operation.type}">
-                                        <h:outputText value="#{operation.type}" />
-                                    </p:column>   
-									<p:column headerText="DESCRIPCIÓN" sortBy="#{operation.description}">
-                                        <h:outputText value="#{operation.description.length() gt 45 ? operation.description.substring(0,42).concat('...') : operation.description}" />
-                                        <p:rowToggler rendered="#{not empty operation.description}" />
-                                    </p:column>
-                                    <p:column rendered="#{not empty userBean.loginUser.email}" style="width: 6%;">
-                                        <h:commandLink value="Editar" rendered="#{not empty userBean.loginUser and operation.reportUser.id eq userBean.loginUser.id}"
-                                        action="#{operationBean.doEditOperation(operation)}" />
-                                    </p:column>
-                                    <p:column rendered="#{not empty userBean.loginUser.email}" style="width: 7%;">                                   
-                                        <h:commandLink value="Eliminar" rendered="#{not empty userBean.loginUser and operation.reportUser.id eq userBean.loginUser.id}"
-                                        	action="#{operationBean.doDeleteOperation(operation)}" >
-                                            <f:ajax execute="@form" render="@form" />
-                                        </h:commandLink>                                        
-									</p:column>
-									<p:rowExpansion>
-										<div style="padding: 5px 30px 6px;">
-											<h:outputText value="#{operation.description}" />
-										</div>
-									</p:rowExpansion>
-							</p:dataTable>
-						</h:form>
-					</f:view>
-				</h:panelGroup>
+				<h:form id="operationsTable">
+					<h:outputText
+						rendered="#{operationBean.operations == null || empty operationBean.operations}"
+						value="No hay ninguna operación todavía" />
+					<h:panelGroup rendered="#{not empty operationBean.operations}"
+						layout="block" style="padding: 0 20px 5px;">
+								<p:dataTable value="#{operationBean.operations}" var="operation" rowExpandMode="single" 
+									style="margin-top: 20px; text-align: center;">
+									<p:column headerText="FECHA CREACIÓN" sortBy="#{operation.creationDate}" style="width: 16%;">
+										<h:outputText value="#{operation.creationDate}" >
+	                                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="Europe/Madrid"/>
+	                                        </h:outputText>
+	                                    </p:column>
+	                                    <p:column headerText="FECHA INICIO" sortBy="#{operation.startDate}" style="width: 16%;">
+	                                        <h:outputText value="#{operation.startDate}" >
+	                                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="Europe/Madrid"/>
+	                                        </h:outputText>
+	                                    </p:column>
+	                                    <p:column headerText="TIPO" sortBy="#{operation.type}">
+	                                        <h:outputText value="#{operation.type}" />
+	                                    </p:column>   
+										<p:column headerText="DESCRIPCIÓN" sortBy="#{operation.description}">
+	                                        <h:outputText value="#{operation.description.length() gt 45 ? operation.description.substring(0,42).concat('...') : operation.description}" />
+	                                        <p:rowToggler rendered="#{not empty operation.description and operation.description.length() gt 45}" />
+	                                    </p:column>
+	                                    <p:column rendered="#{not empty userBean.loginUser.email}" style="width: 6%;">
+	                                        <h:commandLink value="Editar" rendered="#{not empty userBean.loginUser and operation.reportUser.id eq userBean.loginUser.id}"
+	                                        action="#{operationBean.doEditOperation(operation)}" />
+	                                    </p:column>
+	                                    <p:column rendered="#{not empty userBean.loginUser.email}" style="width: 7%;">                                   
+	                                        <p:commandLink value="Eliminar" rendered="#{not empty userBean.loginUser and operation.reportUser.id eq userBean.loginUser.id}"
+	                                        	actionListener="#{operationBean.doDeleteOperation(operation)}" process="@form" update="operationsTable">
+	                                        </p:commandLink>                                        
+										</p:column>
+										<p:rowExpansion>
+											<div style="padding: 5px 30px 6px;">
+												<h:outputText value="#{operation.description}" />
+											</div>
+										</p:rowExpansion>
+								</p:dataTable>
+					</h:panelGroup>
+				</h:form>
 				<h:panelGroup rendered="#{not empty userBean.loginUser.email}" layout="block" style="margin-top: 15px; padding: 0 20px;">
 					<h:link class="btn btn-info btn-crear-aviso"
 						outcome="createOperation">
@@ -211,27 +208,27 @@
 
 				<script
 					src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDaKC_fQZyaRvwbfuE6U6YFeuUzE1pmhq8&amp;callback=initMap"></script>
-				<center>
-					<h:panelGroup rendered="#{not empty userBean.reportSelected.label}">
+				
+					<h:panelGroup rendered="#{not empty userBean.reportSelected.label}" layout="block" style="margin-top: 10px; text-align: center;">
 						<h3>##{userBean.reportSelected.label}</h3>
 						<h:form>
-							<p:graphicImage id="fondo"
-								style="border: 1px solid black; width: 350px; height: 170px"
-								url="#{galleryBean.url}" />
-							<br />
-							<h:commandLink value="anterior"
-								style="font-size: 12px; height: 30px; width: 100px"
+						<h:commandLink style="font-size: 12px; width: 40px; height: 100px; text-align: center;"
 								action="#{galleryBean.previous()}" class="btn btn-default">
 								<f:ajax execute="@this" render="fondo" />
+								<span class="glyphicon glyphicon-chevron-left" style="vertical-align: bottom; line-height: 85px;"/>
 							</h:commandLink>
-							<h:commandLink value="siguiente"
-								style="font-size: 12px; height: 30px; width: 100px"
+							<p:graphicImage id="fondo"
+								style="border: 1px solid black; width: 450px; height: 230px; float:center"
+								url="#{galleryBean.url}" />
+							
+							<h:commandLink style="font-size: 12px; width: 40px; height: 100px; text-align: center;"
 								action="#{galleryBean.next()}" class="btn btn-default">
 								<f:ajax execute="@this" render="fondo" />
+								<span class="glyphicon glyphicon-chevron-right" style="vertical-align: bottom; line-height: 85px;"/>
 							</h:commandLink>
 						</h:form>
 					</h:panelGroup>
-					<h:form>
+					<h:form style="margin-top: 10px; text-align: center;">
 						<h:button value="Volver" outcome="index?faces-redirect=true"
 							style="margin: 20px 0 0 5px;" class="btn btn-default"
 							a:aria-expanded="false" />
@@ -245,7 +242,6 @@
 							class="btn btn-danger" a:aria-expanded="false" />
 							</h:panelGroup>
 					</h:form>
-				</center>
 			</div>
 		</div>
 	</div>

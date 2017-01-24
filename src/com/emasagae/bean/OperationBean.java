@@ -134,11 +134,9 @@ public class OperationBean implements Serializable {
         return "updateOperation?faces-redirect=true";
     }
     
-    public String doDeleteOperation(Operation operation) {  
+    public void doDeleteOperation(Operation operation) {  
         dao.delete(operation);
-        operations.remove(operation);
-        
-    	return "viewReport";    
+        operations.remove(operation);          
     } 
     
     public String doConfirmChanges() {   
