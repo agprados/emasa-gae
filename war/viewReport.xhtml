@@ -154,14 +154,14 @@
 					layout="block" style="padding: 0 20px 5px;">
 					<f:view>
 						<h:form>
-							<p:dataTable value="#{operationBean.operations}" var="operation"
+							<p:dataTable value="#{operationBean.operations}" var="operation" rowExpandMode="single" 
 								style="margin-top: 20px; text-align: center;">
-								<p:column headerText="FECHA CREACIÓN" sortBy="#{operation.creationDate}" style="width:17%;">
+								<p:column headerText="FECHA CREACIÓN" sortBy="#{operation.creationDate}" style="width: 16%;">
 									<h:outputText value="#{operation.creationDate}" >
                                             <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="Europe/Madrid"/>
                                         </h:outputText>
                                     </p:column>
-                                    <p:column headerText="FECHA INICIO" sortBy="#{operation.startDate}" style="width:17%;">
+                                    <p:column headerText="FECHA INICIO" sortBy="#{operation.startDate}" style="width: 16%;">
                                         <h:outputText value="#{operation.startDate}" >
                                             <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="Europe/Madrid"/>
                                         </h:outputText>
@@ -170,18 +170,24 @@
                                         <h:outputText value="#{operation.type}" />
                                     </p:column>   
 									<p:column headerText="DESCRIPCIÓN" sortBy="#{operation.description}">
-                                        <h:outputText value="#{operation.description}" />
+                                        <h:outputText value="#{operation.description.length() gt 45 ? operation.description.substring(0,42).concat('...') : operation.description}" />
+                                        <p:rowToggler rendered="#{not empty operation.description}" />
                                     </p:column>
-                                    <p:column>
-                                        <h:commandLink value="Editar" 
+                                    <p:column rendered="#{not empty userBean.loginUser.email}" style="width: 6%;">
+                                        <h:commandLink value="Editar" rendered="#{not empty userBean.loginUser and operation.reportUser.id eq userBean.loginUser.id}"
                                         action="#{operationBean.doEditOperation(operation)}" />
                                     </p:column>
-                                    <p:column>
-                                        <h:commandLink value="Eliminar" 
+                                    <p:column rendered="#{not empty userBean.loginUser.email}" style="width: 7%;">                                   
+                                        <h:commandLink value="Eliminar" rendered="#{not empty userBean.loginUser and operation.reportUser.id eq userBean.loginUser.id}"
                                         	action="#{operationBean.doDeleteOperation(operation)}" >
                                             <f:ajax execute="@form" render="@form" />
-                                        </h:commandLink>
+                                        </h:commandLink>                                        
 									</p:column>
+									<p:rowExpansion>
+										<div style="padding: 5px 30px 6px;">
+											<h:outputText value="#{operation.description}" />
+										</div>
+									</p:rowExpansion>
 							</p:dataTable>
 						</h:form>
 					</f:view>

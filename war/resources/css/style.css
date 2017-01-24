@@ -35,6 +35,10 @@ html body {
 	margin-bottom: 0 !important;
 }
 
+.navbar-header {
+	float: left;
+}
+
 .padd {
 	padding-left: 5%;
 	padding-right: 5%;
@@ -230,4 +234,9 @@ html body {
     border: 1px solid #46b8da;
     color: #fff;
     background-color: #5bc0de;
+}
+
+.ui-row-toggler {
+	display: inline-block;
+	float: right;
 }

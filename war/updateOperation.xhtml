@@ -63,11 +63,14 @@
                         </div>
                         <div class="form-group">
                             <label for="inputType" class="form-text-input">Tipo de operación *</label>  
-                            <h:inputText id="inputType" maxlength="20" value="#{userBean.operationSelected.type}" style="border-radius: 5px;" class="form-control" />
+                            <h:inputText id="inputType" maxlength="25" value="#{userBean.operationSelected.type}" style="border-radius: 5px;" class="form-control" />
                         </div>
                         <div class="form-group">
                             <label for="inputDescription" class="form-text-input">Descripción *</label>
-                            <h:inputTextarea id="inputDescription" rows="4" cols="500" maxlength="500" autoResize="false" value="#{userBean.operationSelected.description}" style="border-radius: 5px; resize: none;" class="form-control" />
+                           <p:inputTextarea id="inputDescription" rows="3" cols="70" maxlength="350" value="#{userBean.operationSelected.description}" style="border-radius: 5px; resize: none;" styleClass="form-control" counter="display" counterTemplate="{0} caracteres restantes"/>
+                        	<div style="text-align: right;">
+                        		<h:outputText id="display" />
+                        	</div>
                         </div>
                         
                         * Campo obligatorio                 

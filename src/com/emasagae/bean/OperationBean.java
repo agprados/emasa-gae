@@ -118,7 +118,7 @@ public class OperationBean implements Serializable {
         dao.save(operation);
         findOperations();
                
-        return "viewReportt?faces-redirect=true";
+        return "viewReport?faces-redirect=true";
     }
     
     private void findOperations() {

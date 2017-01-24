@@ -79,7 +79,7 @@
 					</div>
 					<div class="form-group">
 						<label for="inputType" class="form-text-input">Tipo de avería</label>
-						<h:inputText id="inputType" maxlength="20" value="#{reportBean.type}" style="border-radius: 5px;" class="form-control" />
+						<h:inputText id="inputType" maxlength="25" value="#{reportBean.type}" style="border-radius: 5px;" class="form-control" />
 					</div>
 					<div class="form-group">
 						<label for="inputType" class="form-text-input">Etiqueta para Flickr</label>
@@ -87,7 +87,10 @@
 					</div>
 					<div class="form-group">
 						<label for="inputDescription" class="form-text-input">Descripción *</label>
-						<h:inputTextarea id="inputDescription" rows="4" cols="500" maxlength="500" autoResize="false" value="#{reportBean.description}" style="border-radius: 5px; resize: none;" class="form-control" />
+						<p:inputTextarea id="inputDescription" rows="4" cols="80" maxlength="500" value="#{reportBean.description}" style="border-radius: 5px;" styleClass="form-control" counter="display" counterTemplate="{0} caracteres restantes"/>
+                        <div style="text-align: right;">
+                        	<h:outputText id="display" />
+                        </div>
 					</div>                                             
 	                * Campo obligatorio                 
 	                <center>

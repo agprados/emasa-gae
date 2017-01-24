@@ -49,7 +49,7 @@ public class UserBean implements Serializable {
 	public void setLoginUser(ReportUser loginUser) {
 		this.loginUser = loginUser;
 	}
-
+	
 	public String getReportSelectedEmail() {
 		return reportSelectedEmail;
 	}
@@ -64,6 +64,14 @@ public class UserBean implements Serializable {
 
 	public void setReportSelected(Report reportSelected) {
 		this.reportSelected = reportSelected;
+	}
+	
+	public Operation getOperationSelected() {
+		return operationSelected;
+	}
+
+	public void setOperationSelected(Operation operationSelected) {
+		this.operationSelected = operationSelected;
 	}
 
 	public void doLogin() {
@@ -94,13 +102,13 @@ public class UserBean implements Serializable {
 				} else {
 					loginUser = u;
 					loginUser.setEmail(email);
-				}				
+				}	
 			}
 		}
 	}
 
 	public void doLogout() {
-		loginUser = new ReportUser();		
+		loginUser = new ReportUser();
 		UserService userService = UserServiceFactory.getUserService();
 		ExternalContext ctx = FacesContext.getCurrentInstance().getExternalContext();
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
@@ -129,14 +137,6 @@ public class UserBean implements Serializable {
 			emasa = new Emasa("EMASA");
 			dao.save(emasa);
 		}
-	}
-
-	public Operation getOperationSelected() {
-		return operationSelected;
-	}
-
-	public void setOperationSelected(Operation operationSelected) {
-		this.operationSelected = operationSelected;
-	}
-
+	}	
+	
 }
